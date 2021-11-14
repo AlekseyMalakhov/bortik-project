@@ -1,14 +1,19 @@
 import React from "react";
-import { Counter } from "./components/counter/Counter";
-import styled from "@emotion/styled";
-import Container from "react-bootstrap/Container";
+//import { Counter } from "./components/counter/Counter";
+import Header from "./components/Header";
+//import styled from "@emotion/styled";
 
 // const Header = styled.h2({
 //     marginTop: "20px",
 // });
 
 function App() {
-    return <div>{/* <Counter /> */}</div>;
+    return (
+        <div>
+            <Header />
+            {/* <Counter /> */}
+        </div>
+    );
 }
 
 export default App;
