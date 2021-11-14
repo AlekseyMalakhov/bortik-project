@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import colors from "../settings/colors";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { changeSideBarOpened } from "../store/manage";
 
 const HeaderStyled = styled.div({
     display: "flex",
@@ -24,9 +27,20 @@ const MenuButton = styled.div({
 });
 
 function Header() {
+    const dispatch = useDispatch();
+    const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
+
+    const toggleSidebar = () => {
+        if (sideBarOpened) {
+            dispatch(changeSideBarOpened(false));
+        } else {
+            dispatch(changeSideBarOpened(true));
+        }
+    };
+
     return (
         <HeaderStyled>
-            <MenuButton></MenuButton>
+            <MenuButton onClick={toggleSidebar}></MenuButton>
             <BrandName>Bortik Project</BrandName>
         </HeaderStyled>
     );
