@@ -4,6 +4,7 @@ import colors from "../settings/colors";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { changeSideBarOpened } from "../store/manage";
+import MenuButton from "./MenuButton";
 
 const HeaderStyled = styled.div({
     display: "flex",
@@ -19,12 +20,12 @@ const BrandName = styled.div({
     fontSize: "20px",
 });
 
-const MenuButton = styled.div({
-    backgroundColor: "white",
-    height: "20px",
-    width: "20px",
-    marginLeft: "20px",
-});
+// const MenuButton = styled.div({
+//     backgroundColor: "white",
+//     height: "20px",
+//     width: "20px",
+//     marginLeft: "20px",
+// });
 
 function Header() {
     const dispatch = useDispatch();
