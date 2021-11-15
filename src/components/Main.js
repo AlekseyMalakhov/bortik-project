@@ -11,7 +11,7 @@ function Main({ items }) {
         position: "absolute",
         top: "50px",
         left: sideBarOpened ? "170px" : "0",
-        bottom: "0px",
+        bottom: "80px",
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "center",
@@ -20,7 +20,7 @@ function Main({ items }) {
         overflow: "auto",
     });
 
-    return <MainStyled>{items ? items.map((item) => <Card item={item} />) : null}</MainStyled>;
+    return <MainStyled>{items ? items.map((item) => <Card item={item} key={item.id} />) : null}</MainStyled>;
 }
 
 export default Main;

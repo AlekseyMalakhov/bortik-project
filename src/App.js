@@ -2,6 +2,7 @@ import React from "react";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Main from "./components/Main";
+import CartPanel from "./components/CartPanel";
 import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 
@@ -116,6 +117,7 @@ function App() {
             <Header />
             {sideBarOpened ? <Sidebar /> : null}
             <Main items={items} />
+            <CartPanel />
         </AppStyled>
     );
 }

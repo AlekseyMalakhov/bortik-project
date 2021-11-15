@@ -9,7 +9,7 @@ const CardStyled = styled.div({
     margin: "10px 10px",
     padding: "10px 10px",
     "&:hover": {
-        backgroundColor: "rgba(0, 0, 0, 0.1)",
+        backgroundColor: "rgba(0, 0, 0, 0.05)",
     },
 });
 

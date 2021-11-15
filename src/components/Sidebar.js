@@ -48,17 +48,17 @@ const items = [
         img: "https://smartikon.by/uploads/catalog-004.png",
     },
     {
-        id: 4,
+        id: 5,
         name: "Диспенсеры и дозаторы для общественных санузлов",
         img: "https://smartikon.by/uploads/catalog-004.png",
     },
     {
-        id: 4,
+        id: 6,
         name: "Диспенсеры и дозаторы для общественных санузлов",
         img: "https://smartikon.by/uploads/catalog-004.png",
     },
     {
-        id: 4,
+        id: 7,
         name: "Диспенсеры и дозаторы для общественных санузлов",
         img: "https://smartikon.by/uploads/catalog-004.png",
     },
