@@ -15,15 +15,16 @@ const Text = styled.div({
     alignItems: "center",
     border: "1px solid black",
     margin: "auto 10px",
-    padding: "10px",
+    padding: "7px",
     borderRadius: "3px",
+    fontSize: "14px",
 });
 
 function AddRemove() {
     return (
         <AddRemoveStyled>
             <AddRemoveButton icon="minus" />
-            <Text>{0}</Text>
+            <Text>{1000}</Text>
             <AddRemoveButton icon="plus" />
         </AddRemoveStyled>
     );
