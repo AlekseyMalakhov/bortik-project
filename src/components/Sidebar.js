@@ -2,14 +2,19 @@ import React from "react";
 import styled from "@emotion/styled";
 import colors from "../settings/colors";
 import Item from "./Item";
+import { useSelector } from "react-redux";
 
-const SidebarStyled = styled.div({
-    position: "absolute",
-    top: "50px",
-    bottom: "0px",
-    backgroundColor: colors.greyBackground,
-    width: "170px",
-    overflow: "auto",
+const SidebarStyled = styled.div((props) => {
+    return {
+        position: "absolute",
+        top: "50px",
+        bottom: "0px",
+        backgroundColor: colors.greyBackground,
+        width: "170px",
+        left: props.sideBarOpened ? "0px" : "-170px",
+        transition: "left 0.5s",
+        overflow: "auto",
+    };
 });
 
 const Header = styled.div({
@@ -65,8 +70,10 @@ const items = [
 ];
 
 function Sidebar() {
+    const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
+
     return (
-        <SidebarStyled>
+        <SidebarStyled sideBarOpened={sideBarOpened}>
             <Header>Каталог</Header>
             <ItemsList>{items ? items.map((item) => <Item key={item.id} item={item} />) : null}</ItemsList>
         </SidebarStyled>

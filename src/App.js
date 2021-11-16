@@ -4,7 +4,6 @@ import Sidebar from "./components/Sidebar";
 import Main from "./components/Main";
 import CartPanel from "./components/CartPanel";
 import styled from "@emotion/styled";
-import { useSelector } from "react-redux";
 
 const AppStyled = styled.div({
     height: "100%",
@@ -110,12 +109,10 @@ const items = [
 ];
 
 function App() {
-    const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
-
     return (
         <AppStyled>
             <Header />
-            {sideBarOpened ? <Sidebar /> : null}
+            <Sidebar />
             <Main items={items} />
             <CartPanel />
         </AppStyled>

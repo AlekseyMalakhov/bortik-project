@@ -2,18 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import colors from "../settings/colors";
 import Button from "react-bootstrap/Button";
-
-const CartPanelStyled = styled.div({
-    position: "absolute",
-    bottom: "0",
-    height: "80px",
-    backgroundColor: colors.lightGreyBackground,
-    left: "170px",
-    right: "0",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-});
+import { useSelector } from "react-redux";
 
 const MyButton = styled(Button)`
     margin-left: 50px;
@@ -27,6 +16,20 @@ const Price = styled.div({
 });
 
 function CartPanel() {
+    const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
+
+    const CartPanelStyled = styled.div({
+        position: "absolute",
+        bottom: "0",
+        height: "80px",
+        backgroundColor: colors.lightGreyBackground,
+        left: sideBarOpened ? "170px" : "0",
+        right: "0",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+    });
+
     return (
         <CartPanelStyled>
             <MyButton variant="primary">Оформить</MyButton>
