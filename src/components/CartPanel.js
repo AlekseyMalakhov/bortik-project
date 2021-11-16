@@ -16,7 +16,7 @@ const CartPanelStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
     return {
         position: "absolute",
         bottom: "0",
-        height: "80px",
+        height: mobileScreen ? "40px" : "80px",
         backgroundColor: colors.lightGreyBackground,
         left: getLeft(),
         transition: "left 0.5s",
@@ -35,11 +35,13 @@ const MyButton = styled(Button)`
     }
 `;
 
-const Price = styled.div({
-    textAlign: "center",
-    fontSize: "25px",
-    fontWeight: "600",
-    marginRight: "30px",
+const Price = styled.div((props) => {
+    return {
+        textAlign: "center",
+        fontSize: props.mobileScreen ? "18px" : "25px",
+        fontWeight: "600",
+        marginRight: "30px",
+    };
 });
 
 function CartPanel() {
@@ -48,8 +50,10 @@ function CartPanel() {
 
     return (
         <CartPanelStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
-            <MyButton variant="primary">Оформить</MyButton>
-            <Price>{25.5} руб</Price>
+            <MyButton variant="primary" size={mobileScreen ? "sm" : ""}>
+                Оформить
+            </MyButton>
+            <Price mobileScreen={mobileScreen}>{25.5} руб</Price>
         </CartPanelStyled>
     );
 }

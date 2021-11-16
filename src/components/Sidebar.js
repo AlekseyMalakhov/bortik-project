@@ -8,7 +8,7 @@ const SidebarStyled = styled.div((props) => {
     return {
         position: "absolute",
         top: "50px",
-        bottom: "0px",
+        bottom: props.mobileScreen ? "40px" : "0px",
         backgroundColor: colors.greyBackground,
         width: "170px",
         left: props.sideBarOpened ? "0px" : "-170px",
@@ -71,9 +71,10 @@ const items = [
 
 function Sidebar() {
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
+    const mobileScreen = useSelector((state) => state.manage.mobileScreen);
 
     return (
-        <SidebarStyled sideBarOpened={sideBarOpened}>
+        <SidebarStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
             <Header>Каталог</Header>
             <ItemsList>{items ? items.map((item) => <Item key={item.id} item={item} />) : null}</ItemsList>
         </SidebarStyled>
