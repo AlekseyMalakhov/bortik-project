@@ -9,6 +9,10 @@ const AddRemoveButtonStyled = styled(Button)`
     justify-content: center;
     align-items: center;
     padding: 0;
+    &:focus {
+        outline: none;
+        box-shadow: none;
+    }
 `;
 
 function AddRemoveButton({ icon }) {

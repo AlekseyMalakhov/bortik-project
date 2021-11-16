@@ -9,6 +9,7 @@ const CardStyled = styled(Container)`
     background-color: white;
     margin: 10px 10px;
     padding: 10px 10px;
+    max-width: 800px;
 `;
 
 const MyRow = styled(Row)`

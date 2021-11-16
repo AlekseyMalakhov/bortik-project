@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Main from "./components/Main";
 import CartPanel from "./components/CartPanel";
 import styled from "@emotion/styled";
+import handleScreenSize from "./settings/screenWidth";
 
 const AppStyled = styled.div({
     height: "100%",
@@ -109,11 +110,14 @@ const items = [
 ];
 
 function App() {
+    useEffect(() => {
+        handleScreenSize();
+    }, []);
     return (
         <AppStyled>
             <Header />
-            <Sidebar />
             <Main items={items} />
+            <Sidebar />
             <CartPanel />
         </AppStyled>
     );
