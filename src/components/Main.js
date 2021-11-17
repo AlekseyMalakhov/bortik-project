@@ -28,7 +28,8 @@ const MainStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
     };
 });
 
-function Main({ items }) {
+function Main() {
+    const items = useSelector((state) => state.manage.items);
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
 

@@ -84,13 +84,13 @@ if (data) {
         const number = numberOfItems[i];
         if (data[`B${number}`] && data[`C${number}`]) {
             const obj = {
-                id: data[`B${number}`].v,
+                id: data[`B${number}`].v + "_" + i,
                 kategoria: data[`A${number}`].v,
                 article: data[`B${number}`].v,
                 title: data[`C${number}`].v,
                 presence: data[`D${number}`] ? data[`D${number}`].v : 0,
                 unit: data[`E${number}`].v,
-                img: data[`F${number}`] ? data[`F${number}`].v : "",
+                img: data[`F${number}`] ? "https://smartikon.by/uploads/" + data[`F${number}`].v : "",
                 price: data[`G${number}`].v,
                 priceopt: data[`H${number}`] ? data[`H${number}`].v : null,
                 pricemegaopt: data[`I${number}`] ? data[`I${number}`].v : null,
