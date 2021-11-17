@@ -1,4 +1,6 @@
 const express = require("express");
+const XLSX = require("xlsx");
+const fs = require("fs");
 const app = express();
 const port = process.env.PORT || 3010;
 const cors = require("cors");
@@ -12,6 +14,17 @@ app.get("*", function (req, res) {
     res.sendFile(__dirname + "/build/index.html");
 });
 //end for production build
+
+const generateListOfItems = () => {
+    const buf = fs.readFileSync("import.xlsx");
+    const list = XLSX.read(buf, { type: "buffer" });
+    return list;
+};
+
+app.get("/items", (req, res) => {
+    const list = generateListOfItems();
+    res.send(list);
+});
 
 //start the server
 app.listen(port, () => {
