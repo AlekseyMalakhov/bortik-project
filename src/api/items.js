@@ -1,12 +1,11 @@
 import client from "./client";
 
 const getItems = () => {
-    client
+    return client
         .post("/getItems")
         .then((response) => {
             if (response.status === 200) {
-                const data = response.data;
-                console.log(data);
+                return response.data;
             } else {
                 console.log("error");
             }

@@ -26,16 +26,22 @@ const generateListOfItems = () => {
 
 const getCategories = (arr) => {
     const regex = new RegExp("A\\d*");
-    const result = [];
+    const arr2 = [];
     for (let i = 0; i < arr.length; i++) {
         if (regex.test(arr[i].cell)) {
             if (i !== 0) {
-                result.push(arr[i].value);
+                arr2.push(arr[i].value);
             }
         }
     }
-    const uniq = [...new Set(result)];
-    return uniq;
+    const uniq = [...new Set(arr2)];
+    const result = uniq.map((item, i) => {
+        return {
+            id: i + 1,
+            name: item,
+        };
+    });
+    return result;
 };
 
 const getNumbersOfItems = (arr) => {
