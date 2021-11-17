@@ -21,9 +21,25 @@ const generateListOfItems = () => {
     return list;
 };
 
-app.get("/items", (req, res) => {
-    const list = generateListOfItems();
-    res.send(list);
+app.post("/api/getItems", (req, res) => {
+    const workbook = generateListOfItems();
+
+    const arr = [];
+    const data = workbook.Sheets.TDSheet;
+    if (data) {
+        for (let x in data) {
+            if (data[x].v) {
+                const obj = {
+                    cell: x,
+                    value: data[x].v,
+                };
+                arr.push(obj);
+            }
+        }
+        res.send(arr);
+    } else {
+        res.status(500).send("Server error - please contact administrator");
+    }
 });
 
 //start the server

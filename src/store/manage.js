@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import itemsAPI from "../api/items";
+
+itemsAPI.getItems();
 
 const initialState = {
     sideBarOpened: false,
