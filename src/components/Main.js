@@ -13,12 +13,14 @@ const MainStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
         }
     };
 
+    const bottom = mobileScreen ? "40px" : "80px";
+
     return {
         position: "absolute",
         top: "50px",
         left: getLeft(),
         transition: "left 0.5s",
-        bottom: "80px",
+        bottom: bottom,
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "center",
