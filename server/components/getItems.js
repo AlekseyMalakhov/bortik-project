@@ -80,7 +80,9 @@ if (data) {
 
     const numberOfItems = getNumbersOfItems(arr);
 
-    for (let i = 0; i < numberOfItems.length; i++) {
+    //for (let i = 0; i < numberOfItems.length; i++) {
+    for (let i = 0; i < 80; i++) {
+        //show only 80 items
         const number = numberOfItems[i];
         if (data[`B${number}`] && data[`C${number}`]) {
             const obj = {
