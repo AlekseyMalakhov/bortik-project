@@ -2,7 +2,8 @@ import React from "react";
 import styled from "@emotion/styled";
 
 const ItemStyled = styled.div({
-    padding: "15px 10px",
+    width: "100%",
+    padding: "10px 10px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -20,13 +21,10 @@ const Name = styled.div({
     fontWeight: "500",
 });
 
-function Item({ item }) {
+function Item({ category }) {
     return (
         <ItemStyled>
-            <div>
-                <img src={item.img} alt={item.name} width="100" height="100"></img>
-            </div>
-            <Name>{item.name}</Name>
+            <Name>{category.name}</Name>
         </ItemStyled>
     );
 }

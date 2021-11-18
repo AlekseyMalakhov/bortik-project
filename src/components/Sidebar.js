@@ -25,58 +25,21 @@ const Header = styled.div({
 });
 
 const ItemsList = styled.div({
-    marginTop: "10px",
+    margin: "10px 10px",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
 });
 
-const items = [
-    {
-        id: 1,
-        name: "Бытовая химия",
-        img: "https://smartikon.by/uploads/catalog-001.png",
-    },
-    {
-        id: 2,
-        name: "Бумажно-гигиеническая продукция",
-        img: "https://smartikon.by/uploads/catalog-002.png",
-    },
-    {
-        id: 3,
-        name: "Ведра, корзины, урны",
-        img: "https://smartikon.by/uploads/catalog-003.png",
-    },
-    {
-        id: 4,
-        name: "Диспенсеры и дозаторы для общественных санузлов",
-        img: "https://smartikon.by/uploads/catalog-004.png",
-    },
-    {
-        id: 5,
-        name: "Диспенсеры и дозаторы для общественных санузлов",
-        img: "https://smartikon.by/uploads/catalog-004.png",
-    },
-    {
-        id: 6,
-        name: "Диспенсеры и дозаторы для общественных санузлов",
-        img: "https://smartikon.by/uploads/catalog-004.png",
-    },
-    {
-        id: 7,
-        name: "Диспенсеры и дозаторы для общественных санузлов",
-        img: "https://smartikon.by/uploads/catalog-004.png",
-    },
-];
-
 function Sidebar() {
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
+    const categories = useSelector((state) => state.manage.categories);
 
     return (
         <SidebarStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
             <Header>Каталог</Header>
-            <ItemsList>{items ? items.map((item) => <Item key={item.id} item={item} />) : null}</ItemsList>
+            <ItemsList>{categories ? categories.map((category) => <Item key={category.id} category={category} />) : null}</ItemsList>
         </SidebarStyled>
     );
 }
