@@ -13,6 +13,7 @@ const initialState = {
     items: [],
     categories: [],
     loading: true,
+    selectedCategory: 1,
 };
 
 export const manageSlice = createSlice({
@@ -34,6 +35,9 @@ export const manageSlice = createSlice({
         setCategories: (state, action) => {
             state.categories = action.payload;
         },
+        setSelectedCategory: (state, action) => {
+            state.selectedCategory = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -49,5 +53,5 @@ export const manageSlice = createSlice({
     },
 });
 
-export const { changeSideBarOpened, setScreenWidth, setMobileScreen } = manageSlice.actions;
+export const { changeSideBarOpened, setScreenWidth, setMobileScreen, setSelectedCategory } = manageSlice.actions;
 export default manageSlice.reducer;
