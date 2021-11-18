@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import itemsAPI from "../api/items";
 
-export const getItems = createAsyncThunk("counter/fetchCount", async (amount) => {
+export const getItems = createAsyncThunk("manage/getItems", async (amount) => {
     const response = await itemsAPI.getItems();
     return response;
 });
@@ -10,10 +10,10 @@ const initialState = {
     sideBarOpened: false,
     screenWidth: 0,
     mobileScreen: true,
-    items: [],
+    items: null,
     categories: [],
     loading: true,
-    selectedCategory: 1,
+    selectedCategory: null,
 };
 
 export const manageSlice = createSlice({
@@ -48,6 +48,7 @@ export const manageSlice = createSlice({
                 state.loading = false;
                 state.items = action.payload.items;
                 state.categories = action.payload.categories;
+                state.selectedCategory = action.payload.categories[0].name;
                 console.log(action.payload);
             });
     },

@@ -24,20 +24,32 @@ const MainStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "flex-start",
+        alignContent: "flex-start",
         backgroundColor: colors.lightGreyBackground,
         overflow: "auto",
     };
+});
+
+const Error = styled.div({
+    textAlign: "center",
+    margin: "30px 10px",
+    width: "100%",
 });
 
 function Main() {
     const items = useSelector((state) => state.manage.items);
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
+    const selectedCategory = useSelector((state) => state.manage.selectedCategory);
 
     return (
         <MainStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
-            {items ? items.map((item) => <Card item={item} key={item.id} />) : null}
+            {items && selectedCategory && items[selectedCategory].length > 0 ? (
+                items[selectedCategory].map((item) => <Card item={item} key={item.id} />)
+            ) : (
+                <Error>Нет товаров данной категории</Error>
+            )}
         </MainStyled>
     );
 }

@@ -63,9 +63,11 @@ const data = workbook.Sheets.TDSheet;
 
 const arr = [];
 const result = {
-    items: [],
+    items: {},
     categories: [],
 };
+
+const items = [];
 
 if (data) {
     for (let x in data) {
@@ -80,8 +82,8 @@ if (data) {
 
     const numberOfItems = getNumbersOfItems(arr);
 
-    //for (let i = 0; i < numberOfItems.length; i++) {
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < numberOfItems.length; i++) {
+        //for (let i = 0; i < 80; i++) {
         //show only 80 items
         const number = numberOfItems[i];
         if (data[`B${number}`] && data[`C${number}`]) {
@@ -98,10 +100,15 @@ if (data) {
                 pricemegaopt: data[`I${number}`] ? data[`I${number}`].v : null,
                 discount: data[`J${number}`] ? data[`J${number}`].v : null,
             };
-            result.items.push(obj);
+            items.push(obj);
         }
     }
     result.categories = getCategories(arr);
+
+    for (let i = 0; i < result.categories.length; i++) {
+        const name = result.categories[i].name;
+        result.items[name] = items.filter((item) => item.kategoria === name);
+    }
 }
 
 const getItems = (req, res) => {

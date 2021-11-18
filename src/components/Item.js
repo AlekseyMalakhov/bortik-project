@@ -31,7 +31,7 @@ function Item({ category }) {
     const dispatch = useDispatch();
     const selectedCategory = useSelector((state) => state.manage.selectedCategory);
     return (
-        <ItemStyled selected={category.id === selectedCategory} onClick={() => dispatch(setSelectedCategory(category.id))}>
+        <ItemStyled selected={category.name === selectedCategory} onClick={() => dispatch(setSelectedCategory(category.name))}>
             <Name>{category.name}</Name>
         </ItemStyled>
     );
