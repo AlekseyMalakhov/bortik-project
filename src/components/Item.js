@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedCategory } from "../store/manage";
+import { setSelectedCategory, changeSideBarOpened } from "../store/manage";
 
 const ItemStyled = styled.div(({ selected }) => {
     return {
@@ -29,9 +29,18 @@ const Name = styled.div({
 
 function Item({ category }) {
     const dispatch = useDispatch();
+    const mobileScreen = useSelector((state) => state.manage.mobileScreen);
     const selectedCategory = useSelector((state) => state.manage.selectedCategory);
+
+    const handleSelect = (name) => {
+        dispatch(setSelectedCategory(name));
+        if (mobileScreen) {
+            dispatch(changeSideBarOpened(false));
+        }
+    };
+
     return (
-        <ItemStyled selected={category.name === selectedCategory} onClick={() => dispatch(setSelectedCategory(category.name))}>
+        <ItemStyled selected={category.name === selectedCategory} onClick={() => handleSelect(category.name)}>
             <Name>{category.name}</Name>
         </ItemStyled>
     );
