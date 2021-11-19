@@ -29,6 +29,11 @@ function AddRemove() {
         const number = allowOnlyNumbers(e.target.value);
         if (number >= 0) {
             setNumber(number);
+        }
+    };
+
+    const closeKeyboard = (e) => {
+        if (e.key === "Enter") {
             e.target.blur();
         }
     };
@@ -42,7 +47,7 @@ function AddRemove() {
     return (
         <AddRemoveStyled>
             <AddRemoveButton icon="minus" onClick={subtraction} />
-            <MyInput onChange={handleInput} value={number} onFocus={(e) => e.target.select()} inputMode="numeric" />
+            <MyInput onChange={handleInput} value={number} onFocus={(e) => e.target.select()} onKeyDown={closeKeyboard} inputMode="numeric" />
             <AddRemoveButton icon="plus" onClick={() => setNumber(number + 1)} />
         </AddRemoveStyled>
     );
