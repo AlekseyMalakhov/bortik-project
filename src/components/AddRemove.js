@@ -29,6 +29,7 @@ function AddRemove() {
         const number = allowOnlyNumbers(e.target.value);
         if (number >= 0) {
             setNumber(number);
+            e.target.blur();
         }
     };
 
