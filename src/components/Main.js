@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Card from "./Card";
 import colors from "../settings/colors";
@@ -50,23 +50,31 @@ function Main() {
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
     const selectedCategory = useSelector((state) => state.manage.selectedCategory);
 
+    useEffect(() => {
+        setShowNumber(20);
+    }, [items, selectedCategory]);
+
     const showMore = () => {
         setShowNumber(showNumber + 20);
-        console.log(showNumber);
     };
 
-    return (
-        <MainStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
-            {items && selectedCategory && items[selectedCategory].length > 0 ? (
-                items[selectedCategory].map((item) => <Card item={item} key={item.id} />)
-            ) : (
-                <Error>Нет товаров в данной категории</Error>
-            )}
-            <MyButton variant="primary" size={mobileScreen ? "sm" : ""} onClick={showMore}>
-                Показать еще
-            </MyButton>
-        </MainStyled>
-    );
+    if (items && selectedCategory) {
+        return (
+            <MainStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
+                {items[selectedCategory].length > 0 ? (
+                    items[selectedCategory].map((item, index) => (index <= showNumber ? <Card item={item} key={item.id} /> : null))
+                ) : (
+                    <Error>Нет товаров в данной категории</Error>
+                )}
+                {showNumber < items[selectedCategory].length ? (
+                    <MyButton variant="primary" size={mobileScreen ? "sm" : ""} onClick={showMore}>
+                        Показать еще
+                    </MyButton>
+                ) : null}
+            </MainStyled>
+        );
+    }
+    return null;
 }
 
 export default Main;
