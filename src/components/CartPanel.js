@@ -17,7 +17,7 @@ const CartPanelStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
         position: "absolute",
         bottom: "0",
         height: mobileScreen ? "40px" : "80px",
-        backgroundColor: colors.lightGreyBackground,
+        backgroundColor: "#ededed",
         left: getLeft(),
         transition: "left 0.5s",
         right: "0",

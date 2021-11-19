@@ -54,7 +54,7 @@ function Card({ item }) {
             <MyRow>
                 {item.img ? (
                     <Col xs="auto">
-                        <img src={item.img} alt={item.title} width="100" height="100"></img>
+                        <img src={item.img} alt={""} width="100" height="100"></img>
                     </Col>
                 ) : null}
                 <MyCol style={{ fontWeight: "500" }}>{item.title}</MyCol>
