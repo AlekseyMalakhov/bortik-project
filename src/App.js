@@ -12,6 +12,14 @@ const AppStyled = styled.div({
     height: "100%",
 });
 
+const MyContainer = styled.div({
+    position: "absolute",
+    top: "50px",
+    bottom: "0px",
+    display: "flex",
+    width: "100%",
+});
+
 function App() {
     const dispatch = useDispatch();
     useEffect(() => {
@@ -21,8 +29,10 @@ function App() {
     return (
         <AppStyled>
             <Header />
-            <Main />
-            <Sidebar />
+            <MyContainer>
+                <Sidebar />
+                <Main />
+            </MyContainer>
             <CartPanel />
         </AppStyled>
     );

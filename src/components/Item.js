@@ -35,7 +35,7 @@ function Item({ category }) {
     const handleSelect = (name) => {
         dispatch(setSelectedCategory(name));
         if (mobileScreen) {
-            dispatch(changeSideBarOpened(false));
+            //dispatch(changeSideBarOpened(false));
         }
     };
 

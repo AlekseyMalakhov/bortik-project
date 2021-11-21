@@ -15,15 +15,16 @@ const MainStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
     };
 
     return {
-        position: "absolute",
+        //position: "absolute",
         display: "flex",
-        left: getLeft(),
-        top: "50px",
-        bottom: mobileScreen ? "40px" : "80px",
+        width: "100%",
+        //left: getLeft(),
+        //top: "50px",
+        //bottom: mobileScreen ? "40px" : "80px",
         overflow: "auto",
         overflowX: "hidden",
         flexDirection: "column",
-        width: mobileScreen ? "100%" : "calc(100% - 170px)",
+        //width: mobileScreen ? "100%" : "calc(100% - 170px)",
         alignItems: "center",
         backgroundColor: colors.lightGreyBackground,
         padding: "10px 10px",

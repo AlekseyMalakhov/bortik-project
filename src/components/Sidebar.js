@@ -6,14 +6,19 @@ import { useSelector } from "react-redux";
 
 const SidebarStyled = styled.div((props) => {
     return {
-        position: "absolute",
-        top: "50px",
-        bottom: props.mobileScreen ? "40px" : "0px",
+        //height: "100%",
+        //position: "absolute",
+        //top: "50px",
+        //bottom: props.mobileScreen ? "40px" : "0px",
         backgroundColor: colors.greyBackground,
         width: "170px",
-        left: props.sideBarOpened ? "0px" : "-170px",
-        transition: "left 0.5s",
+        minWidth: "170px",
+        marginLeft: props.sideBarOpened ? "0px" : "-170px",
+        //left: props.sideBarOpened ? "0px" : "-170px",
+        //width: props.sideBarOpened ? "170px" : "0px",
+        transition: "margin-left 0.5s",
         overflow: "auto",
+        overflowX: "hidden",
     };
 });
 
