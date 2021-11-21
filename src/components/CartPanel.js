@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-import colors from "../settings/colors";
 import Button from "react-bootstrap/Button";
 import { useSelector } from "react-redux";
 
