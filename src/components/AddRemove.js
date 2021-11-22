@@ -24,31 +24,39 @@ const allowOnlyNumbers = (text) => {
     return number;
 };
 
-function AddRemove({ item }) {
+function AddRemove({ item, inCart }) {
     const dispatch = useDispatch();
     const [number, setNumber] = useState(0);
 
     useEffect(() => {
-        if (number > 0) {
-            const obj = {
-                id: item.id,
-                number,
-            };
-            dispatch(addItemToCart(obj));
+        if (inCart) {
+            setNumber(inCart.number);
         }
-        if (number === 0) {
-            dispatch(removeItemFromCart(item));
-        }
-    }, [number]);
+    }, [inCart]);
+
+    const changeNumber = (newNumber) => {
+        const obj = {
+            id: item.id,
+            number: newNumber,
+            category: item.kategoria,
+        };
+        dispatch(addItemToCart(obj));
+    };
 
     const handleInput = (e) => {
-        console.log(e.target.value);
         const number = allowOnlyNumbers(e.target.value);
         if (number >= 0) {
             setNumber(number);
+            changeNumber(number);
         }
         if (e.target.value === "") {
             setNumber("");
+            return;
+        }
+        if (number === 0) {
+            setNumber(0);
+            dispatch(removeItemFromCart(item));
+            return;
         }
     };
 
@@ -58,21 +66,34 @@ function AddRemove({ item }) {
         }
     };
 
-    const subtraction = () => {
-        if (number > 0) {
+    const minusItem = () => {
+        if (number - 1 > 0) {
             setNumber(number - 1);
+            changeNumber(number - 1);
+            return;
         }
+        if (number - 1 === 0) {
+            setNumber(0);
+            dispatch(removeItemFromCart(item));
+            return;
+        }
+    };
+
+    const plusItem = () => {
+        setNumber(number + 1);
+        changeNumber(number + 1);
     };
 
     const handleEmptyString = () => {
         if (number === "") {
             setNumber(0);
+            dispatch(removeItemFromCart(item));
         }
     };
 
     return (
         <AddRemoveStyled>
-            <AddRemoveButton icon="minus" onClick={subtraction} />
+            <AddRemoveButton icon="minus" onClick={minusItem} />
             <MyInput
                 onChange={handleInput}
                 value={number}
@@ -81,7 +102,7 @@ function AddRemove({ item }) {
                 inputMode="numeric"
                 onBlur={handleEmptyString}
             />
-            <AddRemoveButton icon="plus" onClick={() => setNumber(number + 1)} />
+            <AddRemoveButton icon="plus" onClick={plusItem} />
         </AddRemoveStyled>
     );
 }

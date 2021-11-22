@@ -68,9 +68,9 @@ function Card({ item }) {
 
     useEffect(() => {
         if (cart.length > 0) {
-            const includedInCart = cart.findIndex((itemInCart) => itemInCart.id === item.id);
-            if (includedInCart !== -1) {
-                setInCart(true);
+            const includedInCart = cart.find((itemInCart) => itemInCart.id === item.id);
+            if (includedInCart) {
+                setInCart(includedInCart);
             } else {
                 setInCart(false);
             }
@@ -111,7 +111,7 @@ function Card({ item }) {
                 </Prices>
                 <MyColAddRemove sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
                     <MyCol xs="auto" sm={2}>
-                        <AddRemove item={item} />
+                        <AddRemove item={item} inCart={inCart} />
                     </MyCol>
                 </MyColAddRemove>
             </MyRow>
