@@ -14,6 +14,7 @@ const initialState = {
     categories: [],
     loading: true,
     selectedCategory: null,
+    cart: [],
 };
 
 export const manageSlice = createSlice({
@@ -38,6 +39,24 @@ export const manageSlice = createSlice({
         setSelectedCategory: (state, action) => {
             state.selectedCategory = action.payload;
         },
+        addItemToCart: (state, action) => {
+            const newCart = [...state.cart];
+            const index = newCart.findIndex((item) => item.id === action.payload.id);
+            if (index !== -1) {
+                newCart[index] = action.payload;
+            } else {
+                newCart.push(action.payload);
+            }
+            state.cart = newCart;
+        },
+        removeItemFromCart: (state, action) => {
+            const newCart = [...state.cart];
+            const index = newCart.findIndex((item) => item.id === action.payload.id);
+            if (index !== -1) {
+                const cart = newCart.filter((item) => item.id !== action.payload.id);
+                state.cart = cart;
+            }
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -46,13 +65,15 @@ export const manageSlice = createSlice({
             })
             .addCase(getItems.fulfilled, (state, action) => {
                 state.loading = false;
-                state.items = action.payload.items;
-                state.categories = action.payload.categories;
-                state.selectedCategory = action.payload.categories[0].name;
+                if (action.payload) {
+                    state.items = action.payload.items;
+                    state.categories = action.payload.categories;
+                    state.selectedCategory = action.payload.categories[0].name;
+                }
                 console.log(action.payload);
             });
     },
 });
 
-export const { changeSideBarOpened, setScreenWidth, setMobileScreen, setSelectedCategory } = manageSlice.actions;
+export const { changeSideBarOpened, setScreenWidth, setMobileScreen, setSelectedCategory, addItemToCart, removeItemFromCart } = manageSlice.actions;
 export default manageSlice.reducer;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import AddRemove from "./AddRemove";
 import Container from "react-bootstrap/Container";
@@ -6,8 +6,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useSelector, useDispatch } from "react-redux";
 import { changeSideBarOpened } from "../store/manage";
+import IconCheck from "./IconCheck";
 
 const CardStyled = styled(Container)`
+    position: relative;
     background-color: white;
     margin: 10px 10px;
     padding: 10px 10px;
@@ -53,6 +55,22 @@ function Card({ item }) {
     const dispatch = useDispatch();
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
+    const cart = useSelector((state) => state.manage.cart);
+
+    const [inCart, setInCart] = useState(false);
+
+    useEffect(() => {
+        if (cart.length > 0) {
+            const includedInCart = cart.findIndex((itemInCart) => itemInCart.id === item.id);
+            if (includedInCart !== -1) {
+                setInCart(true);
+            } else {
+                setInCart(false);
+            }
+        } else {
+            setInCart(false);
+        }
+    }, [cart]);
 
     const handleSelect = (name) => {
         if (mobileScreen) {
@@ -62,6 +80,7 @@ function Card({ item }) {
 
     return (
         <CardStyled onClick={() => handleSelect()}>
+            {inCart ? <IconCheck /> : null}
             <MyRow>
                 {item.img ? (
                     <Col xs="auto">
@@ -85,7 +104,7 @@ function Card({ item }) {
                 </Prices>
                 {sideBarOpened && mobileScreen ? null : (
                     <MyCol xs="auto" sm={2}>
-                        <AddRemove />
+                        <AddRemove item={item} />
                     </MyCol>
                 )}
             </MyRow>
