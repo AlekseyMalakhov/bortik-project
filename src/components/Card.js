@@ -68,10 +68,10 @@ function Card({ item }) {
                         <img src={item.img} alt={""} width="100" height="100"></img>
                     </Col>
                 ) : null}
-                <MyCol style={{ fontWeight: "500" }} xs={12} sm="auto">
+                <MyCol style={{ fontWeight: "500" }} xs={12} sm={12} md={5}>
                     {item.title}
                 </MyCol>
-                <Prices>
+                <Prices sm={12} md={3}>
                     <RetailPrice>Цена с НДС {item.price} руб</RetailPrice>
                     {sideBarOpened && mobileScreen ? null : (
                         <div>
@@ -84,7 +84,7 @@ function Card({ item }) {
                     )}
                 </Prices>
                 {sideBarOpened && mobileScreen ? null : (
-                    <MyCol xs="auto">
+                    <MyCol xs="auto" sm={2}>
                         <AddRemove />
                     </MyCol>
                 )}
