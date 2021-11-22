@@ -41,6 +41,13 @@ const Prices = styled(Col)`
     min-width: 250px;
 `;
 
+const MyColAddRemove = styled.div(({ sideBarOpened, mobileScreen }) => {
+    return {
+        display: sideBarOpened && mobileScreen ? "none" : "flex",
+        justifyContent: "center",
+    };
+});
+
 const RetailPrice = styled.div({
     backgroundColor: "#69F0AE",
     padding: "2px 5px",
@@ -102,11 +109,11 @@ function Card({ item }) {
                         </div>
                     )}
                 </Prices>
-                {sideBarOpened && mobileScreen ? null : (
+                <MyColAddRemove sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
                     <MyCol xs="auto" sm={2}>
                         <AddRemove item={item} />
                     </MyCol>
-                )}
+                </MyColAddRemove>
             </MyRow>
         </CardStyled>
     );
