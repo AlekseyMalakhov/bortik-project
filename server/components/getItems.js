@@ -89,7 +89,7 @@ if (data) {
         if (data[`B${number}`] && data[`C${number}`]) {
             const obj = {
                 id: data[`B${number}`].v + "_" + i,
-                kategoria: data[`A${number}`].v,
+                category: data[`A${number}`].v,
                 article: data[`B${number}`].v,
                 title: data[`C${number}`].v,
                 presence: data[`D${number}`] ? data[`D${number}`].v : 0,
@@ -107,7 +107,7 @@ if (data) {
 
     for (let i = 0; i < result.categories.length; i++) {
         const name = result.categories[i].name;
-        result.items[name] = items.filter((item) => item.kategoria === name);
+        result.items[name] = items.filter((item) => item.category === name);
     }
 }
 

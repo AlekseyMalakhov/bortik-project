@@ -36,9 +36,8 @@ function AddRemove({ item, inCart }) {
 
     const changeNumber = (newNumber) => {
         const obj = {
-            id: item.id,
+            ...item,
             number: newNumber,
-            category: item.kategoria,
         };
         dispatch(addItemToCart(obj));
     };
