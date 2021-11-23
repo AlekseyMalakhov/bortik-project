@@ -6,14 +6,12 @@ import { getItems } from "./store/manage";
 import { useDispatch } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
+import Cart from "./views/Cart";
+import NoMatch from "./views/NoMatch";
 
 const AppStyled = styled.div({
     height: "100%",
 });
-
-const Cart = () => {
-    return <div>Fuck</div>;
-};
 
 function App() {
     const dispatch = useDispatch();
@@ -27,6 +25,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="*" element={<NoMatch />} />
             </Routes>
         </AppStyled>
     );

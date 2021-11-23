@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import Button from "react-bootstrap/Button";
 import { useSelector } from "react-redux";
 import SelectPrice from "./SelectPrice";
+import { useNavigate } from "react-router-dom";
 
 const CartPanelStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
     const getLeft = () => {
@@ -50,6 +51,7 @@ const PricePanel = styled.div({
 });
 
 function CartPanel() {
+    let navigate = useNavigate();
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
     const priceType = useSelector((state) => state.manage.priceType);
@@ -87,7 +89,12 @@ function CartPanel() {
 
     return (
         <CartPanelStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
-            <MyButton variant="primary" size={mobileScreen ? "sm" : ""} style={{ marginLeft: mobileScreen ? "15px" : "50px" }}>
+            <MyButton
+                variant="primary"
+                size={mobileScreen ? "sm" : ""}
+                style={{ marginLeft: mobileScreen ? "15px" : "50px" }}
+                onClick={() => navigate("/cart")}
+            >
                 Оформить
             </MyButton>
             <PricePanel>
