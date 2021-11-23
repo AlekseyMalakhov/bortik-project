@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedCategory, changeSideBarOpened } from "../store/manage";
+import { setSelectedCategory } from "../store/manage";
 import CircleCategory from "./CircleCategory";
 
 const ItemStyled = styled.div(({ selected }) => {

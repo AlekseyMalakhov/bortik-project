@@ -7,6 +7,7 @@ import styled from "@emotion/styled";
 import handleScreenSize from "./settings/screenWidth";
 import { getItems } from "./store/manage";
 import { useDispatch } from "react-redux";
+import { Routes, Route, Link } from "react-router-dom";
 
 const AppStyled = styled.div({
     height: "100%",
@@ -20,6 +21,22 @@ const MyContainer = styled.div({
     width: "100%",
 });
 
+const Home = () => {
+    return (
+        <React.Fragment>
+            <MyContainer>
+                <Sidebar />
+                <Main />
+            </MyContainer>
+            <CartPanel />
+        </React.Fragment>
+    );
+};
+
+const Cart = () => {
+    return <div>Fuck</div>;
+};
+
 function App() {
     const dispatch = useDispatch();
     useEffect(() => {
@@ -29,11 +46,10 @@ function App() {
     return (
         <AppStyled>
             <Header />
-            <MyContainer>
-                <Sidebar />
-                <Main />
-            </MyContainer>
-            <CartPanel />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/cart" element={<Cart />} />
+            </Routes>
         </AppStyled>
     );
 }
