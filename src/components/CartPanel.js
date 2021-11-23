@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Button from "react-bootstrap/Button";
 import { useSelector } from "react-redux";
+import SelectPrice from "./SelectPrice";
 
 const CartPanelStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
     const getLeft = () => {
@@ -26,13 +27,12 @@ const CartPanelStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
     };
 });
 
-const MyButton = styled(Button)`
-    margin-left: 50px;
-    &:focus {
-        outline: none;
-        box-shadow: none;
-    }
-`;
+const MyButton = styled(Button)({
+    "&:focus": {
+        outline: "none",
+        boxShadow: "none",
+    },
+});
 
 const Price = styled.div((props) => {
     return {
@@ -40,7 +40,13 @@ const Price = styled.div((props) => {
         fontSize: props.mobileScreen ? "18px" : "25px",
         fontWeight: "600",
         marginRight: "30px",
+        marginLeft: "10px",
     };
+});
+
+const PricePanel = styled.div({
+    display: "flex",
+    justifyContent: "center",
 });
 
 const calculateSum = (cart) => {
@@ -70,10 +76,13 @@ function CartPanel() {
 
     return (
         <CartPanelStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
-            <MyButton variant="primary" size={mobileScreen ? "sm" : ""}>
+            <MyButton variant="primary" size={mobileScreen ? "sm" : ""} style={{ marginLeft: mobileScreen ? "15px" : "50px" }}>
                 Оформить
             </MyButton>
-            <Price mobileScreen={mobileScreen}>{sum.toFixed(2)} руб</Price>
+            <PricePanel>
+                <SelectPrice />
+                <Price mobileScreen={mobileScreen}>{sum.toFixed(2)} руб</Price>
+            </PricePanel>
         </CartPanelStyled>
     );
 }

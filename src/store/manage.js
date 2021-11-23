@@ -7,7 +7,7 @@ export const getItems = createAsyncThunk("manage/getItems", async (amount) => {
 });
 
 const initialState = {
-    sideBarOpened: false,
+    sideBarOpened: true,
     screenWidth: 0,
     mobileScreen: true,
     items: null,
@@ -15,6 +15,7 @@ const initialState = {
     loading: true,
     selectedCategory: null,
     cart: [],
+    priceType: null,
 };
 
 export const manageSlice = createSlice({
@@ -57,6 +58,9 @@ export const manageSlice = createSlice({
                 state.cart = cart;
             }
         },
+        setPriceType: (state, action) => {
+            state.priceType = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -75,5 +79,6 @@ export const manageSlice = createSlice({
     },
 });
 
-export const { changeSideBarOpened, setScreenWidth, setMobileScreen, setSelectedCategory, addItemToCart, removeItemFromCart } = manageSlice.actions;
+export const { changeSideBarOpened, setScreenWidth, setMobileScreen, setSelectedCategory, addItemToCart, removeItemFromCart, setPriceType } =
+    manageSlice.actions;
 export default manageSlice.reducer;
