@@ -12,7 +12,6 @@ const options = ["с НДС", "без НДС", "без НДС (от 250р)"];
 function SelectPrice() {
     const dispatch = useDispatch();
     const priceType = useSelector((state) => state.manage.priceType);
-    //const [priceType, setPriceType] = useState("с НДС");
 
     useEffect(() => {
         if (!priceType) {

@@ -49,20 +49,31 @@ const PricePanel = styled.div({
     justifyContent: "center",
 });
 
-const calculateSum = (cart) => {
-    let sum = 0;
-    for (let i = 0; i < cart.length; i++) {
-        sum = sum + cart[i].price * cart[i].number;
-    }
-    return sum;
-};
-
 function CartPanel() {
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
+    const priceType = useSelector((state) => state.manage.priceType);
     const cart = useSelector((state) => state.manage.cart);
 
     const [sum, setSum] = useState(0);
+
+    const calculateSum = (cart) => {
+        let sum = 0;
+        for (let i = 0; i < cart.length; i++) {
+            let price;
+            if (priceType === "с НДС") {
+                price = cart[i].price;
+            }
+            if (priceType === "без НДС") {
+                price = cart[i].priceopt;
+            }
+            if (priceType === "без НДС (от 250р)") {
+                price = cart[i].pricemegaopt;
+            }
+            sum = sum + price * cart[i].number;
+        }
+        return sum;
+    };
 
     useEffect(() => {
         if (cart.length > 0) {
@@ -72,7 +83,7 @@ function CartPanel() {
         if (cart.length === 0) {
             setSum(0);
         }
-    }, [cart]);
+    }, [cart, priceType]);
 
     return (
         <CartPanelStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
