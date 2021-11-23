@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
 import colors from "../settings/colors";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { changeSideBarOpened } from "../store/manage";
 import MenuButton from "./MenuButton";
+import { useLocation } from "react-router";
+import HeaderBackButton from "./HeaderBackButton";
 
 const HeaderStyled = styled.div({
     display: "flex",
@@ -20,28 +19,12 @@ const BrandName = styled.div({
     fontSize: "20px",
 });
 
-// const MenuButton = styled.div({
-//     backgroundColor: "white",
-//     height: "20px",
-//     width: "20px",
-//     marginLeft: "20px",
-// });
-
 function Header() {
-    const dispatch = useDispatch();
-    const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
-
-    const toggleSidebar = () => {
-        if (sideBarOpened) {
-            dispatch(changeSideBarOpened(false));
-        } else {
-            dispatch(changeSideBarOpened(true));
-        }
-    };
+    let location = useLocation();
 
     return (
         <HeaderStyled>
-            <MenuButton onClick={toggleSidebar}></MenuButton>
+            {location.pathname === "/" ? <MenuButton /> : <HeaderBackButton />}
             <BrandName>Bortik Project</BrandName>
         </HeaderStyled>
     );

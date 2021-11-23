@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { changeSideBarOpened } from "../store/manage";
 
 const MenuButtonStyled = styled.div({
     marginLeft: "10px",
@@ -15,9 +18,19 @@ const MenuButtonStyled = styled.div({
     },
 });
 
-function MenuButton({ onClick }) {
+function MenuButton() {
+    const dispatch = useDispatch();
+    const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
+
+    const toggleSidebar = () => {
+        if (sideBarOpened) {
+            dispatch(changeSideBarOpened(false));
+        } else {
+            dispatch(changeSideBarOpened(true));
+        }
+    };
     return (
-        <MenuButtonStyled onClick={onClick}>
+        <MenuButtonStyled onClick={toggleSidebar}>
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" viewBox="0 0 16 16">
                 <path
                     fillRule="evenodd"
