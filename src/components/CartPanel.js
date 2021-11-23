@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Button from "react-bootstrap/Button";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setCartSum } from "../store/manage";
 import SelectPrice from "./SelectPrice";
 import { useNavigate } from "react-router-dom";
 
@@ -51,13 +52,13 @@ const PricePanel = styled.div({
 });
 
 function CartPanel() {
+    const dispatch = useDispatch();
     let navigate = useNavigate();
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
     const priceType = useSelector((state) => state.manage.priceType);
     const cart = useSelector((state) => state.manage.cart);
-
-    const [sum, setSum] = useState(0);
+    const sum = useSelector((state) => state.manage.cartSum);
 
     const calculateSum = (cart) => {
         let sum = 0;
@@ -80,16 +81,17 @@ function CartPanel() {
     useEffect(() => {
         if (cart.length > 0) {
             const sum = calculateSum(cart);
-            setSum(sum);
+            dispatch(setCartSum(sum));
         }
         if (cart.length === 0) {
-            setSum(0);
+            dispatch(setCartSum(0));
         }
     }, [cart, priceType]);
 
     return (
         <CartPanelStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
             <MyButton
+                disabled={cart.length === 0}
                 variant="primary"
                 size={mobileScreen ? "sm" : ""}
                 style={{ marginLeft: mobileScreen ? "15px" : "50px" }}

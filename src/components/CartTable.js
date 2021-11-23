@@ -1,43 +1,43 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Table from "react-bootstrap/Table";
+import TableRow from "./TableRow";
 
 const CartTableStyled = styled.div({});
 
-function CartTable() {
-    return (
-        <CartTableStyled>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td colSpan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
-                </tbody>
-            </Table>
-        </CartTableStyled>
-    );
+const EmptyCart = styled.div({
+    textAlign: "center",
+    fontSize: "20px",
+    fontWeight: "500",
+});
+
+function CartTable({ cart, priceType, sum }) {
+    if (cart.length > 0) {
+        return (
+            <CartTableStyled>
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Наименование</th>
+                            <th>Кол.</th>
+                            <th>Цена</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {cart.map((item) => (
+                            <TableRow item={item} priceType={priceType} />
+                        ))}
+                        <tr>
+                            <th colSpan="2">Общая сумма</th>
+                            <th>{sum.toFixed(2)}</th>
+                        </tr>
+                    </tbody>
+                </Table>
+                Цена: {priceType}
+            </CartTableStyled>
+        );
+    }
+    return <EmptyCart>Корзина пуста</EmptyCart>;
 }
 
 export default CartTable;

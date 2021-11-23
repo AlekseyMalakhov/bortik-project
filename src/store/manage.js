@@ -16,6 +16,7 @@ const initialState = {
     selectedCategory: null,
     cart: [],
     priceType: null,
+    cartSum: 0,
 };
 
 export const manageSlice = createSlice({
@@ -61,6 +62,9 @@ export const manageSlice = createSlice({
         setPriceType: (state, action) => {
             state.priceType = action.payload;
         },
+        setCartSum: (state, action) => {
+            state.cartSum = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -79,6 +83,14 @@ export const manageSlice = createSlice({
     },
 });
 
-export const { changeSideBarOpened, setScreenWidth, setMobileScreen, setSelectedCategory, addItemToCart, removeItemFromCart, setPriceType } =
-    manageSlice.actions;
+export const {
+    changeSideBarOpened,
+    setScreenWidth,
+    setMobileScreen,
+    setSelectedCategory,
+    addItemToCart,
+    removeItemFromCart,
+    setPriceType,
+    setCartSum,
+} = manageSlice.actions;
 export default manageSlice.reducer;
