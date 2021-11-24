@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 import CartTable from "../components/CartTable";
+import CartForm from "../components/CartForm";
 
 const Title = styled.div({
     textAlign: "center",
@@ -23,6 +24,7 @@ function Cart() {
         <CartStyled>
             <Title>Оформление заказа</Title>
             <CartTable cart={cart} priceType={priceType} sum={sum} />
+            <CartForm />
         </CartStyled>
     );
 }
