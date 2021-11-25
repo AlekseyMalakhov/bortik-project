@@ -88,11 +88,15 @@ function CartForm({ cart }) {
         <CartFormStyled>
             <Formik
                 initialValues={{
-                    name_user: "test",
-                    email: "test@test.com",
-                    phone: "+375111222333",
+                    // name_user: "test",
+                    // email: "test@test.com",
+                    // phone: "+375111222333",
+                    name_user: "",
+                    email: "",
+                    phone: "",
                     payment_method: "сashless",
                     delivery: "Minsk",
+                    address: "",
                 }}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
@@ -100,8 +104,9 @@ function CartForm({ cart }) {
                 {({ handleSubmit, handleChange }) => (
                     <Form noValidate onSubmit={handleSubmit}>
                         <FormInput name="name_user" label="ФИО*" />
-                        <FormInput name="phone" label="Телефон*" inputMode="numeric" placeholder={"+375xxxxxxxxx"} />
-                        <FormInput name="email" label="Email*" />
+                        <FormInput name="phone" label="Телефон*" inputMode="tel" placeholder={"+375xxxxxxxxx"} />
+                        <FormInput name="email" label="Email*" inputMode="email" />
+                        <FormInput name="address" label="Адрес доставки" />
                         <CheckGroup>
                             <Form.Label>Способ оплаты:</Form.Label>
                             {payment_methods.map((method) => (

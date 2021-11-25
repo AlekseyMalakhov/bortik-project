@@ -1,6 +1,7 @@
 const compression = require("compression");
 const express = require("express");
 const getItems = require("./components/getItems");
+const sendCart = require("./components/sendCart");
 const app = express();
 const port = process.env.PORT || 3010;
 const cors = require("cors");
@@ -17,6 +18,7 @@ app.get("*", function (req, res) {
 //end for production build
 
 app.post("/api/getItems", getItems);
+app.post("/api/fakeApi", sendCart);
 
 //start the server
 app.listen(port, () => {
