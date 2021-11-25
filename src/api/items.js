@@ -17,7 +17,7 @@ const getItems = () => {
 
 const sendCart = (formData) => {
     return client
-        .post("/fakeApi", formData, { headers: { "Content-Type": "multipart/form-data" } })
+        .post("/sendCart", formData, { headers: { "Content-Type": "multipart/form-data" } })
         .then((response) => {
             if (response.status === 200) {
                 return response.data;

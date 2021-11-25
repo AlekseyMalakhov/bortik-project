@@ -18,7 +18,7 @@ app.get("*", function (req, res) {
 //end for production build
 
 app.post("/api/getItems", getItems);
-app.post("/api/fakeApi", sendCart);
+app.post("/api/sendCart", sendCart);
 
 //start the server
 app.listen(port, () => {

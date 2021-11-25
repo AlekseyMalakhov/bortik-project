@@ -7,12 +7,19 @@ import * as Yup from "yup";
 import FormInput from "./FormInput";
 import itemsAPI from "../api/items";
 import FormCheckBox from "./FormCheckBox";
+import { useNavigate } from "react-router";
 
 const CartFormStyled = styled.div({
     marginTop: "30px",
 });
 
 const CheckGroup = styled.div({
+    marginTop: "30px",
+});
+
+const ButtonGroup = styled.div({
+    display: "flex",
+    justifyContent: "space-evenly",
     marginTop: "30px",
 });
 
@@ -60,12 +67,24 @@ const delivery_methods = [
 const validationSchema = Yup.object().shape({
     name_user: Yup.string().required("Укажите имя"),
     email: Yup.string().required("Укажите email").email("Укажите email"),
-    phone: Yup.string()
-        .matches(/\+\d{5}\d+/, "Укажите телефон")
-        .required("Укажите телефон"),
+    phone: Yup.string().required("Укажите телефон"),
 });
 
-function CartForm({ cart }) {
+function CartForm({ cart, priceType, sum }) {
+    let navigate = useNavigate();
+
+    const calcSum = (item) => {
+        if (priceType === "с НДС") {
+            return item.price * item.number;
+        }
+        if (priceType === "без НДС") {
+            return item.priceopt * item.number;
+        }
+        if (priceType === "без НДС (от 250р)") {
+            return item.pricemegaopt * item.number;
+        }
+    };
+
     const handleSubmit = (values) => {
         console.log(values);
         console.log(cart);
@@ -74,7 +93,13 @@ function CartForm({ cart }) {
         for (let x in values) {
             formData.append(x, values[x]);
         }
-        console.log(formData);
+        for (let x in cart) {
+            formData.append("qty", cart[x].number);
+            formData.append("id", cart[x].id);
+            formData.append("products_data[]", `${cart[x].id}, ${calcSum(cart[x])}, ${cart[x].number}`);
+        }
+        formData.append("final_price", sum);
+
         itemsAPI
             .sendCart(formData)
             .then((response) => {
@@ -84,29 +109,36 @@ function CartForm({ cart }) {
                 console.log(err);
             });
     };
+
+    const cancel = () => {
+        navigate("/");
+    };
+
     return (
         <CartFormStyled>
             <Formik
                 initialValues={{
-                    // name_user: "test",
-                    // email: "test@test.com",
-                    // phone: "+375111222333",
-                    name_user: "",
-                    email: "",
-                    phone: "",
+                    name_user: "test",
+                    email: "test@test.com",
+                    phone: "+375111222333",
+                    // name_user: "",
+                    // email: "",
+                    // phone: "",
                     payment_method: "сashless",
                     delivery: "Minsk",
                     address: "",
+                    comment: "",
                 }}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
-                {({ handleSubmit, handleChange }) => (
+                {({ handleSubmit }) => (
                     <Form noValidate onSubmit={handleSubmit}>
                         <FormInput name="name_user" label="ФИО*" />
                         <FormInput name="phone" label="Телефон*" inputMode="tel" placeholder={"+375xxxxxxxxx"} />
                         <FormInput name="email" label="Email*" inputMode="email" />
                         <FormInput name="address" label="Адрес доставки" />
+                        <FormInput name="comment" label="Комментарий" as="textarea" />
                         <CheckGroup>
                             <Form.Label>Способ оплаты:</Form.Label>
                             {payment_methods.map((method) => (
@@ -119,11 +151,14 @@ function CartForm({ cart }) {
                                 <FormCheckBox name="delivery" label={method.label} value={method.value} key={method.id} />
                             ))}
                         </CheckGroup>
-                        <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
+                        <ButtonGroup>
+                            <Button variant="outline-primary" onClick={cancel}>
+                                Отмена
+                            </Button>
                             <Button variant="primary" type="submit">
                                 Отправить
                             </Button>
-                        </div>
+                        </ButtonGroup>
                     </Form>
                 )}
             </Formik>
