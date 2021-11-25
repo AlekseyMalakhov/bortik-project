@@ -25,7 +25,7 @@ function CartTable({ cart, priceType, sum }) {
                     </thead>
                     <tbody>
                         {cart.map((item) => (
-                            <TableRow item={item} priceType={priceType} />
+                            <TableRow item={item} priceType={priceType} key={item.id} />
                         ))}
                         <tr>
                             <th colSpan="2">Общая сумма</th>

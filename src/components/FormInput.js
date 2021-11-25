@@ -15,6 +15,7 @@ function FormInput({ name, label, ...otherProps }) {
                 onBlur={() => setFieldTouched(name)}
                 isValid={touched[name] && !errors[name]}
                 isInvalid={touched[name] ? errors[name] : null}
+                {...otherProps}
             />
             <Form.Control.Feedback type="invalid">{errors[name]}</Form.Control.Feedback>
         </Form.Group>

@@ -24,7 +24,7 @@ function Cart() {
         <CartStyled>
             <Title>Оформление заказа</Title>
             <CartTable cart={cart} priceType={priceType} sum={sum} />
-            <CartForm />
+            <CartForm cart={cart} />
         </CartStyled>
     );
 }
