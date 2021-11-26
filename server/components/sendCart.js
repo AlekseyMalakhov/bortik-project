@@ -1,5 +1,39 @@
 const nodemailer = require("nodemailer");
-require("dotenv").config({ path: "../../mail_env/.env" });
+const path = require("path");
+
+path.join(__dirname, "..", "import.xlsx");
+
+// const envPath = {
+//     dev: "../../mail_env/.env",
+//     demo: "../mail_env/.env",
+//     prod: "../mail_env/.env",
+// };
+const envPath = {
+    dev: path.join(__dirname, "..", "..", "..", "mail_env", ".env"),
+    demo: path.join(__dirname, "..", "..", "mail_env", ".env"),
+    prod: path.join(__dirname, "..", "..", "mail_env", ".env"),
+};
+
+const getPath = () => {
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+        console.log(envPath.dev);
+        console.log(envPath.demo);
+        return envPath.dev;
+    } else {
+        console.log(envPath.dev);
+        console.log(envPath.demo);
+        return envPath.demo;
+    }
+    //for production
+    // return settings.prod;
+};
+
+const configPath = getPath();
+
+require("dotenv").config({ path: configPath });
+
+console.log(process.env.USER);
+console.log(process.env.SECRET);
 
 let transporter = nodemailer.createTransport({
     host: "smtp-relay.sendinblue.com",
