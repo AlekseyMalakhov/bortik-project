@@ -1,39 +1,5 @@
 const nodemailer = require("nodemailer");
-const path = require("path");
-
-path.join(__dirname, "..", "import.xlsx");
-
-// const envPath = {
-//     dev: "../../mail_env/.env",
-//     demo: "../mail_env/.env",
-//     prod: "../mail_env/.env",
-// };
-const envPath = {
-    dev: path.join(__dirname, "..", "..", "..", "mail_env", ".env"),
-    demo: path.join(__dirname, "..", "..", "mail_env", ".env"),
-    prod: path.join(__dirname, "..", "..", "mail_env", ".env"),
-};
-
-const getPath = () => {
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-        console.log(envPath.dev);
-        console.log(envPath.demo);
-        return envPath.dev;
-    } else {
-        console.log(envPath.dev);
-        console.log(envPath.demo);
-        return envPath.demo;
-    }
-    //for production
-    // return settings.prod;
-};
-
-const configPath = getPath();
-
-require("dotenv").config({ path: configPath });
-
-console.log(process.env.USER);
-console.log(process.env.SECRET);
+require("dotenv").config({ path: "../../mail_env/.env" }); //just for dev environment
 
 let transporter = nodemailer.createTransport({
     host: "smtp-relay.sendinblue.com",
@@ -61,12 +27,12 @@ const createRows = (cart) => {
     for (let i = 0; i < cart.length; i++) {
         const row = `
         <tr>
-            <td>${i + 1}</td>
-            <td>${cart[i].title}</td>
-            <td>${cart[i].article}</td>
-            <td>${cart[i].number}</td>
-            <td>${cart[i].price}</td>
-            <td>${cart[i].sum}</td>
+            <td style="border: 1px solid black; padding: 5px 5px;">${i + 1}</td>
+            <td style="border: 1px solid black; padding: 5px 5px;">${cart[i].title}</td>
+            <td style="border: 1px solid black; padding: 5px 5px;">${cart[i].article}</td>
+            <td style="border: 1px solid black; padding: 5px 5px;">${cart[i].number}</td>
+            <td style="border: 1px solid black; padding: 5px 5px;">${cart[i].price}</td>
+            <td style="border: 1px solid black; padding: 5px 5px;">${cart[i].sum}</td>
         </tr>
         `;
         str = str + row;
@@ -76,30 +42,19 @@ const createRows = (cart) => {
 
 const createHTML = (data) => {
     const part1 = `<p>Заказ в магазине Bortik Project успешно оформлен. Номер заказа 12345</p>
-    <style>      
-        #bortik_project_table {
-            font-family: sans-serif;
-            width: 100%;
-            border-collapse: collapse;
-        }
-        #bortik_project_table th,td {
-            border: 1px solid black;
-            padding: 5px 5px;
-        }
-    </style>
-    <table id="bortik_project_table" >
+    <table style="font-family: sans-serif; width: 100%; border-collapse: collapse;">
     <tr>
-        <th>Номер</th>
-        <th>Наименование товара</th>
-        <th>Артикул</th>
-        <th>Количество в заказе</th>
-        <th>Цена за 1 шт. руб</th>
-        <th>Сумма, руб</th>
+        <th style="border: 1px solid black; padding: 5px 5px;">Номер</th>
+        <th style="border: 1px solid black; padding: 5px 5px;">Наименование товара</th>
+        <th style="border: 1px solid black; padding: 5px 5px;">Артикул</th>
+        <th style="border: 1px solid black; padding: 5px 5px;">Количество в заказе</th>
+        <th style="border: 1px solid black; padding: 5px 5px;">Цена за 1 шт. руб</th>
+        <th style="border: 1px solid black; padding: 5px 5px;">Сумма, руб</th>
     </tr>`;
     const part2 = createRows(data.cart);
     const part3 = `<tr style="font-weight: bold;">
-            <td colspan="5">Общая сумма</td>
-            <td>${data.sum}</td>
+            <td colspan="5" style="border: 1px solid black; padding: 5px 5px;">Общая сумма</td>
+            <td style="border: 1px solid black; padding: 5px 5px;">${data.sum}</td>
         </tr>
         </table>
         <p>Цена: ${data.priceType}</p>
