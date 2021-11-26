@@ -27,22 +27,22 @@ const payment_methods = [
     {
         id: 1,
         label: "Безналичный расчет (для юридических лиц)",
-        value: "сashless",
+        value: "Безналичный расчет (для юридических лиц)",
     },
     {
         id: 2,
         label: "Наличными",
-        value: "cash",
+        value: "Наличными",
     },
     {
         id: 3,
         label: "Банковской картой (только при самовывозе)",
-        value: "cardUpon",
+        value: "Банковской картой (только при самовывозе)",
     },
     {
         id: 4,
         label: "Банковский перевод по реквизитам",
-        value: "cardOnline",
+        value: "Банковский перевод по реквизитам",
     },
 ];
 
@@ -50,17 +50,17 @@ const delivery_methods = [
     {
         id: 1,
         label: "по Минску",
-        value: "Minsk",
+        value: "по Минску",
     },
     {
         id: 2,
         label: "по Беларуси",
-        value: "Belarus",
+        value: "по Беларуси",
     },
     {
         id: 3,
         label: "Самовывоз",
-        value: "pickup",
+        value: "Самовывоз",
     },
 ];
 
@@ -74,34 +74,59 @@ function CartForm({ cart, priceType, sum }) {
     let navigate = useNavigate();
 
     const calcSum = (item) => {
+        let sum;
         if (priceType === "с НДС") {
-            return item.price * item.number;
+            sum = item.price * item.number;
         }
         if (priceType === "без НДС") {
-            return item.priceopt * item.number;
+            sum = item.priceopt * item.number;
         }
         if (priceType === "без НДС (от 250р)") {
-            return item.pricemegaopt * item.number;
+            sum = item.pricemegaopt * item.number;
+        }
+
+        return sum.toFixed(2);
+    };
+
+    const getPrice = (item) => {
+        if (priceType === "с НДС") {
+            return item.price;
+        }
+        if (priceType === "без НДС") {
+            return item.priceopt;
+        }
+        if (priceType === "без НДС (от 250р)") {
+            return item.pricemegaopt;
         }
     };
 
     const handleSubmit = (values) => {
         console.log(values);
         console.log(cart);
-        const formData = new FormData();
 
-        for (let x in values) {
-            formData.append(x, values[x]);
+        const newCart = [];
+        for (let i = 0; i < cart.length; i++) {
+            const item = {
+                title: cart[i].title,
+                article: cart[i].article,
+                number: cart[i].number,
+                price: getPrice(cart[i]),
+                sum: calcSum(cart[i]),
+            };
+            newCart.push(item);
         }
-        for (let x in cart) {
-            formData.append("qty", cart[x].number);
-            formData.append("id", cart[x].id);
-            formData.append("products_data[]", `${cart[x].id}, ${calcSum(cart[x])}, ${cart[x].number}`);
-        }
-        formData.append("final_price", sum);
+
+        const data = {
+            cart: newCart,
+            customer: values,
+            priceType,
+            sum: sum.toFixed(2),
+        };
+
+        console.log(data);
 
         itemsAPI
-            .sendCart(formData)
+            .sendCart(data)
             .then((response) => {
                 console.log(response);
             })
@@ -124,8 +149,8 @@ function CartForm({ cart, priceType, sum }) {
                     // name_user: "",
                     // email: "",
                     // phone: "",
-                    payment_method: "сashless",
-                    delivery: "Minsk",
+                    payment_method: "Безналичный расчет (для юридических лиц)",
+                    delivery: "по Минску",
                     address: "",
                     comment: "",
                 }}

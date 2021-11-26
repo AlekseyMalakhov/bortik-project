@@ -15,9 +15,9 @@ const getItems = () => {
         });
 };
 
-const sendCart = (formData) => {
+const sendCart = (data) => {
     return client
-        .post("/sendCart", formData, { headers: { "Content-Type": "multipart/form-data" } })
+        .post("/sendCart", data)
         .then((response) => {
             if (response.status === 200) {
                 return response.data;
