@@ -25,7 +25,7 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "deploy": "react-scripts build && copyfiles -V build/** ../bortik-project-demo && cd ../bortik-project-demo && git add -A && git commit -am \"publish to Heroku demo\" && git push origin main"
+        "deploy": "react-scripts build && copyfiles -V build/** ../bortik-project-demo && copyfiles -V -e \"**/node_modules/**\" -e \"**/components/**\" -f server/** ../bortik-project-demo && copyfiles -V -u 1 server/components/** ../bortik-project-demo && cd ../bortik-project-demo && git add -A && git commit -am \"publish to Heroku demo\" && git push origin main"
     },
     "eslintConfig": {
         "extends": "react-app"
