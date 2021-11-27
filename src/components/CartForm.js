@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -10,6 +10,7 @@ import FormCheckBox from "./FormCheckBox";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../store/manage";
+import CartSentModal from "./CartSentModal";
 
 const CartFormStyled = styled.div({
     marginTop: "30px",
@@ -73,8 +74,10 @@ const validationSchema = Yup.object().shape({
 });
 
 function CartForm({ cart, priceType, sum }) {
+    const [showDone, setShowDone] = useState(false);
+    const [email, setEmail] = useState("");
     const dispatch = useDispatch();
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     const calcSum = (item) => {
         let sum;
@@ -104,6 +107,7 @@ function CartForm({ cart, priceType, sum }) {
     };
 
     const handleSubmit = (values) => {
+        setEmail(values.email);
         console.log(values);
         console.log(cart);
 
@@ -132,6 +136,7 @@ function CartForm({ cart, priceType, sum }) {
             .sendCart(data)
             .then((response) => {
                 dispatch(setLoading(false));
+                setShowDone(true);
                 console.log(response);
             })
             .catch((err) => {
@@ -146,7 +151,6 @@ function CartForm({ cart, priceType, sum }) {
 
     return (
         <CartFormStyled>
-            {console.log(process.env.NODE_ENV)}
             <Formik
                 initialValues={{
                     name_user: process.env.NODE_ENV === "development" ? "test" : "",
@@ -190,6 +194,7 @@ function CartForm({ cart, priceType, sum }) {
                     </Form>
                 )}
             </Formik>
+            <CartSentModal show={showDone} onHide={() => setShowDone(false)} backdrop="static" keyboard={false} email={email} />
         </CartFormStyled>
     );
 }

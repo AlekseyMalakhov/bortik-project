@@ -59,6 +59,10 @@ export const manageSlice = createSlice({
                 state.cart = cart;
             }
         },
+        cleanCart: (state) => {
+            state.cart = [];
+            state.cartSum = 0;
+        },
         setPriceType: (state, action) => {
             state.priceType = action.payload;
         },
@@ -96,5 +100,6 @@ export const {
     setPriceType,
     setCartSum,
     setLoading,
+    cleanCart,
 } = manageSlice.actions;
 export default manageSlice.reducer;
