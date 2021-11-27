@@ -30,8 +30,7 @@ function App() {
                 <Route path="/cart" element={<Cart />} />
                 <Route path="*" element={<NoMatch />} />
             </Routes>
-            {/* {loading ? <Loading /> : null} */}
-            <Loading />
+            {loading ? <Loading /> : null}
         </AppStyled>
     );
 }

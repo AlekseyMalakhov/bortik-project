@@ -148,12 +148,12 @@ function CartForm({ cart, priceType, sum }) {
         <CartFormStyled>
             <Formik
                 initialValues={{
-                    // name_user: "test",
-                    // email: "test@test.com",
-                    // phone: "+375111222333",
-                    name_user: "",
-                    email: "",
-                    phone: "",
+                    name_user: "test",
+                    email: "test@test.com",
+                    phone: "+375111222333",
+                    // name_user: "",
+                    // email: "",
+                    // phone: "",
                     payment_method: "Безналичный расчет (для юридических лиц)",
                     delivery: "по Минску",
                     address: "",
