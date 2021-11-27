@@ -37,18 +37,17 @@ const Error = styled.div({
 
 const MyButton = styled(Button)`
     margin-top: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     &:focus {
         outline: none;
         box-shadow: none;
     }
 `;
 
-function Main() {
+function Main({ mobileScreen }) {
     const [showNumber, setShowNumber] = useState(20);
     const items = useSelector((state) => state.manage.items);
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
-    const mobileScreen = useSelector((state) => state.manage.mobileScreen);
     const selectedCategory = useSelector((state) => state.manage.selectedCategory);
 
     useEffect(() => {
