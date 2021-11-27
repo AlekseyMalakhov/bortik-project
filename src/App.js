@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import styled from "@emotion/styled";
 import handleScreenSize from "./settings/screenWidth";
 import { getItems } from "./store/manage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
 import Cart from "./views/Cart";
@@ -16,6 +16,7 @@ const AppStyled = styled.div({
 
 function App() {
     const dispatch = useDispatch();
+    const loading = useSelector((state) => state.manage.loading);
     useEffect(() => {
         handleScreenSize();
         dispatch(getItems());
@@ -23,12 +24,14 @@ function App() {
     return (
         <AppStyled>
             <Header />
-            <Loading />
+
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="*" element={<NoMatch />} />
             </Routes>
+            {/* {loading ? <Loading /> : null} */}
+            <Loading />
         </AppStyled>
     );
 }

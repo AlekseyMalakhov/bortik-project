@@ -65,6 +65,9 @@ export const manageSlice = createSlice({
         setCartSum: (state, action) => {
             state.cartSum = action.payload;
         },
+        setLoading: (state, action) => {
+            state.loading = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -92,5 +95,6 @@ export const {
     removeItemFromCart,
     setPriceType,
     setCartSum,
+    setLoading,
 } = manageSlice.actions;
 export default manageSlice.reducer;

@@ -8,6 +8,8 @@ import FormInput from "./FormInput";
 import itemsAPI from "../api/items";
 import FormCheckBox from "./FormCheckBox";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../store/manage";
 
 const CartFormStyled = styled.div({
     marginTop: "30px",
@@ -71,6 +73,7 @@ const validationSchema = Yup.object().shape({
 });
 
 function CartForm({ cart, priceType, sum }) {
+    const dispatch = useDispatch();
     let navigate = useNavigate();
 
     const calcSum = (item) => {
@@ -124,13 +127,15 @@ function CartForm({ cart, priceType, sum }) {
         };
 
         console.log(data);
-
+        dispatch(setLoading(true));
         itemsAPI
             .sendCart(data)
             .then((response) => {
+                dispatch(setLoading(false));
                 console.log(response);
             })
             .catch((err) => {
+                dispatch(setLoading(false));
                 console.log(err);
             });
     };

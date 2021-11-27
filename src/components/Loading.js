@@ -4,8 +4,9 @@ import loadingSVG from "../assets/loading.svg";
 
 const LoadingStyled = styled.div({
     position: "fixed",
+    top: "0px",
+    bottom: "0px",
     width: "100%",
-    height: window.innerHeight - 50,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

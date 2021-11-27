@@ -20,7 +20,7 @@ const Home = () => {
     return (
         <React.Fragment>
             <MyContainer mobileScreen={mobileScreen}>
-                <Sidebar />
+                <Sidebar mobileScreen={mobileScreen} />
                 <Main mobileScreen={mobileScreen} />
             </MyContainer>
             <CartPanel />
