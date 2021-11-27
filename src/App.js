@@ -8,6 +8,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
 import Cart from "./views/Cart";
 import NoMatch from "./views/NoMatch";
+import Loading from "./components/Loading";
 
 const AppStyled = styled.div({
     height: "100%",
@@ -22,6 +23,7 @@ function App() {
     return (
         <AppStyled>
             <Header />
+            <Loading />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cart" element={<Cart />} />
