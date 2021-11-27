@@ -146,14 +146,12 @@ function CartForm({ cart, priceType, sum }) {
 
     return (
         <CartFormStyled>
+            {console.log(process.env.NODE_ENV)}
             <Formik
                 initialValues={{
-                    name_user: "test",
-                    email: "test@test.com",
-                    phone: "+375111222333",
-                    // name_user: "",
-                    // email: "",
-                    // phone: "",
+                    name_user: process.env.NODE_ENV === "development" ? "test" : "",
+                    email: process.env.NODE_ENV === "development" ? "test@test.com" : "",
+                    phone: process.env.NODE_ENV === "development" ? "+375111222333" : "",
                     payment_method: "Безналичный расчет (для юридических лиц)",
                     delivery: "по Минску",
                     address: "",

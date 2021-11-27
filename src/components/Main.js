@@ -21,6 +21,7 @@ const MainStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
         //left: getLeft(),
         //top: "50px",
         //bottom: mobileScreen ? "40px" : "80px",
+        marginBottom: mobileScreen ? "40px" : "80px",
         overflow: "auto",
         overflowX: "hidden",
         flexDirection: "column",
@@ -44,11 +45,12 @@ const MyButton = styled(Button)`
     }
 `;
 
-function Main({ mobileScreen }) {
+function Main() {
     const [showNumber, setShowNumber] = useState(20);
     const items = useSelector((state) => state.manage.items);
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const selectedCategory = useSelector((state) => state.manage.selectedCategory);
+    const mobileScreen = useSelector((state) => state.manage.mobileScreen);
 
     useEffect(() => {
         setShowNumber(20);
