@@ -19,11 +19,7 @@ const sendCart = (data) => {
     return client
         .post("/sendCart", data)
         .then((response) => {
-            if (response.status === 200) {
-                return response.data;
-            } else {
-                console.log("error");
-            }
+            return response;
         })
         .catch((err) => {
             console.log(err.message);

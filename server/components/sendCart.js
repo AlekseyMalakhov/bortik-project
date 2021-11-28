@@ -73,9 +73,13 @@ const createHTML = (data) => {
 const sendCart = (req, res) => {
     const data = req.body;
     const html = createHTML(data);
-    //console.log(cart);
-    run(html, data.customer.email).catch(console.error);
-    res.status(200).send("Nice!");
+    run(html, data.customer.email)
+        .then(() => {
+            res.status(200).send("Nice!");
+        })
+        .catch((err) => {
+            res.status(500).send(err);
+        });
 };
 
 module.exports = sendCart;

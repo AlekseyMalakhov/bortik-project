@@ -74,7 +74,7 @@ const validationSchema = Yup.object().shape({
 });
 
 function CartForm({ cart, priceType, sum }) {
-    const [showDone, setShowDone] = useState(false);
+    const [showDone, setShowDone] = useState("hide");
     const [email, setEmail] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -136,11 +136,16 @@ function CartForm({ cart, priceType, sum }) {
             .sendCart(data)
             .then((response) => {
                 dispatch(setLoading(false));
-                setShowDone(true);
-                console.log(response);
+                if (response.status === 200) {
+                    setShowDone("OK");
+                } else {
+                    setShowDone("Error");
+                    console.log("error");
+                }
             })
             .catch((err) => {
                 dispatch(setLoading(false));
+                setShowDone("Error");
                 console.log(err);
             });
     };
@@ -194,7 +199,14 @@ function CartForm({ cart, priceType, sum }) {
                     </Form>
                 )}
             </Formik>
-            <CartSentModal show={showDone} onHide={() => setShowDone(false)} backdrop="static" keyboard={false} email={email} />
+            <CartSentModal
+                show={showDone !== "hide"}
+                onHide={() => setShowDone("hide")}
+                backdrop="static"
+                keyboard={false}
+                email={email}
+                showDone={showDone}
+            />
         </CartFormStyled>
     );
 }

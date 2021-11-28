@@ -20,6 +20,12 @@ app.get("*", function (req, res) {
 app.post("/api/getItems", getItems);
 app.post("/api/sendCart", sendCart);
 
+// Error handler
+app.use(function (err, req, res, next) {
+    // All errors from non-async route above will be handled here
+    res.status(500).send(err.message);
+});
+
 //start the server
 app.listen(port, () => {
     console.log(`Bortik project app listening at port ${port}`);
