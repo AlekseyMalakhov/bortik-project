@@ -53,7 +53,7 @@ const PricePanel = styled.div({
 
 function CartPanel() {
     const dispatch = useDispatch();
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
     const priceType = useSelector((state) => state.manage.priceType);
