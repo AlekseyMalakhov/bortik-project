@@ -31,9 +31,9 @@ function Header() {
             <Dropdown align="end">
                 <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
                 <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Поиск</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Личный кабинет</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">О компании</Dropdown.Item>
+                    <Dropdown.Item>Поиск</Dropdown.Item>
+                    <Dropdown.Item>Личный кабинет</Dropdown.Item>
+                    <Dropdown.Item>О компании</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
         </HeaderStyled>

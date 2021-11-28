@@ -41,7 +41,7 @@ const Price = styled.div((props) => {
         textAlign: "center",
         fontSize: props.mobileScreen ? "18px" : "25px",
         fontWeight: "600",
-        marginRight: "30px",
+        marginRight: "10px",
         marginLeft: "10px",
     };
 });
