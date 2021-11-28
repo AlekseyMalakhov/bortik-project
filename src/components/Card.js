@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import { useSelector, useDispatch } from "react-redux";
 import { changeSideBarOpened } from "../store/manage";
 import IconCheck from "./IconCheck";
+import ShowPic from "./ShowPic";
 
 const CardStyled = styled(Container)`
     position: relative;
@@ -65,6 +66,7 @@ function Card({ item }) {
     const cart = useSelector((state) => state.manage.cart);
 
     const [inCart, setInCart] = useState(false);
+    const [showImage, setShowImage] = useState(false);
 
     useEffect(() => {
         if (cart.length > 0) {
@@ -91,7 +93,13 @@ function Card({ item }) {
             <MyRow>
                 {item.img ? (
                     <Col xs="auto">
-                        <img src={item.img} alt={""} width="100" height="100"></img>
+                        {sideBarOpened && mobileScreen ? (
+                            <img src={item.img} alt={""} width="100" height="100"></img>
+                        ) : (
+                            <a href={item.img}>
+                                <img src={item.img} alt={""} width="100" height="100"></img>
+                            </a>
+                        )}
                     </Col>
                 ) : null}
                 <MyCol style={{ fontWeight: "500" }} xs={12} sm={12} md={5}>
@@ -115,6 +123,8 @@ function Card({ item }) {
                     </MyCol>
                 </MyColAddRemove>
             </MyRow>
+
+            <ShowPic show={showImage} fullscreen={true} onHide={() => setShowImage(false)} />
         </CardStyled>
     );
 }

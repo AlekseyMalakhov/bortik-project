@@ -6,26 +6,13 @@ import { useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 
 const MainStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
-    const getLeft = () => {
-        if (mobileScreen) {
-            return "0";
-        } else {
-            return sideBarOpened ? "170px" : "0";
-        }
-    };
-
     return {
-        //position: "absolute",
         display: "flex",
         width: "100%",
-        //left: getLeft(),
-        //top: "50px",
-        //bottom: mobileScreen ? "40px" : "80px",
         marginBottom: mobileScreen ? "40px" : "80px",
         overflow: "auto",
         overflowX: "hidden",
         flexDirection: "column",
-        //width: mobileScreen ? "100%" : "calc(100% - 170px)",
         alignItems: "center",
         backgroundColor: colors.lightGreyBackground,
         padding: "10px 10px",
@@ -52,8 +39,13 @@ function Main() {
     const selectedCategory = useSelector((state) => state.manage.selectedCategory);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
 
+    const ref = React.createRef();
+
     useEffect(() => {
         setShowNumber(20);
+        if (ref.current) {
+            ref.current.scroll(0, 0);
+        }
     }, [items, selectedCategory]);
 
     const showMore = () => {
@@ -62,7 +54,7 @@ function Main() {
 
     if (items && selectedCategory) {
         return (
-            <MainStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
+            <MainStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen} ref={ref}>
                 {items[selectedCategory].length > 0 ? (
                     items[selectedCategory].map((item, index) => (index <= showNumber ? <Card item={item} key={item.id} /> : null))
                 ) : (
