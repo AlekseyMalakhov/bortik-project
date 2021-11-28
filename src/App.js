@@ -9,7 +9,6 @@ import Home from "./views/Home";
 import Cart from "./views/Cart";
 import NoMatch from "./views/NoMatch";
 import Loading from "./components/Loading";
-import ShowPic from "./components/ShowPic";
 
 const AppStyled = styled.div({
     height: "100%",
@@ -29,7 +28,6 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cart" element={<Cart />} />
-                <Route path="/image/:id" element={<ShowPic />} />
                 <Route path="*" element={<NoMatch />} />
             </Routes>
             {loading ? <Loading /> : null}

@@ -96,9 +96,14 @@ function Card({ item }) {
                         {sideBarOpened && mobileScreen ? (
                             <img src={item.img} alt={""} width="100" height="100"></img>
                         ) : (
-                            <a href={item.img}>
-                                <img src={item.img} alt={""} width="100" height="100"></img>
-                            </a>
+                            <img
+                                src={item.img}
+                                alt={""}
+                                width="100"
+                                height="100"
+                                onClick={() => setShowImage(item)}
+                                style={{ cursor: "pointer" }}
+                            ></img>
                         )}
                     </Col>
                 ) : null}
@@ -124,7 +129,7 @@ function Card({ item }) {
                 </MyColAddRemove>
             </MyRow>
 
-            <ShowPic show={showImage} fullscreen={true} onHide={() => setShowImage(false)} />
+            <ShowPic item={showImage} fullscreen={true} onHide={() => setShowImage(false)} />
         </CardStyled>
     );
 }
