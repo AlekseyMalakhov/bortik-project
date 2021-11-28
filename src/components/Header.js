@@ -4,6 +4,8 @@ import colors from "../settings/colors";
 import MenuButton from "./MenuButton";
 import { useLocation } from "react-router";
 import HeaderBackButton from "./HeaderBackButton";
+import Dropdown from "react-bootstrap/Dropdown";
+import ThreeDotsButton from "./ThreeDotsButton";
 
 const HeaderStyled = styled.div({
     display: "flex",
@@ -15,7 +17,7 @@ const HeaderStyled = styled.div({
 
 const BrandName = styled.div({
     color: "white",
-    marginRight: "20px",
+    //marginRight: "20px",
     fontSize: "20px",
 });
 
@@ -26,6 +28,14 @@ function Header() {
         <HeaderStyled>
             {location.pathname === "/" ? <MenuButton /> : <HeaderBackButton />}
             <BrandName>Bortik Project</BrandName>
+            <Dropdown align="end">
+                <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
+                <Dropdown.Menu>
+                    <Dropdown.Item href="#/action-1">Поиск</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">Личный кабинет</Dropdown.Item>
+                    <Dropdown.Item href="#/action-3">О компании</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
         </HeaderStyled>
     );
 }
