@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSelectedCategory } from "../store/manage";
 import CircleCategory from "./CircleCategory";
 
-const ItemStyled = styled.div(({ selected }) => {
+const ItemStyled = styled.div(({ selected, empty }) => {
     return {
         position: "relative",
         width: "100%",
@@ -20,6 +20,7 @@ const ItemStyled = styled.div(({ selected }) => {
             backgroundColor: "rgba(0, 0, 0, 0.1)",
             borderRadius: "5px",
         },
+        color: empty ? "grey" : "rgb(33, 37, 41)",
     };
 });
 
@@ -34,6 +35,7 @@ function Item({ category }) {
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
     const selectedCategory = useSelector((state) => state.manage.selectedCategory);
     const cart = useSelector((state) => state.manage.cart);
+    const items = useSelector((state) => state.manage.items);
 
     const [numberInCart, setNumberInCart] = useState(0);
 
@@ -50,7 +52,11 @@ function Item({ category }) {
     };
 
     return (
-        <ItemStyled selected={category.name === selectedCategory} onClick={() => handleSelect(category.name)}>
+        <ItemStyled
+            selected={category.name === selectedCategory}
+            onClick={() => handleSelect(category.name)}
+            empty={items[category.name].length === 0}
+        >
             <Name>{category.name}</Name>
             {numberInCart > 0 ? <CircleCategory numberInCart={numberInCart} /> : null}
         </ItemStyled>
