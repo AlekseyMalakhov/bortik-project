@@ -68,6 +68,7 @@ export const manageSlice = createSlice({
         },
         setPriceType: (state, action) => {
             state.priceType = action.payload;
+            localStorage.setItem("price_type", action.payload);
         },
         setCartSum: (state, action) => {
             state.cartSum = action.payload;

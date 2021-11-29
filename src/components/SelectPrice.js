@@ -15,7 +15,12 @@ function SelectPrice() {
 
     useEffect(() => {
         if (!priceType) {
-            dispatch(setPriceType(options[0]));
+            const type = localStorage.getItem("price_type");
+            if (type) {
+                dispatch(setPriceType(type));
+            } else {
+                dispatch(setPriceType(options[0]));
+            }
         }
     }, [priceType]);
 
