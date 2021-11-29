@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import colors from "../settings/colors";
 import Item from "./Item";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedCategory } from "../store/manage";
 
 const SidebarStyled = styled.div((props) => {
     return {
@@ -31,11 +32,13 @@ const ItemsList = styled.div({
 });
 
 function Sidebar() {
+    const dispatch = useDispatch();
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const categories = useSelector((state) => state.manage.categories);
     const searchInput = useSelector((state) => state.manage.searchInput);
     const search = useSelector((state) => state.manage.search);
     const items = useSelector((state) => state.manage.items);
+    const selectedCategory = useSelector((state) => state.manage.selectedCategory);
 
     const [searchedCategories, setSearchedCategories] = useState(null);
 
@@ -44,6 +47,10 @@ function Sidebar() {
             const str = searchInput.toLowerCase();
             const arr = categories.filter((category) => items[category.name].find((item) => item.title.toLowerCase().includes(str)));
             setSearchedCategories(arr);
+            const selectedCat = arr.find((category) => category.name === selectedCategory);
+            if (!selectedCat && arr.length > 0) {
+                dispatch(setSelectedCategory(arr[0].name));
+            }
         } else {
             setSearchedCategories(categories);
         }
