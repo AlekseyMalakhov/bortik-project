@@ -38,6 +38,24 @@ function Main() {
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const selectedCategory = useSelector((state) => state.manage.selectedCategory);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
+    const searchInput = useSelector((state) => state.manage.searchInput);
+    const search = useSelector((state) => state.manage.search);
+
+    const [searchedItems, setSearchedItems] = useState(null);
+
+    useEffect(() => {
+        if (search && searchInput) {
+            const str = searchInput.toLowerCase();
+            const searchedItems = {};
+            for (const category in items) {
+                const arr = items[category].filter((item) => item.title.toLowerCase().includes(str));
+                searchedItems[category] = arr;
+            }
+            setSearchedItems(searchedItems);
+        } else {
+            setSearchedItems(items);
+        }
+    }, [items, search, searchInput]);
 
     const ref = React.createRef();
 
@@ -46,21 +64,21 @@ function Main() {
         if (ref.current) {
             ref.current.scroll(0, 0);
         }
-    }, [items, selectedCategory]);
+    }, [searchedItems, selectedCategory]);
 
     const showMore = () => {
         setShowNumber(showNumber + 20);
     };
 
-    if (items && selectedCategory) {
+    if (searchedItems && selectedCategory && searchedItems[selectedCategory]) {
         return (
             <MainStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen} ref={ref}>
-                {items[selectedCategory].length > 0 ? (
-                    items[selectedCategory].map((item, index) => (index <= showNumber ? <Card item={item} key={item.id} /> : null))
+                {searchedItems[selectedCategory].length > 0 ? (
+                    searchedItems[selectedCategory].map((item, index) => (index <= showNumber ? <Card item={item} key={item.id} /> : null))
                 ) : (
                     <Error>Нет товаров в данной категории</Error>
                 )}
-                {showNumber < items[selectedCategory].length ? (
+                {showNumber < searchedItems[selectedCategory].length ? (
                     <MyButton variant="primary" size={mobileScreen ? "sm" : ""} onClick={showMore}>
                         Показать еще
                     </MyButton>
