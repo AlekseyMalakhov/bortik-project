@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import colors from "../settings/colors";
 import Item from "./Item";
@@ -33,11 +33,26 @@ const ItemsList = styled.div({
 function Sidebar() {
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const categories = useSelector((state) => state.manage.categories);
+    const searchInput = useSelector((state) => state.manage.searchInput);
+    const search = useSelector((state) => state.manage.search);
+    const items = useSelector((state) => state.manage.items);
+
+    const [searchedCategories, setSearchedCategories] = useState(null);
+
+    useEffect(() => {
+        if (search && searchInput) {
+            const str = searchInput.toLowerCase();
+            const arr = categories.filter((category) => items[category.name].find((item) => item.title.toLowerCase().includes(str)));
+            setSearchedCategories(arr);
+        } else {
+            setSearchedCategories(categories);
+        }
+    }, [categories, search, searchInput]);
 
     return (
         <SidebarStyled sideBarOpened={sideBarOpened}>
             <Header>Каталог</Header>
-            <ItemsList>{categories ? categories.map((category) => <Item key={category.id} category={category} />) : null}</ItemsList>
+            <ItemsList>{searchedCategories ? searchedCategories.map((category) => <Item key={category.id} category={category} />) : null}</ItemsList>
         </SidebarStyled>
     );
 }
