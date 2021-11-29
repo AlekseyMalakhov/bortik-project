@@ -5,6 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCartSum } from "../store/manage";
 import SelectPrice from "./SelectPrice";
 import { useNavigate } from "react-router-dom";
+import CleanCartButton from "./CleanCartButton";
+import AskCleanCartModal from "./AskCleanCartModal";
+import { cleanCart } from "../store/manage";
 
 const CartPanelStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
     const getLeft = () => {
@@ -59,6 +62,7 @@ function CartPanel() {
     const priceType = useSelector((state) => state.manage.priceType);
     const cart = useSelector((state) => state.manage.cart);
     const sum = useSelector((state) => state.manage.cartSum);
+    const [showAsk, setShowAsk] = useState(false);
 
     const calculateSum = (cart) => {
         let sum = 0;
@@ -88,6 +92,11 @@ function CartPanel() {
         }
     }, [cart, priceType]);
 
+    const handleCleanCart = () => {
+        dispatch(cleanCart());
+        setShowAsk(false);
+    };
+
     return (
         <CartPanelStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
             <MyButton
@@ -103,6 +112,8 @@ function CartPanel() {
                 <SelectPrice />
                 <Price mobileScreen={mobileScreen}>{sum.toFixed(2)} руб</Price>
             </PricePanel>
+            <CleanCartButton onClick={() => setShowAsk(true)} />
+            <AskCleanCartModal show={showAsk} onHide={() => setShowAsk(false)} onClean={handleCleanCart} />
         </CartPanelStyled>
     );
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import AddRemoveButton from "./AddRemoveButton";
 import Form from "react-bootstrap/Form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, removeItemFromCart } from "../store/manage";
 
 const AddRemoveStyled = styled.div({
@@ -26,7 +26,14 @@ const allowOnlyNumbers = (text) => {
 
 function AddRemove({ item, inCart }) {
     const dispatch = useDispatch();
+    const cart = useSelector((state) => state.manage.cart);
     const [number, setNumber] = useState(0);
+
+    useEffect(() => {
+        if (!cart || cart.length === 0) {
+            setNumber(0);
+        }
+    }, [cart]);
 
     useEffect(() => {
         if (inCart) {
