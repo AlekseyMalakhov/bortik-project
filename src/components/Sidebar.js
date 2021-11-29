@@ -33,7 +33,6 @@ const ItemsList = styled.div({
 function Sidebar() {
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const categories = useSelector((state) => state.manage.categories);
-    const searchInput = useSelector((state) => state.manage.searchInput);
 
     return (
         <SidebarStyled sideBarOpened={sideBarOpened}>

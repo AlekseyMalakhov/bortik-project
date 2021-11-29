@@ -36,13 +36,30 @@ function Item({ category }) {
     const selectedCategory = useSelector((state) => state.manage.selectedCategory);
     const cart = useSelector((state) => state.manage.cart);
     const items = useSelector((state) => state.manage.items);
+    const searchInput = useSelector((state) => state.manage.searchInput);
+    const search = useSelector((state) => state.manage.search);
 
     const [numberInCart, setNumberInCart] = useState(0);
+    const [show, setShow] = useState(true);
 
     useEffect(() => {
         const arr = cart.filter((item) => item.category === category.name);
         setNumberInCart(arr.length);
     }, [cart]);
+
+    useEffect(() => {
+        if (search && searchInput) {
+            const str = searchInput.toLowerCase();
+            const check = items[category.name].find((item) => item.title.toLowerCase().includes(str));
+            if (check) {
+                setShow(true);
+            } else {
+                setShow(false);
+            }
+        } else {
+            setShow(true);
+        }
+    }, [searchInput, search]);
 
     const handleSelect = (name) => {
         dispatch(setSelectedCategory(name));
@@ -51,16 +68,19 @@ function Item({ category }) {
         }
     };
 
-    return (
-        <ItemStyled
-            selected={category.name === selectedCategory}
-            onClick={() => handleSelect(category.name)}
-            empty={items[category.name].length === 0}
-        >
-            <Name>{category.name}</Name>
-            {numberInCart > 0 ? <CircleCategory numberInCart={numberInCart} /> : null}
-        </ItemStyled>
-    );
+    if (show) {
+        return (
+            <ItemStyled
+                selected={category.name === selectedCategory}
+                onClick={() => handleSelect(category.name)}
+                empty={items[category.name].length === 0}
+            >
+                <Name>{category.name}</Name>
+                {numberInCart > 0 ? <CircleCategory numberInCart={numberInCart} /> : null}
+            </ItemStyled>
+        );
+    }
+    return null;
 }
 
 export default Item;
