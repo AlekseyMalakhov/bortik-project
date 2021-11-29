@@ -5,16 +5,18 @@ import { useDispatch } from "react-redux";
 import { setSearchInput, setSearch } from "../store/manage";
 
 const SearchStyled = styled.div({
+    position: "relative",
     display: "flex",
 });
 
 const SearchInput = styled(Form.Control)({
     position: "relative",
+    paddingRight: "35px",
 });
 
 const SearchIcon = styled.div(({ focus, value }) => {
     return {
-        position: "relative",
+        position: "absolute",
         width: "16px",
         right: "200px",
         top: "7px",
@@ -23,14 +25,19 @@ const SearchIcon = styled.div(({ focus, value }) => {
 });
 
 const CloseButton = styled.div({
-    position: "relative",
-    width: "20px",
-    height: "20px",
-    top: "5px",
+    position: "absolute",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minWidth: "26px",
+    width: "26px",
+    height: "26px",
+    top: "7px",
+    right: "8px",
     cursor: "pointer",
     "&:hover": {
         backgroundColor: "rgba(0, 0, 0, 0.1)",
-        borderRadius: "10px",
+        borderRadius: "13px",
     },
 });
 
@@ -71,7 +78,7 @@ function Search({ show }) {
                     </svg>
                 </SearchIcon>
                 <CloseButton onClick={handleClose}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" viewBox="0 0 16 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                     </svg>
