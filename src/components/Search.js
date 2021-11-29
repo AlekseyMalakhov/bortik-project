@@ -18,7 +18,7 @@ const SearchIcon = styled.div(({ focus, value }) => {
     return {
         position: "absolute",
         width: "16px",
-        right: "200px",
+        left: "10px",
         top: "7px",
         visibility: focus || value ? "hidden" : "visible",
     };
