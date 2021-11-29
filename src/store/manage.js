@@ -17,6 +17,7 @@ const initialState = {
     cart: [],
     priceType: null,
     cartSum: 0,
+    search: false,
 };
 
 export const manageSlice = createSlice({
@@ -76,6 +77,9 @@ export const manageSlice = createSlice({
         setLoading: (state, action) => {
             state.loading = action.payload;
         },
+        setSearch: (state, action) => {
+            state.search = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -110,5 +114,6 @@ export const {
     setCartSum,
     setLoading,
     cleanCart,
+    setSearch,
 } = manageSlice.actions;
 export default manageSlice.reducer;
