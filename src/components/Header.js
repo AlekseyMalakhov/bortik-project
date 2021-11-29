@@ -20,7 +20,6 @@ const HeaderStyled = styled.div({
 
 const BrandName = styled.div({
     color: "white",
-    //marginRight: "20px",
     fontSize: "20px",
     cursor: "pointer",
 });
@@ -30,12 +29,13 @@ function Header() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const search = useSelector((state) => state.manage.search);
+    const mobileScreen = useSelector((state) => state.manage.mobileScreen);
 
     return (
         <HeaderStyled>
             {location.pathname === "/" ? <MenuButton /> : <HeaderBackButton />}
-            <BrandName onClick={() => navigate("/")}>Bortik Project</BrandName>
-            <Search show={search} onHide={() => dispatch(setSearch(false))} />
+            {mobileScreen && search ? null : <BrandName onClick={() => navigate("/")}>Bortik Project</BrandName>}
+            <Search show={search} />
             <Dropdown align="end">
                 <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
                 <Dropdown.Menu>

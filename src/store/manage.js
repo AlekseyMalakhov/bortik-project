@@ -18,6 +18,7 @@ const initialState = {
     priceType: null,
     cartSum: 0,
     search: false,
+    searchInput: "",
 };
 
 export const manageSlice = createSlice({
@@ -80,6 +81,9 @@ export const manageSlice = createSlice({
         setSearch: (state, action) => {
             state.search = action.payload;
         },
+        setSearchInput: (state, action) => {
+            state.searchInput = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -115,5 +119,6 @@ export const {
     setLoading,
     cleanCart,
     setSearch,
+    setSearchInput,
 } = manageSlice.actions;
 export default manageSlice.reducer;
