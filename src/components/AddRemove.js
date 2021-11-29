@@ -30,7 +30,7 @@ function AddRemove({ item, inCart }) {
     const [number, setNumber] = useState(0);
 
     useEffect(() => {
-        if (!cart || cart.length === 0) {
+        if (cart.length === 0) {
             setNumber(0);
         }
     }, [cart]);
