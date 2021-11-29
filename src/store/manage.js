@@ -50,6 +50,7 @@ export const manageSlice = createSlice({
                 newCart.push(action.payload);
             }
             state.cart = newCart;
+            localStorage.setItem("cart", JSON.stringify(newCart));
         },
         removeItemFromCart: (state, action) => {
             const newCart = [...state.cart];
@@ -57,10 +58,12 @@ export const manageSlice = createSlice({
             if (index !== -1) {
                 const cart = newCart.filter((item) => item.id !== action.payload.id);
                 state.cart = cart;
+                localStorage.setItem("cart", JSON.stringify(cart));
             }
         },
         cleanCart: (state) => {
             state.cart = [];
+            localStorage.setItem("cart", JSON.stringify([]));
             state.cartSum = 0;
         },
         setPriceType: (state, action) => {
@@ -84,6 +87,11 @@ export const manageSlice = createSlice({
                     state.items = action.payload.items;
                     state.categories = action.payload.categories;
                     state.selectedCategory = action.payload.categories[0].name;
+                    const cart = localStorage.getItem("cart");
+                    if (cart) {
+                        const data = JSON.parse(cart);
+                        state.cart = data;
+                    }
                 }
                 console.log(action.payload);
             });
