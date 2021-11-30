@@ -2,6 +2,7 @@ const compression = require("compression");
 const express = require("express");
 const getItems = require("./components/getItems");
 const sendCart = require("./components/sendCart");
+const db = require("./db/queries");
 const app = express();
 const port = process.env.PORT || 3010;
 const cors = require("cors");
@@ -19,6 +20,7 @@ app.get("*", function (req, res) {
 
 app.post("/api/getItems", getItems);
 app.post("/api/sendCart", sendCart);
+app.post("/api/createAccount", db.createUser);
 
 // Error handler
 app.use(function (err, req, res, next) {
