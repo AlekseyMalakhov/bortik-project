@@ -43,9 +43,17 @@ function Sidebar() {
     const [searchedCategories, setSearchedCategories] = useState(null);
 
     useEffect(() => {
-        if (search && searchInput) {
-            const str = searchInput.toLowerCase();
-            const arr = categories.filter((category) => items[category.name].find((item) => item.title.toLowerCase().includes(str)));
+        if (search && searchInput.length > 0) {
+            const arr = categories.filter((category) => {
+                return items[category.name].find((item) => {
+                    for (let i = 0; i < searchInput.length; i++) {
+                        if (item.title.toLowerCase().includes(searchInput[i])) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+            });
             setSearchedCategories(arr);
             const selectedCat = arr.find((category) => category.name === selectedCategory);
             if (!selectedCat && arr.length > 0) {

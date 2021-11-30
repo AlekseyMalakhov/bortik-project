@@ -18,7 +18,7 @@ const initialState = {
     priceType: null,
     cartSum: 0,
     search: false,
-    searchInput: "",
+    searchInput: [],
 };
 
 export const manageSlice = createSlice({
@@ -82,7 +82,8 @@ export const manageSlice = createSlice({
             state.search = action.payload;
         },
         setSearchInput: (state, action) => {
-            state.searchInput = action.payload;
+            const arr = action.payload.map((word) => word.toLowerCase());
+            state.searchInput = arr;
         },
     },
     extraReducers: (builder) => {

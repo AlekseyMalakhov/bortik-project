@@ -44,11 +44,17 @@ function Main() {
     const [searchedItems, setSearchedItems] = useState(null);
 
     useEffect(() => {
-        if (search && searchInput) {
-            const str = searchInput.toLowerCase();
+        if (search && searchInput.length > 0) {
             const searchedItems = {};
             for (const category in items) {
-                const arr = items[category].filter((item) => item.title.toLowerCase().includes(str));
+                const arr = items[category].filter((item) => {
+                    for (let i = 0; i < searchInput.length; i++) {
+                        if (item.title.toLowerCase().includes(searchInput[i])) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
                 searchedItems[category] = arr;
             }
             setSearchedItems(searchedItems);

@@ -48,7 +48,8 @@ function Search({ show }) {
 
     const handleInput = (e) => {
         setValue(e.target.value);
-        dispatch(setSearchInput(e.target.value));
+        const arr = e.target.value.split(" ");
+        dispatch(setSearchInput(arr));
     };
 
     const handlePressEnter = (e) => {
@@ -59,7 +60,7 @@ function Search({ show }) {
 
     const handleClose = () => {
         setValue("");
-        dispatch(setSearchInput(""));
+        dispatch(setSearchInput([]));
         dispatch(setSearch(false));
     };
     if (show) {
