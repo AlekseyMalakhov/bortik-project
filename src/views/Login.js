@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import { setLoading } from "../store/manage";
 import userAPI from "../api/user";
 
-const AccountStyled = styled.div({
+const LoginStyled = styled.div({
     margin: "10px 20px",
     display: "flex",
     flexDirection: "column",
@@ -48,6 +48,7 @@ function Login() {
                 dispatch(setLoading(false));
                 if (response.status === 200) {
                     console.log(response);
+                    navigate("/account");
                     //setShowDone("OK");
                 } else {
                     //setShowDone("Error");
@@ -65,12 +66,14 @@ function Login() {
         navigate("/");
     };
     return (
-        <AccountStyled>
-            <Title>Личный кабинет</Title>
+        <LoginStyled>
+            <Title>Вход в личный кабинет</Title>
             <Formik
                 initialValues={{
-                    email: "www1@www.ww",
-                    password: "12345",
+                    // email: process.env.NODE_ENV === "development" ? "www1@www.ww" : "",
+                    // password: process.env.NODE_ENV === "development" ? "12345" : "",
+                    email: "",
+                    password: "",
                 }}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
@@ -98,7 +101,7 @@ function Login() {
                     </Form>
                 )}
             </Formik>
-        </AccountStyled>
+        </LoginStyled>
     );
 }
 
