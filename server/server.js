@@ -21,6 +21,7 @@ app.get("*", function (req, res) {
 app.post("/api/getItems", getItems);
 app.post("/api/sendCart", sendCart);
 app.post("/api/createAccount", db.createUser);
+app.post("/api/login", db.login);
 
 // Error handler
 app.use(function (err, req, res, next) {
