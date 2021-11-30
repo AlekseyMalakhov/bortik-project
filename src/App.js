@@ -10,7 +10,7 @@ import Cart from "./views/Cart";
 import NoMatch from "./views/NoMatch";
 import Loading from "./components/Loading";
 import About from "./views/About";
-import Account from "./views/Account";
+import Login from "./views/Login";
 
 const AppStyled = styled.div({
     height: "100%",
@@ -31,7 +31,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/account" element={<Account />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="*" element={<NoMatch />} />
             </Routes>
             {loading ? <Loading /> : null}

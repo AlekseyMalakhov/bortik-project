@@ -7,6 +7,9 @@ import * as Yup from "yup";
 import FormInput from "../components/FormInput";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../store/manage";
+import userAPI from "../api/user";
 
 const AccountStyled = styled.div({
     margin: "10px 20px",
@@ -33,10 +36,29 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required("Введите пароль"),
 });
 
-function Account() {
+function Login() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleSubmit = (values) => {
         console.log(values);
+        dispatch(setLoading(true));
+        userAPI
+            .login(values)
+            .then((response) => {
+                dispatch(setLoading(false));
+                if (response.status === 200) {
+                    console.log(response);
+                    //setShowDone("OK");
+                } else {
+                    //setShowDone("Error");
+                    console.log("error");
+                }
+            })
+            .catch((err) => {
+                dispatch(setLoading(false));
+                //setShowDone("Error");
+                console.log(err);
+            });
     };
 
     const cancel = () => {
@@ -47,8 +69,8 @@ function Account() {
             <Title>Личный кабинет</Title>
             <Formik
                 initialValues={{
-                    email: "",
-                    password: "",
+                    email: "www1@www.ww",
+                    password: "12345",
                 }}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
@@ -80,4 +102,4 @@ function Account() {
     );
 }
 
-export default Account;
+export default Login;

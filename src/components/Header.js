@@ -40,7 +40,7 @@ function Header() {
                 <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
                 <Dropdown.Menu>
                     <Dropdown.Item onClick={() => dispatch(setSearch(true))}>Поиск</Dropdown.Item>
-                    <Dropdown.Item onClick={() => navigate("/account")}>Личный кабинет</Dropdown.Item>
+                    <Dropdown.Item onClick={() => navigate("/login")}>Личный кабинет</Dropdown.Item>
                     <Dropdown.Item onClick={() => navigate("/about")}>О компании</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
