@@ -10,6 +10,7 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../store/manage";
 import userAPI from "../api/user";
+import { setUser } from "../store/manage";
 
 const LoginStyled = styled.div({
     margin: "10px 20px",
@@ -48,6 +49,7 @@ function Login() {
                 dispatch(setLoading(false));
                 if (response.status === 200) {
                     console.log(response);
+                    dispatch(setUser(response.data));
                     navigate("/account");
                     //setShowDone("OK");
                 } else {
@@ -70,10 +72,10 @@ function Login() {
             <Title>Вход в личный кабинет</Title>
             <Formik
                 initialValues={{
-                    // email: process.env.NODE_ENV === "development" ? "www1@www.ww" : "",
-                    // password: process.env.NODE_ENV === "development" ? "12345" : "",
-                    email: "",
-                    password: "",
+                    email: process.env.NODE_ENV === "development" ? "www1@www.ww" : "",
+                    password: process.env.NODE_ENV === "development" ? "12345" : "",
+                    // email: "",
+                    // password: "",
                 }}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
