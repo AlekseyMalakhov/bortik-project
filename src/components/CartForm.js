@@ -68,7 +68,7 @@ const delivery_methods = [
 ];
 
 const validationSchema = Yup.object().shape({
-    name_user: Yup.string().required("Укажите имя"),
+    name: Yup.string().required("Укажите имя"),
     email: Yup.string().required("Укажите email").email("Укажите email"),
     phone: Yup.string().required("Укажите телефон"),
 });
@@ -158,7 +158,7 @@ function CartForm({ cart, priceType, sum }) {
         <CartFormStyled>
             <Formik
                 initialValues={{
-                    name_user: process.env.NODE_ENV === "development" ? "test" : "",
+                    name: process.env.NODE_ENV === "development" ? "test" : "",
                     email: process.env.NODE_ENV === "development" ? "test@test.com" : "",
                     phone: process.env.NODE_ENV === "development" ? "+375111222333" : "",
                     payment_method: "Безналичный расчет (для юридических лиц)",
@@ -171,7 +171,7 @@ function CartForm({ cart, priceType, sum }) {
             >
                 {({ handleSubmit }) => (
                     <Form noValidate onSubmit={handleSubmit}>
-                        <FormInput name="name_user" label="ФИО*" />
+                        <FormInput name="name" label="ФИО*" />
                         <FormInput name="phone" label="Телефон*" inputMode="tel" placeholder={"+375xxxxxxxxx"} />
                         <FormInput name="email" label="Email*" inputMode="email" />
                         <FormInput name="address" label="Адрес доставки" />

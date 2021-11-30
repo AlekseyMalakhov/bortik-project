@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config({ path: "../../project_env/.env" }); //just for dev environment
+const db = require("../db/queries");
 
 let transporter = nodemailer.createTransport({
     host: "smtp-relay.sendinblue.com",
@@ -10,7 +11,7 @@ let transporter = nodemailer.createTransport({
     },
 });
 
-async function run(html, email) {
+async function run(html, email, password) {
     let info = await transporter.sendMail({
         from: '"Bortik Project" <cart@bortikproject.com>',
         to: email,
@@ -40,7 +41,7 @@ const createRows = (cart) => {
     return str;
 };
 
-const createHTML = (data) => {
+const createHTML = (data, password) => {
     const part1 = `<p>Заказ в магазине Bortik Project успешно оформлен. Номер заказа 12345</p>
     <table style="font-family: sans-serif; width: 100%; border-collapse: collapse;">
     <tr>
@@ -59,23 +60,31 @@ const createHTML = (data) => {
         </table>
         <p>Цена: ${data.priceType}</p>
         <p style="font-weight: bold;">Сведения о покупателе:</p>
-        <p>ФИО: ${data.customer.name_user}</p>
+        <p>ФИО: ${data.customer.name}</p>
         <p>Телефон: ${data.customer.phone}</p>
         <p>Email: ${data.customer.email}</p>
         <p>Адрес доставки: ${data.customer.address}</p>
         <p>Комментарий: ${data.customer.comment}</p>
         <p>Способ оплаты: ${data.customer.payment_method}</p>
         <p>Доставка: ${data.customer.delivery}</p>`;
-    const htmlStr = part1 + part2 + part3;
+    const part4 = password
+        ? `
+    <p>Просмотреть историю заказов Вы можете в Личном кабинете</p>
+    <p>Login: ${data.customer.email}</p>
+    <p>Password: ${password}</p>
+    `
+        : "";
+    const htmlStr = part1 + part2 + part3 + part4;
     return htmlStr;
 };
 
-const sendCart = (req, res) => {
+const sendCart = async (req, res) => {
     const data = req.body;
-    const html = createHTML(data);
+    const password = await db.createUserAuto(req, res);
+    const html = createHTML(data, password);
     run(html, data.customer.email)
         .then(() => {
-            res.status(200).send("Nice!");
+            res.status(200).send(html);
         })
         .catch((err) => {
             res.status(500).send(err);
