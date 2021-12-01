@@ -68,7 +68,10 @@ function Header() {
                             <Dropdown.Item onClick={logout}>Выход</Dropdown.Item>
                         </React.Fragment>
                     ) : (
-                        <Dropdown.Item onClick={() => navigate("/login")}>Вход в личный кабинет</Dropdown.Item>
+                        <React.Fragment>
+                            <Dropdown.Item onClick={() => navigate("/login")}>Вход в личный кабинет</Dropdown.Item>
+                            <Dropdown.Item onClick={() => navigate("/register")}>Регистрация</Dropdown.Item>
+                        </React.Fragment>
                     )}
                 </Dropdown.Menu>
             </Dropdown>

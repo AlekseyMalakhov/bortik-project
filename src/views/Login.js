@@ -92,7 +92,7 @@ function Login() {
                 {({ handleSubmit }) => (
                     <Form noValidate onSubmit={handleSubmit} style={{ maxWidth: "400px", width: "100%" }}>
                         <FormInput name="email" label="Email*" inputMode="email" />
-                        <FormInput name="password" label="Password*" type="password" />
+                        <FormInput name="password" label="Пароль*" type="password" />
 
                         {error !== "" ? <Error>{error}</Error> : null}
 

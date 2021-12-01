@@ -82,7 +82,7 @@ const createHTML = (data, password) => {
 
 const sendCart = async (req, res) => {
     const data = req.body;
-    const password = await db.createUserAuto(req, res);
+    const password = await db.createAccountAuto(req, res);
     const html = createHTML(data, password);
     run(html, data.customer.email)
         .then(() => {
