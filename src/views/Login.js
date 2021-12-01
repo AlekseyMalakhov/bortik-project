@@ -59,8 +59,8 @@ function Login() {
                 if (response.status === 200) {
                     console.log(response);
                     dispatch(setUser(response.data));
+                    localStorage.setItem("user", JSON.stringify(response.data));
                     navigate("/account");
-                    //setShowDone("OK");
                 } else {
                     setError("Неверный логин или пароль");
                     console.log("error");

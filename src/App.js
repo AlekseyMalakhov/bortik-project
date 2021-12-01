@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Header from "./components/Header";
 import styled from "@emotion/styled";
 import handleScreenSize from "./settings/screenWidth";
-import { getItems } from "./store/manage";
+import { getItems, setUser } from "./store/manage";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
@@ -23,6 +23,10 @@ function App() {
     useEffect(() => {
         handleScreenSize();
         dispatch(getItems());
+        const user = localStorage.getItem("user");
+        if (user) {
+            dispatch(setUser(JSON.parse(user)));
+        }
     }, []);
     return (
         <AppStyled>
