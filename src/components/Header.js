@@ -8,7 +8,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import ThreeDotsButton from "./ThreeDotsButton";
 import Search from "./Search";
 import { useSelector, useDispatch } from "react-redux";
-import { setSearch } from "../store/manage";
+import { setSearch, setUser } from "../store/manage";
 
 const HeaderStyled = styled.div({
     display: "flex",
@@ -30,6 +30,13 @@ function Header() {
     const dispatch = useDispatch();
     const search = useSelector((state) => state.manage.search);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
+    const user = useSelector((state) => state.manage.user);
+
+    const logout = () => {
+        dispatch(setUser(null));
+        localStorage.removeItem("user");
+        navigate("/");
+    };
 
     return (
         <HeaderStyled>
@@ -40,8 +47,18 @@ function Header() {
                 <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
                 <Dropdown.Menu>
                     <Dropdown.Item onClick={() => dispatch(setSearch(true))}>Поиск</Dropdown.Item>
-                    <Dropdown.Item onClick={() => navigate("/login")}>Личный кабинет</Dropdown.Item>
                     <Dropdown.Item onClick={() => navigate("/about")}>О компании</Dropdown.Item>
+                    <Dropdown.Divider />
+                    {user ? (
+                        <React.Fragment>
+                            <Dropdown.Item onClick={() => navigate("/account")} style={{ fontWeight: 500 }}>
+                                {user.name}
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={logout}>Выход</Dropdown.Item>
+                        </React.Fragment>
+                    ) : (
+                        <Dropdown.Item onClick={() => navigate("/login")}>Вход в личный кабинет</Dropdown.Item>
+                    )}
                 </Dropdown.Menu>
             </Dropdown>
         </HeaderStyled>
