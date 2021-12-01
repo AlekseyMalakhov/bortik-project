@@ -84,8 +84,13 @@ const login = async (req, res) => {
     }
 };
 
+const forgotPassword = (req, res) => {
+    res.status(200).send("hi");
+};
+
 module.exports = {
     createAccountAuto,
     createAccount,
     login,
+    forgotPassword,
 };

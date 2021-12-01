@@ -1,17 +1,5 @@
-const nodemailer = require("nodemailer");
-require("dotenv").config({ path: "../../project_env/.env" }); //just for dev environment
 const db = require("../db/queries");
-// const path = require("path");
-// const db = require(path.join(__dirname, "..", "db", "queries.js"));
-
-let transporter = nodemailer.createTransport({
-    host: "smtp-relay.sendinblue.com",
-    port: 587,
-    auth: {
-        user: process.env.USER,
-        pass: process.env.SECRET,
-    },
-});
+const transporter = require("./nodeMailerClient");
 
 async function run(html, email, password) {
     let info = await transporter.sendMail({

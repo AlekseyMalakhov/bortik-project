@@ -42,9 +42,9 @@ function ForgotPassword() {
             .forgotPassword(email)
             .then((response) => {
                 dispatch(setLoading(false));
-                if (response.status === 201) {
+                if (response.status === 200) {
                     setDone(true);
-                } else if (response.status === 404) {
+                } else if (response.status === 409) {
                     setError(`Аккаунт с email ${email} не обнаружен!`);
                 } else {
                     setError("Неизвестная ошибка! Обратитесь в службу поддержки.");
