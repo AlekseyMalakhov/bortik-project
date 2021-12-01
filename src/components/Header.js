@@ -43,22 +43,17 @@ function Header() {
         navigate("/");
     };
 
-    const toggleAbout = () => {
-        dispatch(setSearch(false));
-        navigate("/about");
-    };
-
     return (
         <HeaderStyled>
             {location.pathname === "/" ? <MenuButton /> : <HeaderBackButton />}
             {mobileScreen && search ? null : <BrandName onClick={() => navigate("/")}>Bortik Project</BrandName>}
-            <Search show={search} />
+            <Search show={search && location.pathname === "/"} />
             <Dropdown align="end">
                 <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
                 <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => navigate("/")}>На главную</Dropdown.Item>
+                    {location.pathname !== "/" ? <Dropdown.Item onClick={() => navigate("/")}>На главную</Dropdown.Item> : null}
                     <Dropdown.Item onClick={toggleSearch}>Поиск</Dropdown.Item>
-                    <Dropdown.Item onClick={toggleAbout}>О компании</Dropdown.Item>
+                    <Dropdown.Item onClick={() => navigate("/about")}>О компании</Dropdown.Item>
                     <Dropdown.Divider />
                     {user ? (
                         <React.Fragment>

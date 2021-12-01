@@ -34,6 +34,7 @@ const ButtonGroup = styled.div({
     display: "flex",
     justifyContent: "space-evenly",
     marginTop: "30px",
+    marginBottom: "30px",
 });
 
 const validationSchema = Yup.object().shape({
