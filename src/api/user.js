@@ -18,9 +18,19 @@ const login = (data) => {
         .catch((error) => error.response);
 };
 
+const forgotPassword = (email) => {
+    return client
+        .post("/forgotPassword", email)
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => error.response);
+};
+
 const userAPI = {
     createAccount,
     login,
+    forgotPassword,
 };
 
 export default userAPI;

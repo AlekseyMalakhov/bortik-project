@@ -13,6 +13,7 @@ import About from "./views/About";
 import Login from "./views/Login";
 import Account from "./views/Account";
 import Register from "./views/Register";
+import ForgotPassword from "./views/ForgotPassword";
 
 const AppStyled = styled.div({
     height: "100%",
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/account" element={<Account />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/forgot_password" element={<ForgotPassword />} />
                 <Route path="*" element={<NoMatch />} />
             </Routes>
             {loading ? <Loading /> : null}

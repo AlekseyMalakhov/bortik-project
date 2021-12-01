@@ -97,7 +97,7 @@ function Login() {
                         {error !== "" ? <Error>{error}</Error> : null}
 
                         <div style={{ marginBottom: "10px" }}>
-                            <Link to="/forget_password">Забыл пароль</Link>
+                            <Link to="/forgot_password">Забыл пароль</Link>
                         </div>
                         <div>
                             <Link to="/register">Зарегистрироваться</Link>
