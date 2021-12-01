@@ -38,6 +38,16 @@ function Header() {
         navigate("/");
     };
 
+    const toggleSearch = () => {
+        dispatch(setSearch(true));
+        navigate("/");
+    };
+
+    const toggleAbout = () => {
+        dispatch(setSearch(false));
+        navigate("/about");
+    };
+
     return (
         <HeaderStyled>
             {location.pathname === "/" ? <MenuButton /> : <HeaderBackButton />}
@@ -46,8 +56,9 @@ function Header() {
             <Dropdown align="end">
                 <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
                 <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => dispatch(setSearch(true))}>Поиск</Dropdown.Item>
-                    <Dropdown.Item onClick={() => navigate("/about")}>О компании</Dropdown.Item>
+                    <Dropdown.Item onClick={() => navigate("/")}>На главную</Dropdown.Item>
+                    <Dropdown.Item onClick={toggleSearch}>Поиск</Dropdown.Item>
+                    <Dropdown.Item onClick={toggleAbout}>О компании</Dropdown.Item>
                     <Dropdown.Divider />
                     {user ? (
                         <React.Fragment>
