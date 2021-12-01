@@ -12,6 +12,7 @@ import Loading from "./components/Loading";
 import About from "./views/About";
 import Login from "./views/Login";
 import Account from "./views/Account";
+import Register from "./views/Register";
 
 const AppStyled = styled.div({
     height: "100%",
@@ -38,6 +39,7 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/account" element={<Account />} />
+                <Route path="/register" element={<Register />} />
                 <Route path="*" element={<NoMatch />} />
             </Routes>
             {loading ? <Loading /> : null}
