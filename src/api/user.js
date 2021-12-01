@@ -17,9 +17,7 @@ const login = (data) => {
         .then((response) => {
             return response;
         })
-        .catch((err) => {
-            console.log(err.message);
-        });
+        .catch((error) => error.response);
 };
 
 const userAPI = {

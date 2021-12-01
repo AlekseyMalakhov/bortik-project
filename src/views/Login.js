@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -26,6 +26,11 @@ const Title = styled.div({
     fontWeight: "500",
 });
 
+const Error = styled.div({
+    color: "red",
+    marginBottom: "10px",
+});
+
 const ButtonGroup = styled.div({
     display: "flex",
     justifyContent: "space-evenly",
@@ -40,26 +45,30 @@ const validationSchema = Yup.object().shape({
 function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [error, setError] = useState("");
+
     const handleSubmit = (values) => {
         console.log(values);
+        setError("");
         dispatch(setLoading(true));
         userAPI
             .login(values)
             .then((response) => {
                 dispatch(setLoading(false));
+                console.log(response);
                 if (response.status === 200) {
                     console.log(response);
                     dispatch(setUser(response.data));
                     navigate("/account");
                     //setShowDone("OK");
                 } else {
-                    //setShowDone("Error");
+                    setError("Неверный логин или пароль");
                     console.log("error");
                 }
             })
             .catch((err) => {
                 dispatch(setLoading(false));
-                //setShowDone("Error");
+                setError("Неизвестная ошибка! Обратитесь в службу поддержки.");
                 console.log(err);
             });
     };
@@ -84,6 +93,8 @@ function Login() {
                     <Form noValidate onSubmit={handleSubmit} style={{ maxWidth: "400px", width: "100%" }}>
                         <FormInput name="email" label="Email*" inputMode="email" />
                         <FormInput name="password" label="Password*" type="password" />
+
+                        {error !== "" ? <Error>{error}</Error> : null}
 
                         <div style={{ marginBottom: "10px" }}>
                             <Link to="/forget_password">Забыл пароль</Link>
