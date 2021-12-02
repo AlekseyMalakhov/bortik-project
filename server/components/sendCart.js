@@ -32,7 +32,8 @@ const createRows = (cart) => {
 };
 
 const createHTML = (data, password) => {
-    const part1 = `<p>Заказ в магазине Bortik Project успешно оформлен. Номер заказа 12345</p>
+    const part1 = `<p>Благодарим за покупку!</p>
+    <p>Заказ в магазине Bortik Project успешно оформлен. Номер заказа 12345</p>
     <table style="font-family: sans-serif; width: 100%; border-collapse: collapse;">
     <tr>
         <th style="border: 1px solid black; padding: 5px 5px;">Номер</th>
@@ -64,7 +65,12 @@ const createHTML = (data, password) => {
     <p>Password: ${password}</p>
     `
         : "";
-    const htmlStr = part1 + part2 + part3 + part4;
+    const part5 = `
+        <br>
+        <br>
+        <div>С уважением,</div>
+        <div>Служба поддержки Bortik Project</div>`;
+    const htmlStr = part1 + part2 + part3 + part4 + part5;
     return htmlStr;
 };
 

@@ -39,13 +39,14 @@ function ForgotPassword() {
         setError("");
         dispatch(setLoading(true));
         userAPI
-            .forgotPassword(email)
+            .forgotPassword({ email })
             .then((response) => {
                 dispatch(setLoading(false));
+                console.log(response);
                 if (response.status === 200) {
                     setDone(true);
-                } else if (response.status === 409) {
-                    setError(`Аккаунт с email ${email} не обнаружен!`);
+                } else if (response.status === 404 && response.data === "Email not found") {
+                    setError(`Аккаунт ${email} не обнаружен!`);
                 } else {
                     setError("Неизвестная ошибка! Обратитесь в службу поддержки.");
                 }
@@ -59,7 +60,7 @@ function ForgotPassword() {
 
     return (
         <ForgotPasswordStyled>
-            <Title>Если Вы забыли пароль от своего аккаунта, введите свой email и мы пришлем Вам новый.</Title>
+            <Title>Если Вы забыли пароль от своего аккаунта, введите свой email и мы пришлем Вам его.</Title>
             <div style={{ display: "flex", width: "100%", flexDirection: "column", alignItems: "center", marginTop: "20px" }}>
                 <MyInput value={email} onChange={(e) => setEmail(e.target.value)} placeholder="example@example.com" />
                 {error !== "" ? <Error>{error}</Error> : null}
