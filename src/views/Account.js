@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 import AccountDataTable from "../components/AccountDataTable";
 import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router";
 
 const AccountStyled = styled.div({
     margin: "10px 20px",
@@ -19,10 +20,11 @@ const Title = styled.div({
 });
 
 function Account() {
+    const navigate = useNavigate();
     const user = useSelector((state) => state.manage.user);
 
     const edit = () => {
-        console.log("edit");
+        navigate("/edit_account");
     };
     return (
         <AccountStyled>
