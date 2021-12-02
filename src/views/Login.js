@@ -48,7 +48,6 @@ function Login() {
     const [error, setError] = useState("");
 
     const handleSubmit = (values) => {
-        console.log(values);
         setError("");
         dispatch(setLoading(true));
         userAPI

@@ -6,7 +6,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import FormInput from "./FormInput";
 import itemsAPI from "../api/items";
-import FormCheckBox from "./FormCheckBox";
+import FormCheckBoxRadio from "./FormCheckBoxRadio";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../store/manage";
@@ -179,13 +179,13 @@ function CartForm({ cart, priceType, sum }) {
                         <CheckGroup>
                             <Form.Label>Способ оплаты:</Form.Label>
                             {payment_methods.map((method) => (
-                                <FormCheckBox name="payment_method" label={method.label} value={method.value} key={method.id} />
+                                <FormCheckBoxRadio name="payment_method" label={method.label} value={method.value} key={method.id} />
                             ))}
                         </CheckGroup>
                         <CheckGroup>
                             <Form.Label>Доставка:</Form.Label>
                             {delivery_methods.map((method) => (
-                                <FormCheckBox name="delivery" label={method.label} value={method.value} key={method.id} />
+                                <FormCheckBoxRadio name="delivery" label={method.label} value={method.value} key={method.id} />
                             ))}
                         </CheckGroup>
                         <ButtonGroup>

@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 import { setLoading } from "../store/manage";
 import userAPI from "../api/user";
 import AccountCreatedModal from "../components/AccountCreatedModal";
+import { useSelector } from "react-redux";
+import FormCheckBoxSwitch from "../components/FormCheckBoxSwitch";
 
 const EditAccountStyled = styled.div({
     margin: "10px 20px",
@@ -48,52 +50,58 @@ const validationSchema = Yup.object().shape({
 function EditAccount() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const user = useSelector((state) => state.manage.user);
     const [error, setError] = useState("");
     const [done, setDone] = useState(false);
     const [newUser, setNewUser] = useState(null);
 
     const handleSubmit = (values) => {
-        if (values.password !== values.repeatPassword) {
-            setError("Пароль и повтор пароля не совпадают!");
-            return;
-        }
-        setError("");
-        dispatch(setLoading(true));
-        userAPI
-            .createAccount(values)
-            .then((response) => {
-                dispatch(setLoading(false));
-                if (response.status === 201) {
-                    setNewUser(values);
-                    setDone(true);
-                } else if (response.status === 409) {
-                    setError("Данный email уже зарегистрирован!");
-                } else {
-                    setError("Неизвестная ошибка! Обратитесь в службу поддержки.");
-                }
-            })
-            .catch((err) => {
-                dispatch(setLoading(false));
-                setError("Неизвестная ошибка! Обратитесь в службу поддержки.");
-                console.log(err);
-            });
+        console.log("hi");
+        console.log(values);
+        // if (values.password !== values.repeatPassword) {
+        //     setError("Пароль и повтор пароля не совпадают!");
+        //     return;
+        // }
+        // setError("");
+        // dispatch(setLoading(true));
+        // userAPI
+        //     .createAccount(values)
+        //     .then((response) => {
+        //         dispatch(setLoading(false));
+        //         if (response.status === 201) {
+        //             setNewUser(values);
+        //             setDone(true);
+        //         } else if (response.status === 409) {
+        //             setError("Данный email уже зарегистрирован!");
+        //         } else {
+        //             setError("Неизвестная ошибка! Обратитесь в службу поддержки.");
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         dispatch(setLoading(false));
+        //         setError("Неизвестная ошибка! Обратитесь в службу поддержки.");
+        //         console.log(err);
+        //     });
     };
 
     const cancel = () => {
-        navigate("/account");
+        console.log("hi");
+        //navigate("/account");
     };
 
     return (
         <EditAccountStyled>
             <Title>Редактирование аккаунта</Title>
+
             <Formik
                 initialValues={{
                     name: "",
-                    phone: "",
-                    email: "",
-                    password: "",
-                    repeatPassword: "",
-                    address: "",
+                    // phone: "",
+                    // email: "",
+                    // // password: "",
+                    // repeatPassword: "",
+                    //address: "",
+                    //changePassword: false,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
@@ -101,11 +109,13 @@ function EditAccount() {
                 {({ handleSubmit }) => (
                     <Form noValidate onSubmit={handleSubmit} style={{ maxWidth: "400px", width: "100%" }}>
                         <FormInput name="name" label="ФИО*" />
-                        <FormInput name="phone" label="Телефон*" inputMode="tel" placeholder={"+375xxxxxxxxx"} />
-                        <FormInput name="email" label="Email*" inputMode="email" />
-                        <FormInput name="password" label="Пароль*" type="password" />
-                        <FormInput name="repeatPassword" label="Повторите пароль*" type="password" />
-                        <FormInput name="address" label="Адрес доставки по умолчанию" />
+                        {/* <FormInput name="phone" label="Телефон*" inputMode="tel" placeholder={"+375xxxxxxxxx"} />
+                            <FormInput name="email" label="Email*" inputMode="email" />
+                            <FormInput name="address" label="Адрес доставки по умолчанию" /> */}
+                        {/* <FormCheckBoxSwitch name="changePassword" label="Изменить пароль" /> */}
+
+                        {/* <FormInput name="password" label="Пароль*" type="password" />
+                        <FormInput name="repeatPassword" label="Повторите пароль*" type="password" /> */}
 
                         {error !== "" ? <Error>{error}</Error> : null}
 
@@ -120,6 +130,7 @@ function EditAccount() {
                     </Form>
                 )}
             </Formik>
+
             <AccountCreatedModal show={done} onHide={() => setDone(false)} backdrop="static" keyboard={false} newUser={newUser} />
         </EditAccountStyled>
     );

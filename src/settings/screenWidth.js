@@ -1,5 +1,5 @@
 import { store } from "../store/store";
-import { setScreenWidth, changeSideBarOpened, setMobileScreen } from "../store/manage";
+import { setScreenWidth, setMobileScreen } from "../store/manage";
 
 const handleScreenSize = () => {
     const getScreenWidth = () => {
@@ -18,10 +18,8 @@ const handleScreenSize = () => {
     const adjustSidebar = () => {
         const width = getScreenWidth();
         if (width < 650) {
-            //store.dispatch(changeSideBarOpened(false));
             store.dispatch(setMobileScreen(true));
         } else {
-            //store.dispatch(changeSideBarOpened(true));
             store.dispatch(setMobileScreen(false));
         }
     };

@@ -1,11 +1,18 @@
 import React from "react";
 import { useFormikContext } from "formik";
 import Form from "react-bootstrap/Form";
+import styled from "@emotion/styled";
 
-function FormCheckBox({ name, label, value, ...otherProps }) {
+const CheckStyled = styled(Form.Check)({
+    "& label": {
+        cursor: "pointer",
+    },
+});
+
+function FormCheckBoxRadio({ name, label, value, ...otherProps }) {
     const { setFieldValue, values } = useFormikContext();
     return (
-        <Form.Check
+        <CheckStyled
             name={name}
             label={label}
             type="radio"
@@ -17,4 +24,4 @@ function FormCheckBox({ name, label, value, ...otherProps }) {
     );
 }
 
-export default FormCheckBox;
+export default FormCheckBoxRadio;
