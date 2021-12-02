@@ -55,9 +55,7 @@ function Login() {
             .login(values)
             .then((response) => {
                 dispatch(setLoading(false));
-                console.log(response);
                 if (response.status === 200) {
-                    console.log(response);
                     dispatch(setUser(response.data));
                     localStorage.setItem("user", JSON.stringify(response.data));
                     navigate("/account");
@@ -107,8 +105,8 @@ function Login() {
                             <Button variant="outline-primary" onClick={cancel}>
                                 Отмена
                             </Button>
-                            <Button variant="primary" type="submit">
-                                Отправить
+                            <Button variant="primary" type="submit" style={{ width: "80px" }}>
+                                Войти
                             </Button>
                         </ButtonGroup>
                     </Form>
