@@ -3,9 +3,9 @@ import styled from "@emotion/styled";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import userAPI from "../api/user";
-import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../store/manage";
+import ForgottenPasswordSentModal from "../components/ForgottenPasswordSentModal";
 
 const ForgotPasswordStyled = styled.div({
     margin: "10px 20px",
@@ -30,7 +30,6 @@ const MyInput = styled(Form.Control)({
 
 function ForgotPassword() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [error, setError] = useState("");
     const [email, setEmail] = useState("");
     const [done, setDone] = useState(false);
@@ -42,7 +41,6 @@ function ForgotPassword() {
             .forgotPassword({ email })
             .then((response) => {
                 dispatch(setLoading(false));
-                console.log(response);
                 if (response.status === 200) {
                     setDone(true);
                 } else if (response.status === 404 && response.data === "Email not found") {
@@ -68,6 +66,7 @@ function ForgotPassword() {
                     Отправить
                 </Button>
             </div>
+            <ForgottenPasswordSentModal show={done} onHide={() => setDone(false)} />
         </ForgotPasswordStyled>
     );
 }
