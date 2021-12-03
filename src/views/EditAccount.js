@@ -32,6 +32,10 @@ const Error = styled.div({
     marginBottom: "10px",
 });
 
+const PasswordGroup = styled.div({
+    marginTop: "20px",
+});
+
 const ButtonGroup = styled.div({
     display: "flex",
     justifyContent: "space-evenly",
@@ -43,8 +47,10 @@ const validationSchema = Yup.object().shape({
     name: Yup.string().required("Укажите имя"),
     phone: Yup.string().required("Укажите телефон"),
     email: Yup.string().required("Укажите email").email("Укажите email"),
-    // password: Yup.string().required("Введите пароль"),
-    // repeatPassword: Yup.string().required("Введите пароль"),
+    changePassword: Yup.boolean(),
+    oldPassword: Yup.string().when("changePassword", { is: true, then: Yup.string().required("Введите пароль") }),
+    newPassword: Yup.string().when("changePassword", { is: true, then: Yup.string().required("Введите пароль") }),
+    repeatPassword: Yup.string().when("changePassword", { is: true, then: Yup.string().required("Введите пароль") }),
 });
 
 function EditAccount() {
@@ -56,7 +62,6 @@ function EditAccount() {
     const [newUser, setNewUser] = useState(null);
 
     const handleSubmit = (values) => {
-        console.log("hi");
         console.log(values);
         // if (values.password !== values.repeatPassword) {
         //     setError("Пароль и повтор пароля не совпадают!");
@@ -85,52 +90,56 @@ function EditAccount() {
     };
 
     const cancel = () => {
-        console.log("hi");
-        //navigate("/account");
+        navigate("/account");
     };
 
     return (
         <EditAccountStyled>
-            <Title>Редактирование аккаунта</Title>
+            <Title>Редактировать личные данные</Title>
+            {user ? (
+                <Formik
+                    initialValues={{
+                        name: user.name,
+                        phone: user.phone,
+                        email: user.email,
+                        oldPassword: "",
+                        newPassword: "",
+                        repeatPassword: "",
+                        address: user.address,
+                        changePassword: false,
+                    }}
+                    validationSchema={validationSchema}
+                    onSubmit={handleSubmit}
+                >
+                    {({ handleSubmit, values }) => (
+                        <Form noValidate onSubmit={handleSubmit} style={{ maxWidth: "400px", width: "100%" }}>
+                            <FormInput name="name" label="ФИО*" />
+                            <FormInput name="phone" label="Телефон*" inputMode="tel" placeholder={"+375xxxxxxxxx"} />
+                            <FormInput name="email" label="Email*" inputMode="email" />
+                            <FormInput name="address" label="Адрес доставки по умолчанию" />
+                            <FormCheckBoxSwitch name="changePassword" label="Изменить пароль" />
+                            {values.changePassword ? (
+                                <PasswordGroup>
+                                    <FormInput name="oldPassword" label="Текущий пароль*" type="password" />
+                                    <FormInput name="newPassword" label="Новый пароль*" type="password" />
+                                    <FormInput name="repeatPassword" label="Повторите новый пароль*" type="password" />
+                                </PasswordGroup>
+                            ) : null}
 
-            <Formik
-                initialValues={{
-                    name: "",
-                    phone: "",
-                    email: "",
-                    // password: "",
-                    // repeatPassword: "",
-                    address: "",
-                    changePassword: false,
-                }}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-            >
-                {({ handleSubmit }) => (
-                    <Form noValidate onSubmit={handleSubmit} style={{ maxWidth: "400px", width: "100%" }}>
-                        <FormInput name="name" label="ФИО*" />
-                        <FormInput name="phone" label="Телефон*" inputMode="tel" placeholder={"+375xxxxxxxxx"} />
-                        <FormInput name="email" label="Email*" inputMode="email" />
-                        <FormInput name="address" label="Адрес доставки по умолчанию" />
-                        <FormCheckBoxSwitch name="changePassword" label="Изменить пароль" />
+                            {error !== "" ? <Error>{error}</Error> : null}
 
-                        {/* <FormInput name="password" label="Пароль*" type="password" />
-                        <FormInput name="repeatPassword" label="Повторите пароль*" type="password" /> */}
-
-                        {error !== "" ? <Error>{error}</Error> : null}
-
-                        <ButtonGroup>
-                            <Button variant="outline-primary" onClick={cancel}>
-                                Отмена
-                            </Button>
-                            <Button variant="primary" type="submit">
-                                Отправить
-                            </Button>
-                        </ButtonGroup>
-                    </Form>
-                )}
-            </Formik>
-
+                            <ButtonGroup>
+                                <Button variant="outline-primary" onClick={cancel}>
+                                    Отмена
+                                </Button>
+                                <Button variant="primary" type="submit">
+                                    Отправить
+                                </Button>
+                            </ButtonGroup>
+                        </Form>
+                    )}
+                </Formik>
+            ) : null}
             <AccountCreatedModal show={done} onHide={() => setDone(false)} backdrop="static" keyboard={false} newUser={newUser} />
         </EditAccountStyled>
     );
