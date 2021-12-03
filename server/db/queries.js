@@ -20,13 +20,15 @@ const createAccountAuto = async (req, res) => {
         const existingUser = response1.rows[0];
         if (!existingUser) {
             const query2 = {
-                text: "INSERT INTO users (name, email, password, phone, address) VALUES($1, $2, $3, $4, $5) RETURNING password",
+                text: "INSERT INTO users (name, email, password, phone, address) VALUES($1, $2, $3, $4, $5) RETURNING *",
                 values: [name, email, "12345", phone, address],
             };
             const response2 = await pool.query(query2);
-            return response2.rows[0].password;
+            const newUser = response2.rows[0];
+            newUser.new = true;
+            return newUser;
         } else {
-            return null;
+            return existingUser;
         }
     } catch (error) {
         res.status(500).send(error.stack);
@@ -165,31 +167,50 @@ const forgotPassword = async (req, res) => {
     }
 };
 
-const createOrder = async (req, res) => {
+const createOrder = async (req, res, userID) => {
+    const { article, title, number, price, sum, date } = req.body.cart[0];
+    const cart = req.body.cart;
     console.log(req.body);
-    return 111;
-    // const query1 = {
-    //     text: "SELECT * FROM users WHERE email = $1",
-    //     values: [email],
-    // };
-    // try {
-    //     const response1 = await pool.query(query1);
-    //     const existingUser = response1.rows[0];
-    //     if (!existingUser) {
-    //         const query2 = {
-    //             text: "INSERT INTO users (name, email, password, phone, address) VALUES($1, $2, $3, $4, $5) RETURNING id",
-    //             values: [name, email, password, phone, address],
-    //         };
-    //         const response2 = await pool.query(query2);
-    //         res.status(201).send(`User added with ID: ${response2.rows[0].id}`);
-    //     } else {
-    //         res.status(409).send("Current email already exists");
-    //         return null;
-    //     }
-    // } catch (error) {
-    //     res.status(500).send(error.stack);
-    //     console.log(error.stack);
-    // }
+    console.log("userID " + userID);
+
+    const arrData = [];
+    for (let i = 0; i < cart.length; i++) {
+        const item = [];
+        item.push(cart[i].article);
+        item.push(cart[i].title);
+        item.push(cart[i].number);
+        item.push(cart[i].price);
+        item.push(cart[i].sum);
+        item.push(cart[i].userID);
+        item.push(cart[i].date);
+        arrData.push(item);
+    }
+    console.log(arrData);
+
+    try {
+        /*
+        const query = {
+            text: "INSERT INTO sold_items (article, title, number, price, sum, customer_id, date) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING id",
+            values: [article, title, number, price, sum, userID, date],
+        };
+        const response = await pool.query(query);
+        console.log(response.rows[0]);
+        */
+        // if (!existingUser) {
+        //     const query2 = {
+        //         text: "INSERT INTO users (name, email, password, phone, address) VALUES($1, $2, $3, $4, $5) RETURNING id",
+        //         values: [name, email, password, phone, address],
+        //     };
+        //     const response2 = await pool.query(query2);
+        //     res.status(201).send(`User added with ID: ${response2.rows[0].id}`);
+        // } else {
+        //     res.status(409).send("Current email already exists");
+        //     return null;
+        // }
+    } catch (error) {
+        res.status(500).send(error.stack);
+        console.log(error.stack);
+    }
 };
 
 module.exports = {

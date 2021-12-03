@@ -8,7 +8,7 @@ import FormInput from "./FormInput";
 import itemsAPI from "../api/items";
 import FormCheckBoxRadio from "./FormCheckBoxRadio";
 import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../store/manage";
 import CartSentModal from "./CartSentModal";
 
@@ -74,6 +74,7 @@ const validationSchema = Yup.object().shape({
 });
 
 function CartForm({ cart, priceType, sum }) {
+    const user = useSelector((state) => state.manage.user);
     const [showDone, setShowDone] = useState("hide");
     const [email, setEmail] = useState("");
     const [orderID, setOrderID] = useState(null);
@@ -92,7 +93,7 @@ function CartForm({ cart, priceType, sum }) {
             sum = item.pricemegaopt * item.number;
         }
 
-        return sum.toFixed(2);
+        return Number(sum.toFixed(2));
     };
 
     const getPrice = (item) => {
@@ -120,6 +121,7 @@ function CartForm({ cart, priceType, sum }) {
                 number: cart[i].number,
                 price: getPrice(cart[i]),
                 sum: calcSum(cart[i]),
+                date: Date.now(),
             };
             newCart.push(item);
         }
@@ -128,8 +130,12 @@ function CartForm({ cart, priceType, sum }) {
             cart: newCart,
             customer: values,
             priceType,
-            sum: sum.toFixed(2),
+            sum: Number(sum.toFixed(2)),
         };
+
+        if (user) {
+            data.customer.id = user.id;
+        }
 
         console.log(data);
         dispatch(setLoading(true));
@@ -160,12 +166,12 @@ function CartForm({ cart, priceType, sum }) {
         <CartFormStyled>
             <Formik
                 initialValues={{
-                    name: process.env.NODE_ENV === "development" ? "test" : "",
-                    email: process.env.NODE_ENV === "development" ? "test@test.com" : "",
-                    phone: process.env.NODE_ENV === "development" ? "+375111222333" : "",
+                    name: user ? user.name : "",
+                    email: user ? user.email : "",
+                    phone: user ? user.phone : "",
                     payment_method: "Безналичный расчет (для юридических лиц)",
                     delivery: "по Минску",
-                    address: "",
+                    address: user ? user.address : "",
                     comment: "",
                 }}
                 validationSchema={validationSchema}

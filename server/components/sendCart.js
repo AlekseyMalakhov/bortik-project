@@ -31,7 +31,7 @@ const createRows = (cart) => {
     return str;
 };
 
-const createHTML = (data, password, orderId) => {
+const createHTML = (data, newUser, orderId) => {
     const part1 = `<p>Благодарим за покупку!</p>
     <p>Заказ в магазине Bortik Project успешно оформлен. Номер заказа ${orderId}</p>
     <table style="font-family: sans-serif; width: 100%; border-collapse: collapse;">
@@ -58,11 +58,11 @@ const createHTML = (data, password, orderId) => {
         <p>Комментарий: ${data.customer.comment}</p>
         <p>Способ оплаты: ${data.customer.payment_method}</p>
         <p>Доставка: ${data.customer.delivery}</p>`;
-    const part4 = password
+    const part4 = newUser
         ? `
     <p>Просмотреть историю заказов Вы можете в Личном кабинете</p>
     <p>Login: ${data.customer.email}</p>
-    <p>Password: ${password}</p>
+    <p>Password: ${newUser.password}</p>
     `
         : "";
     const part5 = `
@@ -76,16 +76,28 @@ const createHTML = (data, password, orderId) => {
 
 const sendCart = async (req, res) => {
     const data = req.body;
-    const password = await db.createAccountAuto(req, res);
-    const orderID = await db.createOrder(req, res);
-    const html = createHTML(data, password, orderID);
-    run(html, data.customer.email, orderID)
-        .then(() => {
-            res.status(200).send({ orderID });
-        })
-        .catch((err) => {
-            res.status(500).send(err);
-        });
+    let newUser;
+    let userID;
+    if (data.customer.id) {
+        userID = data.customer.id;
+    } else {
+        const user = await db.createAccountAuto(req, res);
+        if (user.new) {
+            newUser = user;
+        }
+        userID = user.id;
+    }
+    console.log("newUser " + newUser);
+    console.log("userID " + userID);
+    const orderID = await db.createOrder(req, res, userID);
+    // const html = createHTML(data, newUser, orderID);
+    // run(html, data.customer.email, orderID)
+    //     .then(() => {
+    //         res.status(200).send({ orderID });
+    //     })
+    //     .catch((err) => {
+    //         res.status(500).send(err);
+    //     });
 };
 
 module.exports = sendCart;
