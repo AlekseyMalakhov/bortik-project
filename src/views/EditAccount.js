@@ -59,7 +59,7 @@ function EditAccount() {
     const user = useSelector((state) => state.manage.user);
     const [error, setError] = useState("");
     const [done, setDone] = useState(false);
-    const [newUser, setNewUser] = useState(null);
+    const [updatedUser, setUpdatedUser] = useState(null);
 
     const handleSubmit = (values) => {
         console.log(values);
@@ -67,14 +67,33 @@ function EditAccount() {
             setError("Пароль и повтор пароля не совпадают!");
             return;
         }
+        let data;
+        if (values.changePassword) {
+            data = { ...values };
+            delete data.repeatNewPassword;
+            delete data.changePassword;
+        } else {
+            data = {
+                name: values.name,
+                phone: values.phone,
+                email: values.email,
+                address: values.address,
+                password: values.password,
+            };
+        }
         setError("");
         dispatch(setLoading(true));
         userAPI
-            .editAccount(values)
+            .editAccount(data, user.id)
             .then((response) => {
                 dispatch(setLoading(false));
                 if (response.status === 200) {
-                    setNewUser(values);
+                    const updatedUser = { ...data };
+                    delete updatedUser.password;
+                    if (updatedUser.newPassword) {
+                        delete updatedUser.newPassword;
+                    }
+                    setUpdatedUser(updatedUser);
                     setDone(true);
                 } else if (response.status === 409) {
                     setError("Данный email уже зарегистрирован!");
@@ -102,7 +121,7 @@ function EditAccount() {
                         name: user.name,
                         phone: user.phone,
                         email: user.email,
-                        address: user.address,
+                        address: user.address ? user.address : "",
                         password: "",
                         changePassword: false,
                         newPassword: "",
@@ -140,7 +159,7 @@ function EditAccount() {
                     )}
                 </Formik>
             ) : null}
-            <AccountEditedModal show={done} onHide={() => setDone(false)} backdrop="static" keyboard={false} newUser={newUser} />
+            <AccountEditedModal show={done} onHide={() => setDone(false)} backdrop="static" keyboard={false} updatedUser={updatedUser} />
         </EditAccountStyled>
     );
 }

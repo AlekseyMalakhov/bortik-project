@@ -6,12 +6,13 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setUser } from "../store/manage";
 
-function AccountEditedModal({ show, onHide, newUser, ...otherProps }) {
+function AccountEditedModal({ show, onHide, updatedUser, ...otherProps }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const close = () => {
         onHide();
+        console.log(updatedUser);
         // const user = { ...newUser };
         // delete user.password;
         // delete user.repeatPassword;
@@ -22,10 +23,10 @@ function AccountEditedModal({ show, onHide, newUser, ...otherProps }) {
 
     return (
         <React.Fragment>
-            {newUser ? (
+            {updatedUser ? (
                 <Modal show={show} {...otherProps} size="sm" centered>
                     <Modal.Body>
-                        <div style={{ marginBottom: "10px", textAlign: "center" }}>Аккаунт отредактирован успешно!</div>
+                        <div style={{ marginBottom: "10px", textAlign: "center" }}>Аккаунт успешно отредактирован!</div>
                     </Modal.Body>
                     <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>
                         <Button onClick={close}>На главную</Button>

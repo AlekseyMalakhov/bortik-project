@@ -61,13 +61,11 @@ const createAccount = async (req, res) => {
 };
 
 const editAccount = async (req, res) => {
-    const { name, email, password, phone, address } = req.body;
+    const id = req.params.id;
+    //const { name, email, password, phone, address } = req.body;
+    console.log("id= " + id);
     console.log(req.body);
-    res.status(200).send("hi");
-    // const query1 = {
-    //     text: "SELECT * FROM users WHERE email = $1",
-    //     values: [email],
-    // };
+
     // try {
     //     const response1 = await pool.query(query1);
     //     const existingUser = response1.rows[0];

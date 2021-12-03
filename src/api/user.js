@@ -9,9 +9,9 @@ const createAccount = (data) => {
         .catch((error) => error.response);
 };
 
-const editAccount = (data) => {
+const editAccount = (data, userId) => {
     return client
-        .post("/editAccount", data)
+        .put("/editAccount/" + userId, data)
         .then((response) => {
             return response;
         })
