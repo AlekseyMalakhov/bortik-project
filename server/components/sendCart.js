@@ -1,11 +1,11 @@
 const db = require("../db/queries");
 const transporter = require("./nodeMailerClient");
 
-async function run(html, email, password) {
+async function run(html, email, orderID) {
     let info = await transporter.sendMail({
         from: '"Bortik Project" <cart@bortikproject.com>',
         to: email,
-        subject: "Bortik Project. Заказ №12345",
+        subject: "Bortik Project. Заказ №" + orderID,
         text: "Заказ в магазине Bortik Project успешно оформлен. Номер заказа 12345",
         html: html,
     });
@@ -79,7 +79,7 @@ const sendCart = async (req, res) => {
     const password = await db.createAccountAuto(req, res);
     const orderID = await db.createOrder(req, res);
     const html = createHTML(data, password, orderID);
-    run(html, data.customer.email)
+    run(html, data.customer.email, orderID)
         .then(() => {
             res.status(200).send({ orderID });
         })
