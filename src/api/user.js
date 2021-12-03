@@ -9,6 +9,15 @@ const createAccount = (data) => {
         .catch((error) => error.response);
 };
 
+const editAccount = (data) => {
+    return client
+        .post("/editAccount", data)
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => error.response);
+};
+
 const login = (data) => {
     return client
         .post("/login", data)
@@ -31,6 +40,7 @@ const userAPI = {
     createAccount,
     login,
     forgotPassword,
+    editAccount,
 };
 
 export default userAPI;
