@@ -10,17 +10,11 @@ const CheckStyled = styled(Form.Check)({
 });
 
 function FormCheckBoxSwitch({ name, label, value, ...otherProps }) {
-    const { setFieldValue, values } = useFormikContext();
+    const { values, handleChange } = useFormikContext();
     return (
-        <CheckStyled
-            name={name}
-            label={label}
-            type="switch"
-            id={"switch_" + value}
-            value={value}
-            checked={values[name] === value}
-            onChange={(e) => setFieldValue(name, value)}
-        />
+        <React.Fragment>
+            <CheckStyled name={name} label={label} type="switch" id={"switch_" + value} onChange={handleChange} />
+        </React.Fragment>
     );
 }
 

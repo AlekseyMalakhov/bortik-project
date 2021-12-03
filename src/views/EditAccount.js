@@ -43,8 +43,8 @@ const validationSchema = Yup.object().shape({
     name: Yup.string().required("Укажите имя"),
     phone: Yup.string().required("Укажите телефон"),
     email: Yup.string().required("Укажите email").email("Укажите email"),
-    password: Yup.string().required("Введите пароль"),
-    repeatPassword: Yup.string().required("Введите пароль"),
+    // password: Yup.string().required("Введите пароль"),
+    // repeatPassword: Yup.string().required("Введите пароль"),
 });
 
 function EditAccount() {
@@ -96,12 +96,12 @@ function EditAccount() {
             <Formik
                 initialValues={{
                     name: "",
-                    // phone: "",
-                    // email: "",
-                    // // password: "",
+                    phone: "",
+                    email: "",
+                    // password: "",
                     // repeatPassword: "",
-                    //address: "",
-                    //changePassword: false,
+                    address: "",
+                    changePassword: false,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
@@ -109,10 +109,10 @@ function EditAccount() {
                 {({ handleSubmit }) => (
                     <Form noValidate onSubmit={handleSubmit} style={{ maxWidth: "400px", width: "100%" }}>
                         <FormInput name="name" label="ФИО*" />
-                        {/* <FormInput name="phone" label="Телефон*" inputMode="tel" placeholder={"+375xxxxxxxxx"} />
-                            <FormInput name="email" label="Email*" inputMode="email" />
-                            <FormInput name="address" label="Адрес доставки по умолчанию" /> */}
-                        {/* <FormCheckBoxSwitch name="changePassword" label="Изменить пароль" /> */}
+                        <FormInput name="phone" label="Телефон*" inputMode="tel" placeholder={"+375xxxxxxxxx"} />
+                        <FormInput name="email" label="Email*" inputMode="email" />
+                        <FormInput name="address" label="Адрес доставки по умолчанию" />
+                        <FormCheckBoxSwitch name="changePassword" label="Изменить пароль" />
 
                         {/* <FormInput name="password" label="Пароль*" type="password" />
                         <FormInput name="repeatPassword" label="Повторите пароль*" type="password" /> */}
