@@ -62,28 +62,19 @@ const createAccount = async (req, res) => {
 
 const editAccount = async (req, res) => {
     const id = req.params.id;
-    //const { name, email, password, phone, address } = req.body;
-    console.log("id= " + id);
-    console.log(req.body);
+    const { name, email, password, phone, address } = req.body;
 
-    // try {
-    //     const response1 = await pool.query(query1);
-    //     const existingUser = response1.rows[0];
-    //     if (!existingUser) {
-    //         const query2 = {
-    //             text: "INSERT INTO users (name, email, password, phone, address) VALUES($1, $2, $3, $4, $5) RETURNING id",
-    //             values: [name, email, password, phone, address],
-    //         };
-    //         const response2 = await pool.query(query2);
-    //         res.status(201).send(`User added with ID: ${response2.rows[0].id}`);
-    //     } else {
-    //         res.status(409).send("Current email already exists");
-    //         return null;
-    //     }
-    // } catch (error) {
-    //     res.status(500).send(error.stack);
-    //     console.log(error.stack);
-    // }
+    try {
+        const query = {
+            text: "UPDATE users SET name = ($1), email = ($2), password = ($3), phone = ($4), address = ($5) WHERE id = ($6)",
+            values: [name, email, password, phone, address, id],
+        };
+        const response = await pool.query(query);
+        res.status(200).send(`User saved. ${response.rows[0]}`);
+    } catch (error) {
+        res.status(500).send(error.stack);
+        console.log(error.stack);
+    }
 };
 
 const login = async (req, res) => {
