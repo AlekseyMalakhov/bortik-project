@@ -29,6 +29,7 @@ const Title = styled.div({
 
 const Error = styled.div({
     color: "red",
+    marginTop: "10px",
     marginBottom: "10px",
 });
 
@@ -93,10 +94,11 @@ function EditAccount() {
                     if (updatedUser.newPassword) {
                         delete updatedUser.newPassword;
                     }
+                    updatedUser.id = user.id;
                     setUpdatedUser(updatedUser);
                     setDone(true);
-                } else if (response.status === 409) {
-                    setError("Данный email уже зарегистрирован!");
+                } else if (response.status === 401) {
+                    setError("Неверный пароль");
                 } else {
                     setError("Неизвестная ошибка! Обратитесь в службу поддержки.");
                 }

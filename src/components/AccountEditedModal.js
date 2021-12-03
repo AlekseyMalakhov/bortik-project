@@ -12,13 +12,9 @@ function AccountEditedModal({ show, onHide, updatedUser, ...otherProps }) {
 
     const close = () => {
         onHide();
-        console.log(updatedUser);
-        // const user = { ...newUser };
-        // delete user.password;
-        // delete user.repeatPassword;
-        // dispatch(setUser(user));
-        // localStorage.setItem("user", JSON.stringify(user));
-        // navigate("/");
+        dispatch(setUser(updatedUser));
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        navigate("/account");
     };
 
     return (
@@ -29,7 +25,9 @@ function AccountEditedModal({ show, onHide, updatedUser, ...otherProps }) {
                         <div style={{ marginBottom: "10px", textAlign: "center" }}>Аккаунт успешно отредактирован!</div>
                     </Modal.Body>
                     <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>
-                        <Button onClick={close}>На главную</Button>
+                        <Button onClick={close} style={{ width: "80px" }}>
+                            OK
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             ) : null}

@@ -65,12 +65,22 @@ const editAccount = async (req, res) => {
     const { name, email, password, phone, address } = req.body;
 
     try {
+        const query1 = {
+            text: "SELECT password FROM users WHERE id = $1",
+            values: [id],
+        };
+        const response1 = await pool.query(query1);
+        const userPassword = response1.rows[0].password;
+        if (userPassword !== password) {
+            return res.status(401).send("Invalid password.");
+        }
+
         const query = {
-            text: "UPDATE users SET name = ($1), email = ($2), password = ($3), phone = ($4), address = ($5) WHERE id = ($6)",
-            values: [name, email, password, phone, address, id],
+            text: "UPDATE users SET name = ($1), email = ($2), phone = ($3), address = ($4) WHERE id = ($5) RETURNING id",
+            values: [name, email, phone, address, id],
         };
         const response = await pool.query(query);
-        res.status(200).send(`User saved. ${response.rows[0]}`);
+        res.status(200).send(`User with id = ${response.rows[0].id} updated`);
     } catch (error) {
         res.status(500).send(error.stack);
         console.log(error.stack);

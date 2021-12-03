@@ -58,9 +58,10 @@ function Login() {
                     dispatch(setUser(response.data));
                     localStorage.setItem("user", JSON.stringify(response.data));
                     navigate("/account");
-                } else {
+                } else if (response.status === 401) {
                     setError("Неверный логин или пароль");
-                    console.log("error");
+                } else {
+                    setError("Неизвестная ошибка! Обратитесь в службу поддержки.");
                 }
             })
             .catch((err) => {
