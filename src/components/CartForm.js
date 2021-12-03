@@ -76,6 +76,7 @@ const validationSchema = Yup.object().shape({
 function CartForm({ cart, priceType, sum }) {
     const [showDone, setShowDone] = useState("hide");
     const [email, setEmail] = useState("");
+    const [orderID, setOrderID] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -137,6 +138,7 @@ function CartForm({ cart, priceType, sum }) {
             .then((response) => {
                 dispatch(setLoading(false));
                 if (response.status === 200) {
+                    setOrderID(response.data.orderID);
                     setShowDone("OK");
                 } else {
                     setShowDone("Error");
@@ -206,6 +208,7 @@ function CartForm({ cart, priceType, sum }) {
                 keyboard={false}
                 email={email}
                 showDone={showDone}
+                orderID={orderID}
             />
         </CartFormStyled>
     );

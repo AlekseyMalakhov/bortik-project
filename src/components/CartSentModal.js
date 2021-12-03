@@ -8,7 +8,7 @@ import { cleanCart } from "../store/manage";
 
 const CartSentModalStyled = styled.div({});
 
-function CartSentModal({ onHide, email, showDone, ...otherProps }) {
+function CartSentModal({ onHide, email, showDone, orderID, ...otherProps }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ function CartSentModal({ onHide, email, showDone, ...otherProps }) {
                     <Modal.Body>
                         <h5 style={{ textAlign: "center" }}>Заказ отправлен!</h5>
                         <p>
-                            Номер Вашего заказа <b>12345</b>. Подтверждение заказа отправлено на Ваш email: <b>{email}</b>
+                            Номер Вашего заказа <b>{orderID}</b>. Подтверждение заказа отправлено на Ваш email: <b>{email}</b>
                         </p>
                         <p>В ближайшее время с Вами свяжется наш менеджер для уточнения деталей доставки.</p>
                     </Modal.Body>

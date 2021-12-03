@@ -63,7 +63,6 @@ function EditAccount() {
     const [updatedUser, setUpdatedUser] = useState(null);
 
     const handleSubmit = (values) => {
-        console.log(values);
         if (values.changePassword && values.newPassword !== values.repeatNewPassword) {
             setError("Пароль и повтор пароля не совпадают!");
             return;

@@ -31,9 +31,9 @@ const createRows = (cart) => {
     return str;
 };
 
-const createHTML = (data, password) => {
+const createHTML = (data, password, orderId) => {
     const part1 = `<p>Благодарим за покупку!</p>
-    <p>Заказ в магазине Bortik Project успешно оформлен. Номер заказа 12345</p>
+    <p>Заказ в магазине Bortik Project успешно оформлен. Номер заказа ${orderId}</p>
     <table style="font-family: sans-serif; width: 100%; border-collapse: collapse;">
     <tr>
         <th style="border: 1px solid black; padding: 5px 5px;">Номер</th>
@@ -77,10 +77,11 @@ const createHTML = (data, password) => {
 const sendCart = async (req, res) => {
     const data = req.body;
     const password = await db.createAccountAuto(req, res);
-    const html = createHTML(data, password);
+    const orderID = await db.createOrder(req, res);
+    const html = createHTML(data, password, orderID);
     run(html, data.customer.email)
         .then(() => {
-            res.status(200).send(html);
+            res.status(200).send({ orderID });
         })
         .catch((err) => {
             res.status(500).send(err);
