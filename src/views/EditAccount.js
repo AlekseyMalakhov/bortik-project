@@ -139,6 +139,8 @@ function EditAccount() {
                             <FormInput name="email" label="Email*" inputMode="email" />
                             <FormInput name="address" label="Адрес доставки по умолчанию" />
                             <FormInput name="password" label={values.changePassword ? "Текущий пароль*" : "Пароль*"} type="password" />
+                            {error !== "" ? <Error>{error}</Error> : null}
+
                             <FormCheckBoxSwitch name="changePassword" label="Изменить пароль" />
                             {values.changePassword ? (
                                 <PasswordGroup>
@@ -146,8 +148,6 @@ function EditAccount() {
                                     <FormInput name="repeatNewPassword" label="Повторите новый пароль*" type="password" />
                                 </PasswordGroup>
                             ) : null}
-
-                            {error !== "" ? <Error>{error}</Error> : null}
 
                             <ButtonGroup>
                                 <Button variant="outline-primary" onClick={cancel}>
