@@ -194,7 +194,18 @@ const createOrder = async (req, res, userID) => {
         console.log(sql);
 
         const response = await pool.query(sql);
-        console.log(response.rows[0]);
+        console.log(response.rows);
+        if (response.rows.length > 0) {
+            const arrOfItemsId = response.rows.map((item) => item.id);
+            console.log(arrOfItemsId);
+
+            // const query2 = {
+            //     text: "INSERT INTO users (name, email, password, phone, address) VALUES($1, $2, $3, $4, $5) RETURNING id",
+            //     values: [name, email, password, phone, address],
+            // };
+            // const response2 = await pool.query(query2);
+            // res.status(201).send(`User added with ID: ${response2.rows[0].id}`);
+        }
 
         // if (!existingUser) {
         //     const query2 = {

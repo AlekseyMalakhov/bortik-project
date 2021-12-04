@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import CleanCartButton from "./CleanCartButton";
 import AskCleanCartModal from "./AskCleanCartModal";
 import { cleanCart } from "../store/manage";
+import { calculateSum } from "../utilities/calculate";
 
 const CartPanelStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
     const getLeft = () => {
@@ -64,27 +65,9 @@ function CartPanel() {
     const sum = useSelector((state) => state.manage.cartSum);
     const [showAsk, setShowAsk] = useState(false);
 
-    const calculateSum = (cart) => {
-        let sum = 0;
-        for (let i = 0; i < cart.length; i++) {
-            let price;
-            if (priceType === "с НДС") {
-                price = cart[i].price;
-            }
-            if (priceType === "без НДС") {
-                price = cart[i].priceopt;
-            }
-            if (priceType === "без НДС (от 250р)") {
-                price = cart[i].pricemegaopt;
-            }
-            sum = sum + price * cart[i].number;
-        }
-        return sum;
-    };
-
     useEffect(() => {
         if (cart.length > 0) {
-            const sum = calculateSum(cart);
+            const sum = calculateSum(cart, priceType);
             dispatch(setCartSum(sum));
         }
         if (cart.length === 0) {

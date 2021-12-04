@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Header from "./components/Header";
 import styled from "@emotion/styled";
 import handleScreenSize from "./settings/screenWidth";
-import { getItems, setUser } from "./store/manage";
+import { getItems, setUser, setPriceType } from "./store/manage";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
@@ -15,6 +15,7 @@ import Account from "./views/Account";
 import Register from "./views/Register";
 import ForgotPassword from "./views/ForgotPassword";
 import EditAccount from "./views/EditAccount";
+import priceTypes from "./settings/priceTypes";
 
 const AppStyled = styled.div({
     height: "100%",
@@ -30,6 +31,15 @@ function App() {
         if (user) {
             dispatch(setUser(JSON.parse(user)));
         }
+        const priceType = localStorage.getItem("price_type");
+        if (priceType) {
+            dispatch(setPriceType(priceType));
+        } else {
+            dispatch(setPriceType(priceTypes[0]));
+        }
+        // if (priceType) {
+        //     dispatch(getItems());
+        // }
     }, []);
     return (
         <AppStyled>

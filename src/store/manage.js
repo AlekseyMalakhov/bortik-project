@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import itemsAPI from "../api/items";
+import { calculateSum } from "../utilities/calculate";
 
 export const getItems = createAsyncThunk("manage/getItems", async (amount) => {
     const response = await itemsAPI.getItems();
@@ -105,6 +106,8 @@ export const manageSlice = createSlice({
                     if (cart) {
                         const data = JSON.parse(cart);
                         state.cart = data;
+                        const sum = calculateSum(data, state.priceType);
+                        state.cartSum = sum;
                     }
                 }
                 console.log(action.payload);
