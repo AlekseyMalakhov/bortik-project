@@ -1,6 +1,7 @@
 const Pool = require("pg").Pool;
 require("dotenv").config({ path: "../../project_env/.env" }); //just for dev environment
 const transporter = require("../components/nodeMailerClient");
+const format = require("pg-format");
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -170,6 +171,7 @@ const forgotPassword = async (req, res) => {
 const createOrder = async (req, res, userID) => {
     const { article, title, number, price, sum, date } = req.body.cart[0];
     const cart = req.body.cart;
+    const customer = req.body.customer;
     console.log(req.body);
     console.log("userID " + userID);
 
@@ -181,21 +183,19 @@ const createOrder = async (req, res, userID) => {
         item.push(cart[i].number);
         item.push(cart[i].price);
         item.push(cart[i].sum);
-        item.push(cart[i].userID);
+        item.push(customer.id);
         item.push(cart[i].date);
         arrData.push(item);
     }
-    console.log(arrData);
+    //console.log(arrData);
 
     try {
-        /*
-        const query = {
-            text: "INSERT INTO sold_items (article, title, number, price, sum, customer_id, date) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING id",
-            values: [article, title, number, price, sum, userID, date],
-        };
-        const response = await pool.query(query);
+        const sql = format("INSERT INTO sold_items (article, title, number, price, sum, customer_id, date) VALUES %L RETURNING id", arrData);
+        console.log(sql);
+
+        const response = await pool.query(sql);
         console.log(response.rows[0]);
-        */
+
         // if (!existingUser) {
         //     const query2 = {
         //         text: "INSERT INTO users (name, email, password, phone, address) VALUES($1, $2, $3, $4, $5) RETURNING id",
