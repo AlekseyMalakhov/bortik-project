@@ -121,7 +121,6 @@ function CartForm({ cart, priceType, sum }) {
                 number: cart[i].number,
                 price: getPrice(cart[i]),
                 sum: calcSum(cart[i]),
-                date: Date.now(),
             };
             newCart.push(item);
         }
@@ -131,6 +130,7 @@ function CartForm({ cart, priceType, sum }) {
             customer: values,
             priceType,
             sum: Number(sum.toFixed(2)),
+            date: Date.now(),
         };
 
         if (user) {

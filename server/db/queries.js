@@ -169,11 +169,7 @@ const forgotPassword = async (req, res) => {
 };
 
 const createOrder = async (req, res, userID) => {
-    const { article, title, number, price, sum, date } = req.body.cart[0];
-    const cart = req.body.cart;
-    const customer = req.body.customer;
-    console.log(req.body);
-    console.log("userID " + userID);
+    const { cart, date, priceType, sum } = req.body;
 
     const arrData = [];
     for (let i = 0; i < cart.length; i++) {
@@ -183,41 +179,25 @@ const createOrder = async (req, res, userID) => {
         item.push(cart[i].number);
         item.push(cart[i].price);
         item.push(cart[i].sum);
-        item.push(customer.id);
-        item.push(cart[i].date);
+        item.push(userID);
+        item.push(date);
         arrData.push(item);
     }
-    //console.log(arrData);
 
     try {
         const sql = format("INSERT INTO sold_items (article, title, number, price, sum, customer_id, date) VALUES %L RETURNING id", arrData);
-        console.log(sql);
-
         const response = await pool.query(sql);
-        console.log(response.rows);
         if (response.rows.length > 0) {
             const arrOfItemsId = response.rows.map((item) => item.id);
             console.log(arrOfItemsId);
 
-            // const query2 = {
-            //     text: "INSERT INTO users (name, email, password, phone, address) VALUES($1, $2, $3, $4, $5) RETURNING id",
-            //     values: [name, email, password, phone, address],
-            // };
-            // const response2 = await pool.query(query2);
-            // res.status(201).send(`User added with ID: ${response2.rows[0].id}`);
+            const query2 = {
+                text: "INSERT INTO orders (customer_id, date, price_type, items, sum) VALUES($1, $2, $3, $4, $5) RETURNING id",
+                values: [userID, date, priceType, arrOfItemsId, sum],
+            };
+            const response2 = await pool.query(query2);
+            return response2.rows[0].id;
         }
-
-        // if (!existingUser) {
-        //     const query2 = {
-        //         text: "INSERT INTO users (name, email, password, phone, address) VALUES($1, $2, $3, $4, $5) RETURNING id",
-        //         values: [name, email, password, phone, address],
-        //     };
-        //     const response2 = await pool.query(query2);
-        //     res.status(201).send(`User added with ID: ${response2.rows[0].id}`);
-        // } else {
-        //     res.status(409).send("Current email already exists");
-        //     return null;
-        // }
     } catch (error) {
         res.status(500).send(error.stack);
         console.log(error.stack);

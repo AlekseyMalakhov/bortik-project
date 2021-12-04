@@ -90,14 +90,15 @@ const sendCart = async (req, res) => {
     console.log("newUser " + newUser);
     console.log("userID " + userID);
     const orderID = await db.createOrder(req, res, userID);
-    // const html = createHTML(data, newUser, orderID);
-    // run(html, data.customer.email, orderID)
-    //     .then(() => {
-    //         res.status(200).send({ orderID });
-    //     })
-    //     .catch((err) => {
-    //         res.status(500).send(err);
-    //     });
+    console.log("Order ID " + orderID);
+    const html = createHTML(data, newUser, orderID);
+    run(html, data.customer.email, orderID)
+        .then(() => {
+            res.status(200).send({ orderID });
+        })
+        .catch((err) => {
+            res.status(500).send(err);
+        });
 };
 
 module.exports = sendCart;
