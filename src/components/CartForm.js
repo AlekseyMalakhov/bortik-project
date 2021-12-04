@@ -174,6 +174,7 @@ function CartForm({ cart, priceType, sum }) {
                     address: user ? user.address : "",
                     comment: "",
                 }}
+                enableReinitialize
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
