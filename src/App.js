@@ -16,6 +16,7 @@ import Register from "./views/Register";
 import ForgotPassword from "./views/ForgotPassword";
 import EditAccount from "./views/EditAccount";
 import priceTypes from "./settings/priceTypes";
+import { getHistory } from "./store/manage";
 
 const AppStyled = styled.div({
     height: "100%",
@@ -30,6 +31,7 @@ function App() {
         const user = localStorage.getItem("user");
         if (user) {
             dispatch(setUser(JSON.parse(user)));
+            dispatch(getHistory());
         }
         const priceType = localStorage.getItem("price_type");
         if (priceType) {

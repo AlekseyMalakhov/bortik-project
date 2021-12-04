@@ -24,6 +24,7 @@ app.post("/api/createAccount", db.createAccount);
 app.put("/api/editAccount/:id", db.editAccount);
 app.post("/api/login", db.login);
 app.post("/api/forgotPassword", db.forgotPassword);
+app.post("/api/getHistory", db.getHistory);
 
 // Error handler
 app.use(function (err, req, res, next) {

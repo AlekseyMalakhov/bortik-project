@@ -36,11 +36,21 @@ const forgotPassword = (email) => {
         .catch((error) => error.response);
 };
 
+const getHistory = (userID) => {
+    return client
+        .post("/getHistory", userID)
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => error.response);
+};
+
 const userAPI = {
     createAccount,
     login,
     forgotPassword,
     editAccount,
+    getHistory,
 };
 
 export default userAPI;

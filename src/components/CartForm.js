@@ -137,7 +137,6 @@ function CartForm({ cart, priceType, sum }) {
             data.customer.id = user.id;
         }
 
-        console.log(data);
         dispatch(setLoading(true));
         itemsAPI
             .sendCart(data)

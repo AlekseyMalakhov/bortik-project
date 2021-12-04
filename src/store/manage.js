@@ -1,9 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import itemsAPI from "../api/items";
+import userAPI from "../api/user";
 import { calculateSum } from "../utilities/calculate";
 
-export const getItems = createAsyncThunk("manage/getItems", async (amount) => {
+export const getItems = createAsyncThunk("manage/getItems", async () => {
     const response = await itemsAPI.getItems();
+    return response;
+});
+
+export const getHistory = createAsyncThunk("manage/getHistory", async () => {
+    const response = await userAPI.getHistory();
     return response;
 });
 
@@ -111,6 +117,16 @@ export const manageSlice = createSlice({
                     }
                 }
                 console.log(action.payload);
+            });
+        builder
+            .addCase(getHistory.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(getHistory.fulfilled, (state, action) => {
+                state.loading = false;
+                if (action.payload) {
+                    console.log(action.payload);
+                }
             });
     },
 });

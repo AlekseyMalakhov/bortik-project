@@ -87,10 +87,7 @@ const sendCart = async (req, res) => {
         }
         userID = user.id;
     }
-    console.log("newUser " + newUser);
-    console.log("userID " + userID);
     const orderID = await db.createOrder(req, res, userID);
-    console.log("Order ID " + orderID);
     const html = createHTML(data, newUser, orderID);
     run(html, data.customer.email, orderID)
         .then(() => {
