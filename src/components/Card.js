@@ -14,7 +14,7 @@ const CardStyled = styled(Container)`
     background-color: white;
     margin: 10px 10px;
     padding: 10px 10px;
-    max-width: 1200px;
+    max-width: 1210px;
 `;
 
 const MyRow = styled(Row)`
@@ -42,7 +42,7 @@ const Prices = styled(Col)`
     min-width: 250px;
 `;
 
-const MyColAddRemove = styled.div(({ sideBarOpened, mobileScreen }) => {
+const MyColAddRemove = styled(Col)(({ sideBarOpened, mobileScreen }) => {
     return {
         display: sideBarOpened && mobileScreen ? "none" : "flex",
         justifyContent: "center",
@@ -122,10 +122,8 @@ function Card({ item }) {
                         </div>
                     )}
                 </Prices>
-                <MyColAddRemove sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
-                    <MyCol xs="auto" sm={2}>
-                        <AddRemove item={item} inCart={inCart} />
-                    </MyCol>
+                <MyColAddRemove sideBarOpened={sideBarOpened} mobileScreen={mobileScreen} xs="auto" sm={2}>
+                    <AddRemove item={item} inCart={inCart} />
                 </MyColAddRemove>
             </MyRow>
 
