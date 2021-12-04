@@ -28,10 +28,12 @@ function App() {
     useEffect(() => {
         handleScreenSize();
         dispatch(getItems());
-        const user = localStorage.getItem("user");
+        const userStr = localStorage.getItem("user");
+        const user = JSON.parse(userStr);
+        console.log(getHistory);
         if (user) {
-            dispatch(setUser(JSON.parse(user)));
-            dispatch(getHistory());
+            dispatch(setUser(user));
+            dispatch(getHistory(user.id));
         }
         const priceType = localStorage.getItem("price_type");
         if (priceType) {

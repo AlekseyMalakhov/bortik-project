@@ -205,12 +205,21 @@ const createOrder = async (req, res, userID) => {
 };
 
 const getHistory = async (req, res) => {
-    //const { email, password } = req.body;
+    const { userID } = req.body;
+    console.log(userID);
     res.status(200).send("hi");
-    // const query1 = {
-    //     text: "SELECT * FROM users WHERE email = $1",
-    //     values: [email],
-    // };
+    const query1 = {
+        text: "SELECT * FROM orders WHERE customer_id = $1",
+        values: [userID],
+    };
+    try {
+        const response1 = await pool.query(query1);
+        const history = response1.rows;
+        console.log(history);
+    } catch (error) {
+        res.status(500).send(error.stack);
+        console.log(error.stack);
+    }
     // try {
     //     const response1 = await pool.query(query1);
     //     const user = response1.rows[0];

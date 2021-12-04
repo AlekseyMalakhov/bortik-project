@@ -8,8 +8,8 @@ export const getItems = createAsyncThunk("manage/getItems", async () => {
     return response;
 });
 
-export const getHistory = createAsyncThunk("manage/getHistory", async () => {
-    const response = await userAPI.getHistory();
+export const getHistory = createAsyncThunk("manage/getHistory", async (userID) => {
+    const response = await userAPI.getHistory({ userID });
     return response;
 });
 
