@@ -8,8 +8,7 @@ import { addItemToCart, removeItemFromCart } from "../store/manage";
 const AddRemoveStyled = styled.div({
     display: "flex",
     justifyContent: "center",
-    marginRight: "10px",
-    marginLeft: "10px",
+    margin: "10px 10px",
 });
 
 const MyInput = styled(Form.Control)`

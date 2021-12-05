@@ -42,12 +42,12 @@ const Prices = styled(Col)`
     max-width: 200px;
 `;
 
-const MyColAddRemove = styled.div(({ sideBarOpened, mobileScreen }) => {
-    return {
-        display: sideBarOpened && mobileScreen ? "none" : "flex",
-        justifyContent: "center",
-    };
-});
+// const MyColAddRemove = styled.div(({ sideBarOpened, mobileScreen }) => {
+//     return {
+//         display: sideBarOpened && mobileScreen ? "none" : "flex",
+//         justifyContent: "center",
+//     };
+// });
 
 const RetailPrice = styled.div({
     //backgroundColor: "#69F0AE",
@@ -133,11 +133,11 @@ function Card({ item }) {
                         </div>
                     ) : null}
                 </Prices>
-                <Col xs="auto">
-                    <MyColAddRemove sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
+                {sideBarOpened && mobileScreen ? null : (
+                    <Col xs="auto">
                         <AddRemove item={item} inCart={inCart} />
-                    </MyColAddRemove>
-                </Col>
+                    </Col>
+                )}
             </MyRow>
 
             <ShowPic item={showImage} fullscreen={true} onHide={() => setShowImage(false)} />
