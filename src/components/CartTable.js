@@ -3,7 +3,10 @@ import styled from "@emotion/styled";
 import Table from "react-bootstrap/Table";
 import TableRow from "./TableRow";
 
-const CartTableStyled = styled.div({});
+const CartTableStyled = styled.div({
+    width: "100%",
+    maxWidth: "1000px",
+});
 
 const EmptyCart = styled.div({
     textAlign: "center",

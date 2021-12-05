@@ -9,10 +9,16 @@ const Title = styled.div({
     margin: "20px 10px",
     fontSize: "20px",
     fontWeight: "500",
+    maxWidth: "1000px",
 });
 
 const CartStyled = styled.div({
-    margin: "10px 10px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginBottom: "20px",
+    marginRight: "10px",
+    marginLeft: "10px",
 });
 
 function Cart() {

@@ -14,6 +14,8 @@ import CartSentModal from "./CartSentModal";
 
 const CartFormStyled = styled.div({
     marginTop: "30px",
+    maxWidth: "1000px",
+    width: "100%",
 });
 
 const CheckGroup = styled.div({
