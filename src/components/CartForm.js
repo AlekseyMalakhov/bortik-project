@@ -9,7 +9,7 @@ import itemsAPI from "../api/items";
 import FormCheckBoxRadio from "./FormCheckBoxRadio";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "../store/manage";
+import { setLoading, getHistory } from "../store/manage";
 import CartSentModal from "./CartSentModal";
 
 const CartFormStyled = styled.div({
@@ -146,6 +146,7 @@ function CartForm({ cart, priceType, sum }) {
                 dispatch(setLoading(false));
                 if (response.status === 200) {
                     setOrderID(response.data.orderID);
+                    dispatch(getHistory(user.id));
                     setShowDone("OK");
                 } else {
                     setShowDone("Error");
