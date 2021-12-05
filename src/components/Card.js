@@ -50,7 +50,8 @@ const MyColAddRemove = styled.div(({ sideBarOpened, mobileScreen }) => {
 });
 
 const RetailPrice = styled.div({
-    backgroundColor: "#69F0AE",
+    //backgroundColor: "#69F0AE",
+    fontWeight: "500",
     padding: "2px 5px",
     borderRadius: "3px",
 });
@@ -64,6 +65,7 @@ function Card({ item }) {
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
     const cart = useSelector((state) => state.manage.cart);
+    const priceType = useSelector((state) => state.manage.priceType);
 
     const [inCart, setInCart] = useState(false);
     const [showImage, setShowImage] = useState(false);
@@ -111,16 +113,14 @@ function Card({ item }) {
                     {item.title}
                 </MyCol>
                 <Prices sm={12} md={3}>
-                    <RetailPrice>Цена с НДС {item.price} руб</RetailPrice>
-                    {sideBarOpened && mobileScreen ? null : (
+                    {priceType === "с НДС" ? <RetailPrice>Цена с НДС {item.price} руб</RetailPrice> : null}
+                    {priceType === "без НДС" ? <RetailPrice>Цена без НДС {item.priceopt} руб</RetailPrice> : null}
+                    {priceType === "без НДС (от 250р)" ? (
                         <div>
-                            <div>Цена без НДС {item.priceopt} руб</div>
-                            <div>
-                                <div>Цена без НДС {item.pricemegaopt} руб*</div>
-                                <Tip>*(при общей сумме заказа от 250 руб)</Tip>
-                            </div>
+                            <RetailPrice>Цена без НДС {item.pricemegaopt} руб</RetailPrice>
+                            <Tip>*(при общей сумме заказа от 250 руб)</Tip>
                         </div>
-                    )}
+                    ) : null}
                 </Prices>
                 <Col xs="auto" sm={2}>
                     <MyColAddRemove sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
