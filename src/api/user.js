@@ -40,7 +40,7 @@ const getHistory = (userID) => {
     return client
         .post("/getHistory", userID)
         .then((response) => {
-            return response;
+            return response.data;
         })
         .catch((error) => error.response);
 };

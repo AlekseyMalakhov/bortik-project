@@ -30,7 +30,6 @@ function App() {
         dispatch(getItems());
         const userStr = localStorage.getItem("user");
         const user = JSON.parse(userStr);
-        console.log(getHistory);
         if (user) {
             dispatch(setUser(user));
             dispatch(getHistory(user.id));

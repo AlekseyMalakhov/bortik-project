@@ -206,8 +206,6 @@ const createOrder = async (req, res, userID) => {
 
 const getHistory = async (req, res) => {
     const { userID } = req.body;
-    console.log(userID);
-    res.status(200).send("hi");
     const query1 = {
         text: "SELECT * FROM orders WHERE customer_id = $1",
         values: [userID],
@@ -215,28 +213,26 @@ const getHistory = async (req, res) => {
     try {
         const response1 = await pool.query(query1);
         const history = response1.rows;
-        console.log(history);
+        const result = [];
+        await Promise.all(
+            history.map(async (order) => {
+                const query2 = {
+                    text: "SELECT * FROM sold_items WHERE id = ANY ($1)",
+                    values: [order.items],
+                };
+                const response2 = await pool.query(query2);
+                const items = response2.rows;
+                const newOrder = { ...order };
+                newOrder.items = items;
+                result.push(newOrder);
+            })
+        ).then(() => {
+            res.status(200).send(result);
+        });
     } catch (error) {
         res.status(500).send(error.stack);
         console.log(error.stack);
     }
-    // try {
-    //     const response1 = await pool.query(query1);
-    //     const user = response1.rows[0];
-    //     if (!user || user.password !== password) {
-    //         return res.status(401).send("Invalid email or password.");
-    //     }
-    //     const sendUser = { ...user };
-    //     delete sendUser.password;
-    //     // const accessToken = jwt.sign(sendUser, accessTokenSecret, { expiresIn: "1m" });
-    //     // const refreshToken = jwt.sign(sendUser, refreshTokenSecret, { expiresIn: "100m" });
-    //     // const tokens = { accessToken, refreshToken };
-    //     // res.status(200).send(tokens);
-    //     res.status(200).send(sendUser);
-    // } catch (error) {
-    //     res.status(500).send(error.stack);
-    //     console.log(error.stack);
-    // }
 };
 
 module.exports = {
