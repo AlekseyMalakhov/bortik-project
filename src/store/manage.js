@@ -27,6 +27,7 @@ const initialState = {
     search: false,
     searchInput: [],
     user: null,
+    history: [],
 };
 
 export const manageSlice = createSlice({
@@ -125,7 +126,7 @@ export const manageSlice = createSlice({
             .addCase(getHistory.fulfilled, (state, action) => {
                 state.loading = false;
                 if (action.payload) {
-                    console.log(action.payload);
+                    state.history = action.payload;
                 }
             });
     },

@@ -10,7 +10,7 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../store/manage";
 import userAPI from "../api/user";
-import { setUser } from "../store/manage";
+import { setUser, getHistory } from "../store/manage";
 
 const LoginStyled = styled.div({
     margin: "10px 20px",
@@ -58,6 +58,7 @@ function Login() {
                     dispatch(setUser(response.data));
                     localStorage.setItem("user", JSON.stringify(response.data));
                     navigate("/account");
+                    dispatch(getHistory(response.data.id));
                 } else if (response.status === 401) {
                     setError("Неверный логин или пароль");
                 } else {

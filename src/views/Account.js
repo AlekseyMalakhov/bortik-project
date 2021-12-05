@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import AccountDataTable from "../components/AccountDataTable";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router";
+import HistoryTable from "../components/HistoryTable";
 
 const AccountStyled = styled.div({
     margin: "10px 20px",
@@ -22,6 +23,7 @@ const Title = styled.div({
 function Account() {
     const navigate = useNavigate();
     const user = useSelector((state) => state.manage.user);
+    const history = useSelector((state) => state.manage.history);
 
     const edit = () => {
         navigate("/edit_account");
@@ -34,6 +36,7 @@ function Account() {
                 Редактировать личные данные
             </Button>
             <Title>История покупок</Title>
+            {history.length > 0 ? <HistoryTable history={history} /> : null}
         </AccountStyled>
     );
 }
