@@ -18,7 +18,7 @@ const CardStyled = styled(Container)`
 `;
 
 const MyRow = styled(Row)`
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
 `;
 
@@ -39,7 +39,7 @@ const Prices = styled(Col)`
     font-size: 14px;
     padding: 10px 10px;
     text-align: center;
-    min-width: 250px;
+    max-width: 200px;
 `;
 
 const MyColAddRemove = styled.div(({ sideBarOpened, mobileScreen }) => {
@@ -51,6 +51,7 @@ const MyColAddRemove = styled.div(({ sideBarOpened, mobileScreen }) => {
 
 const RetailPrice = styled.div({
     //backgroundColor: "#69F0AE",
+    fontSize: "18px",
     fontWeight: "500",
     padding: "2px 5px",
     borderRadius: "3px",
@@ -113,16 +114,26 @@ function Card({ item }) {
                     {item.title}
                 </MyCol>
                 <Prices sm={12} md={3}>
-                    {priceType === "с НДС" ? <RetailPrice>Цена с НДС {item.price} руб</RetailPrice> : null}
-                    {priceType === "без НДС" ? <RetailPrice>Цена без НДС {item.priceopt} руб</RetailPrice> : null}
+                    {priceType === "с НДС" ? (
+                        <div>
+                            <RetailPrice>{item.price} руб</RetailPrice>
+                            <Tip>Цена с НДС</Tip>
+                        </div>
+                    ) : null}
+                    {priceType === "без НДС" ? (
+                        <div>
+                            <RetailPrice>{item.priceopt} руб</RetailPrice>
+                            <Tip>Цена без НДС</Tip>
+                        </div>
+                    ) : null}
                     {priceType === "без НДС (от 250р)" ? (
                         <div>
-                            <RetailPrice>Цена без НДС {item.pricemegaopt} руб</RetailPrice>
-                            <Tip>*(при общей сумме заказа от 250 руб)</Tip>
+                            <RetailPrice>{item.pricemegaopt} руб</RetailPrice>
+                            <Tip>Цена без НДС при общей сумме заказа от 250 руб</Tip>
                         </div>
                     ) : null}
                 </Prices>
-                <Col xs="auto" sm={2}>
+                <Col xs="auto">
                     <MyColAddRemove sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}>
                         <AddRemove item={item} inCart={inCart} />
                     </MyColAddRemove>
