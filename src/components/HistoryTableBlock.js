@@ -5,13 +5,20 @@ import HistoryTableRow from "./HistoryTableRow";
 import Button from "react-bootstrap/Button";
 
 const HistoryTableBlockStyled = styled.div({
-    marginBottom: "40px",
+    marginBottom: "20px",
+});
+
+const Divider = styled.div({
+    display: "flex",
+    justifyContent: "center",
+    borderBottom: "1px solid #e9e9e9",
+    paddingBottom: "20px",
 });
 
 const createDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-    const month = date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth();
+    const month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
     const year = date.getFullYear();
     const h = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
     const m = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
@@ -45,7 +52,9 @@ function HistoryTableBlock({ order }) {
                     </tr>
                 </tbody>
             </Table>
-            <Button variant="primary">Повторить заказ</Button>
+            <Divider>
+                <Button variant="primary">Повторить заказ</Button>
+            </Divider>
         </HistoryTableBlockStyled>
     );
 }
