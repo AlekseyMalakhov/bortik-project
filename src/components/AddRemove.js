@@ -9,6 +9,7 @@ const AddRemoveStyled = styled.div({
     display: "flex",
     justifyContent: "center",
     margin: "10px 10px",
+    width: "162px",
 });
 
 const MyInput = styled(Form.Control)`
