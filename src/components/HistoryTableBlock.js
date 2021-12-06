@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Table from "react-bootstrap/Table";
 import HistoryTableRow from "./HistoryTableRow";
 import Button from "react-bootstrap/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { addItemToCart } from "../store/manage";
+import AddHistoryToCartModal from "./AddHistoryToCartModal";
 
 const HistoryTableBlockStyled = styled.div({
     marginBottom: "20px",
@@ -30,16 +31,20 @@ const createDate = (dateString) => {
 
 function HistoryTableBlock({ order }) {
     const dispatch = useDispatch();
+    const [showAdded, setShowAdded] = useState(false);
+    const [notFound, setNotFound] = useState([]);
     const items = useSelector((state) => state.manage.items);
 
     const putItemToCart = (orderItem) => {
-        //console.log(orderItem);
+        const orderItemTest = { ...orderItem };
 
         //for test only
-        const orderItemTest = { ...orderItem };
-        if (orderItemTest.article === "SMART.12026") {
-            orderItemTest.article = "test";
-        }
+        // if (orderItemTest.article === "SMART.12026") {
+        //     orderItemTest.article = "test";
+        // }
+        // if (orderItemTest.article === "SMART.14001") {
+        //     orderItemTest.article = "test2";
+        // }
         //end test
 
         for (let x in items) {
@@ -64,18 +69,9 @@ function HistoryTableBlock({ order }) {
     const repeatOrder = () => {
         //console.log(items);
         const notFound = order.items.filter((orderItem) => putItemToCart(orderItem));
+        setNotFound(notFound);
+        setShowAdded(true);
         console.log(notFound);
-
-        // for (let x in items) {
-        //     const category = items[x];
-        //     if (category.length > 0) {
-        //         for (let i = 0; i < category.length; i++) {
-        //             console.log(category[i].article);
-        //             const article = category[i].article
-        //         }
-        //     }
-        // }
-        //console.log(order.items);
     };
 
     return (
@@ -106,6 +102,7 @@ function HistoryTableBlock({ order }) {
                     Повторить заказ
                 </Button>
             </Divider>
+            <AddHistoryToCartModal show={showAdded} onHide={() => setShowAdded(false)} notFound={notFound} />
         </HistoryTableBlockStyled>
     );
 }
