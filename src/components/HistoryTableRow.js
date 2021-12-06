@@ -4,9 +4,12 @@ import styled from "@emotion/styled";
 function HistoryTableRow({ item }) {
     return (
         <tr>
-            <td>{item.title}</td>
-            <td>{item.number}</td>
-            <td>{item.price}</td>
+            <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                <img src={item.img} alt="" height="50"></img>
+            </td>
+            <td style={{ verticalAlign: "middle" }}>{item.title}</td>
+            <td style={{ verticalAlign: "middle", textAlign: "center" }}>{item.number}</td>
+            <td style={{ verticalAlign: "middle", textAlign: "center" }}>{item.price}</td>
         </tr>
     );
 }

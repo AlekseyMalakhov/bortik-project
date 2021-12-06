@@ -34,6 +34,7 @@ function HistoryTableBlock({ order }) {
     const [showAdded, setShowAdded] = useState(false);
     const [notFound, setNotFound] = useState([]);
     const items = useSelector((state) => state.manage.items);
+    const mobileScreen = useSelector((state) => state.manage.mobileScreen);
 
     const putItemToCart = (orderItem) => {
         const orderItemTest = { ...orderItem };
@@ -79,12 +80,13 @@ function HistoryTableBlock({ order }) {
             <div style={{ fontWeight: "500" }}>Заказ №{order.id}</div>
             <div>Дата: {createDate(Number(order.date))}</div>
             <div>Тип цены: {order.price_type}</div>
-            <Table striped bordered hover>
+            <Table striped bordered hover style={{ fontSize: mobileScreen ? "14px" : "16px" }}>
                 <thead>
                     <tr>
+                        <th style={{ textAlign: "center" }}>Фото</th>
                         <th>Наименование</th>
-                        <th>Кол.</th>
-                        <th>Цена</th>
+                        <th style={{ textAlign: "center" }}>Кол.</th>
+                        <th style={{ textAlign: "center" }}>Цена</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,8 +94,8 @@ function HistoryTableBlock({ order }) {
                         <HistoryTableRow item={item} key={item.id} />
                     ))}
                     <tr>
-                        <th colSpan="2">Общая сумма</th>
-                        <th>{order.sum}</th>
+                        <th colSpan="3">Общая сумма</th>
+                        <th style={{ textAlign: "center" }}>{order.sum}</th>
                     </tr>
                 </tbody>
             </Table>

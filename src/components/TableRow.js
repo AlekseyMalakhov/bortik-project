@@ -16,7 +16,7 @@ function TableRow({ item, priceType }) {
     return (
         <tr>
             <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                <img src={item.img} alt={""} height="50"></img>
+                <img src={item.img} alt="" height="50"></img>
             </td>
             <td style={{ verticalAlign: "middle" }}>{item.title}</td>
             <td style={{ verticalAlign: "middle", textAlign: "center" }}>{item.number}</td>

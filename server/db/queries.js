@@ -222,8 +222,12 @@ const getHistory = async (req, res) => {
                 };
                 const response2 = await pool.query(query2);
                 const items = response2.rows;
+                const itemsWithImages = items.map((item) => {
+                    item.img = "https://smartikon.by/uploads/" + item.article + ".webp";
+                    return item;
+                });
                 const newOrder = { ...order };
-                newOrder.items = items;
+                newOrder.items = itemsWithImages;
                 result.push(newOrder);
             })
         ).then(() => {
