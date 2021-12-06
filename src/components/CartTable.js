@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import Table from "react-bootstrap/Table";
 import TableRow from "./TableRow";
+import { useSelector } from "react-redux";
 
 const CartTableStyled = styled.div({
     width: "100%",
@@ -15,15 +16,18 @@ const EmptyCart = styled.div({
 });
 
 function CartTable({ cart, priceType, sum }) {
+    const mobileScreen = useSelector((state) => state.manage.mobileScreen);
+
     if (cart.length > 0) {
         return (
-            <CartTableStyled>
+            <CartTableStyled style={{ fontSize: mobileScreen ? "14px" : "16px" }}>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
+                            <th style={{ textAlign: "center" }}>Фото</th>
                             <th>Наименование</th>
-                            <th>Кол.</th>
-                            <th>Цена</th>
+                            <th style={{ textAlign: "center" }}>Кол.</th>
+                            <th style={{ textAlign: "center" }}>Цена</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,12 +35,12 @@ function CartTable({ cart, priceType, sum }) {
                             <TableRow item={item} priceType={priceType} key={item.id} />
                         ))}
                         <tr>
-                            <th colSpan="2">Общая сумма</th>
-                            <th>{sum.toFixed(2)}</th>
+                            <th colSpan="3">Общая сумма</th>
+                            <th style={{ textAlign: "center" }}>{sum.toFixed(2)}</th>
                         </tr>
                     </tbody>
                 </Table>
-                Цена: {priceType}
+                <div style={{ fontSize: "16px" }}>Цена: {priceType}</div>
             </CartTableStyled>
         );
     }
