@@ -1,64 +1,26 @@
 const XLSX = require("xlsx");
 const path = require("path");
 const fs = require("fs");
+const groups = require("../groups");
 
-const groups = {
-    "Бумажно-гигиеническая продукция": [
-        "Бумажно-гигиеническая продукция",
-        "Бумажные полотенца",
-        "Бумажные салфетки",
-        "Прочая бумажная продукция",
-        "Туалетная бумага",
-    ],
-    "Бытовая химия": [
-        "Мыло",
-        "Освежители воздуха",
-        "Полироль для мебели",
-        "Средства для кухни",
-        "Средства для мытья пола и стен",
-        "Средства для мытья посуды",
-        "Средства для очистки стекол и зеркал",
-        "Средства для стирки",
-        "Средства для туалетов и ванных комнат",
-        "Средства для чистки ковров и обивки мебели",
-        "Средства для чистки труб",
-        "Универсальные чистящие средства",
-    ],
-    "Диспенсеры и дозаторы для общественных санузлов": ["Диспенсеры для бумажных изделий", "Дозаторы"],
-    "Канцелярские товары": ["Офисные кресла", "Художественные товары"],
-    "Одноразовая посуда": [
-        "Бумажная упаковка",
-        "Контейнеры универсальные",
-        "Крышки для стаканов",
-        "Ланч-боксы",
-        "Одноразовые пластиковые стаканы",
-        "Палочки для еды",
-        "Пластиковые контейнеры-салатники",
-        "ПЭТ-стаканы",
-        "Размешиватели",
-        "Соусники",
-        "Стаканы для горячих напитков",
-        "Столовые приборы",
-        "Суповые банки",
-        "Тарелки и миски",
-        "Трубочки",
-    ],
-    "Профессиональная химия, дезсредства": ["Дезсредства", "Профессиональная химия", "Профессиональные моющие средства Тайгета"],
-    "Спецодежда и перчатки": ["Одноразовая спецодежда", "Перчатки"],
-    "Товары для кухни, общепита и клининга": ["Термометры и гигрометры", "Товары для приготовления еды", "Украшения, сервировка для напитков и еды"],
-    "Товары для упаковки и фасовки": ["Пакеты", "Скотчи, клейкие ленты и стрейч", "Хомуты, шпагаты и сетки"],
-    "Хозяйственные товары": [
-        "Губки и мочалки хозяйственные",
-        "Лопаты, грабли, черенки",
-        "Метлы, щетки, совки для уборки",
-        "Окномойки",
-        "Протирочный материал, ветошь",
-        "Разное",
-        "Тележки для уборки",
-        "Товары для туалета",
-        "Швабры, мопы, держатели",
-    ],
-};
+const catalog = {};
+for (let i = 0; i < groups.length; i++) {
+    const item = groups[i];
+    const group = item.group;
+    const category1 = item.category1;
+    const category2 = item.category2;
+
+    if (!catalog[group]) {
+        catalog[group] = {};
+    }
+    if (!catalog[group][category1]) {
+        catalog[group][category1] = {};
+    }
+    if (!catalog[group][category1][category2]) {
+        catalog[group][category1][category2] = [];
+    }
+}
+//console.log(catalog);
 
 const generateListOfItems = () => {
     const buf = fs.readFileSync(path.join(__dirname, "..", "import.xlsx"));
@@ -109,13 +71,6 @@ const result = {
     categories: [],
 };
 
-//
-const result1 = {
-    items: {},
-    groups: {},
-};
-//
-
 const items = [];
 
 if (data) {
@@ -154,33 +109,20 @@ if (data) {
     }
     result.categories = getCategories(arr);
 
-    //
-    const findGroup = (categoryName) => {
-        for (let x in groups) {
-            const result = groups[x].find((name) => name === categoryName);
-            if (result) {
-                return x;
-            }
-        }
-        return "notFound";
-    };
-    //
-
     for (let i = 0; i < result.categories.length; i++) {
         const name = result.categories[i].name;
-        //
-        const group = findGroup(name);
-        if (group === "notFound") {
-            console.log(name);
-        }
-        //
         result.items[name] = items.filter((item) => item.category === name);
-
-        //
-        // result1.groups[group][name] = items.filter((item) => item.category === name);
-        // console.log(result1);
-        //
     }
+
+    for (let group in catalog) {
+        for (let category1 in catalog[group]) {
+            for (let category2 in catalog[group][category1]) {
+                console.log(group + " " + category1 + " " + category2);
+                catalog[group][category1][category2] = items.filter((item) => item.category === category2);
+            }
+        }
+    }
+    result.catalog = catalog;
 }
 
 const getItems = (req, res) => {
