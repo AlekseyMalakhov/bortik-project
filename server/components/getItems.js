@@ -1,26 +1,6 @@
 const XLSX = require("xlsx");
 const path = require("path");
 const fs = require("fs");
-const groups = require("../groups");
-
-const catalog = {};
-for (let i = 0; i < groups.length; i++) {
-    const item = groups[i];
-    const group = item.group;
-    const category1 = item.category1;
-    const category2 = item.category2;
-
-    if (!catalog[group]) {
-        catalog[group] = {};
-    }
-    if (!catalog[group][category1]) {
-        catalog[group][category1] = {};
-    }
-    if (!catalog[group][category1][category2]) {
-        catalog[group][category1][category2] = [];
-    }
-}
-//console.log(catalog);
 
 const generateListOfItems = () => {
     const buf = fs.readFileSync(path.join(__dirname, "..", "import.xlsx"));
@@ -113,15 +93,6 @@ if (data) {
         const name = result.categories[i].name;
         result.items[name] = items.filter((item) => item.category === name);
     }
-
-    for (let group in catalog) {
-        for (let category1 in catalog[group]) {
-            for (let category2 in catalog[group][category1]) {
-                catalog[group][category1][category2] = items.filter((item) => item.category === category2);
-            }
-        }
-    }
-    result.catalog = catalog;
 }
 
 const getItems = (req, res) => {
