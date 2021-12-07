@@ -47,12 +47,18 @@ function Sidebar() {
     const [searchedCategories, setSearchedCategories] = useState(null);
 
     const [list, setList] = useState([]);
+    const [showType, setShowType] = useState("groups");
 
     useEffect(() => {
         if (items) {
             if (!selectedCategory1 && !selectedCategory2) {
                 setList(groups);
+                return;
             }
+            // if (selectedGroup && selectedCategory1 && !selectedCategory2) {
+            //     setList(groups);
+            //     return;
+            // }
         }
     }, [items, groups, selectedGroup, selectedCategory1, selectedCategory2]);
 
@@ -61,7 +67,7 @@ function Sidebar() {
             <Header>Каталог</Header>
             <ItemsList>
                 {list.map((category) => (
-                    <Item key={category} category={category} />
+                    <Item key={category} category={category} showType={showType} />
                 ))}
             </ItemsList>
         </SidebarStyled>

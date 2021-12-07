@@ -30,7 +30,7 @@ const Name = styled.div({
     fontWeight: "500",
 });
 
-function Item({ category }) {
+function Item({ category, showType }) {
     const dispatch = useDispatch();
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
     const selectedCategory1 = useSelector((state) => state.manage.selectedCategory1);
@@ -45,9 +45,8 @@ function Item({ category }) {
     }, [cart]);
 
     const handleSelect = (name) => {
-        dispatch(setSelectedCategory1(name));
-        if (mobileScreen) {
-            //dispatch(changeSideBarOpened(false));
+        if (showType === "groups") {
+            dispatch(setSelectedCategory1(name));
         }
     };
 
