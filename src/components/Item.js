@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedCategory1 } from "../store/manage";
+import { setSelectedCategory1, setSelectedCategory2, setSelectedGroup } from "../store/manage";
 import CircleCategory from "./CircleCategory";
 
 const ItemStyled = styled.div(({ selected, empty }) => {
@@ -46,7 +46,13 @@ function Item({ category, showType }) {
 
     const handleSelect = (name) => {
         if (showType === "groups") {
+            dispatch(setSelectedGroup(name));
+        }
+        if (showType === "categories1") {
             dispatch(setSelectedCategory1(name));
+        }
+        if (showType === "categories2") {
+            dispatch(setSelectedCategory2(name));
         }
     };
 

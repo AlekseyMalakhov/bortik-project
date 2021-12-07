@@ -39,7 +39,7 @@ function Sidebar() {
     const search = useSelector((state) => state.manage.search);
 
     const items = useSelector((state) => state.manage.items);
-    const groups = useSelector((state) => state.manage.groups);
+    const catalog = useSelector((state) => state.manage.catalog);
     const selectedGroup = useSelector((state) => state.manage.selectedGroup);
     const selectedCategory1 = useSelector((state) => state.manage.selectedCategory1);
     const selectedCategory2 = useSelector((state) => state.manage.selectedCategory2);
@@ -51,23 +51,33 @@ function Sidebar() {
 
     useEffect(() => {
         if (items) {
-            if (!selectedCategory1 && !selectedCategory2) {
-                setList(groups);
+            if (!selectedGroup && !selectedCategory1 && !selectedCategory2) {
+                setShowType("groups");
+                setList(catalog);
                 return;
             }
-            // if (selectedGroup && selectedCategory1 && !selectedCategory2) {
-            //     setList(groups);
-            //     return;
-            // }
+            if (selectedGroup && !selectedCategory1 && !selectedCategory2) {
+                const index = catalog.findIndex((gr) => gr.name === selectedGroup);
+                setShowType("categories1");
+                setList(catalog[index].items);
+                return;
+            }
+            if (selectedGroup && selectedCategory1 && !selectedCategory2) {
+                const indexGr = catalog.findIndex((gr) => gr.name === selectedGroup);
+                const indexCat1 = catalog[indexGr].items.findIndex((categ1) => categ1.name === selectedCategory1);
+                setShowType("categories2");
+                setList(catalog[indexGr].items[indexCat1].items);
+                return;
+            }
         }
-    }, [items, groups, selectedGroup, selectedCategory1, selectedCategory2]);
+    }, [items, catalog, selectedGroup, selectedCategory1, selectedCategory2]);
 
     return (
         <SidebarStyled sideBarOpened={sideBarOpened}>
             <Header>Каталог</Header>
             <ItemsList>
                 {list.map((category) => (
-                    <Item key={category} category={category} showType={showType} />
+                    <Item key={category.id} category={category.name} showType={showType} />
                 ))}
             </ItemsList>
         </SidebarStyled>

@@ -18,9 +18,7 @@ const initialState = {
     screenWidth: 0,
     mobileScreen: true,
     items: null,
-    groups: [],
-    // categories1: [],
-    // categories2: [],
+    catalog: [],
     loading: true,
     selectedCategory1: null,
     selectedCategory2: null,
@@ -50,12 +48,6 @@ export const manageSlice = createSlice({
         setItems: (state, action) => {
             state.items = action.payload;
         },
-        // setCategories1: (state, action) => {
-        //     state.categories1 = action.payload;
-        // },
-        // setCategories2: (state, action) => {
-        //     state.categories2 = action.payload;
-        // },
         setSelectedCategory1: (state, action) => {
             state.selectedCategory1 = action.payload;
         },
@@ -120,7 +112,7 @@ export const manageSlice = createSlice({
                 state.loading = false;
                 if (action.payload) {
                     state.items = action.payload.items;
-                    state.groups = action.payload.groups;
+                    state.catalog = action.payload.catalog;
                     //state.selectedCategory = action.payload.categories[0].name;
                     const cart = localStorage.getItem("cart");
                     if (cart) {
