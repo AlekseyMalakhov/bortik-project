@@ -117,7 +117,6 @@ if (data) {
     for (let group in catalog) {
         for (let category1 in catalog[group]) {
             for (let category2 in catalog[group][category1]) {
-                console.log(group + " " + category1 + " " + category2);
                 catalog[group][category1][category2] = items.filter((item) => item.category === category2);
             }
         }
