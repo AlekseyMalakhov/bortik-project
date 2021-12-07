@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedCategory } from "../store/manage";
+import { setSelectedGroup } from "../store/manage";
 import CircleCategory from "./CircleCategory";
 
 const ItemStyled = styled.div(({ selected, empty }) => {
@@ -30,10 +30,10 @@ const Name = styled.div({
     fontWeight: "500",
 });
 
-function Item({ category }) {
+function Item({ category, type }) {
     const dispatch = useDispatch();
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
-    const selectedCategory = useSelector((state) => state.manage.selectedCategory);
+    const selectedGroup = useSelector((state) => state.manage.selectedGroup);
     const cart = useSelector((state) => state.manage.cart);
     const items = useSelector((state) => state.manage.items);
 
@@ -45,19 +45,14 @@ function Item({ category }) {
     }, [cart]);
 
     const handleSelect = (name) => {
-        dispatch(setSelectedCategory(name));
-        if (mobileScreen) {
-            //dispatch(changeSideBarOpened(false));
+        if (type === "group") {
+            dispatch(setSelectedGroup(name));
         }
     };
 
     return (
-        <ItemStyled
-            selected={category.name === selectedCategory}
-            onClick={() => handleSelect(category.name)}
-            empty={items[category.name].length === 0}
-        >
-            <Name>{category.name}</Name>
+        <ItemStyled selected={category === selectedGroup} onClick={() => handleSelect(category)}>
+            <Name>{category}</Name>
             {numberInCart > 0 ? <CircleCategory numberInCart={numberInCart} /> : null}
         </ItemStyled>
     );

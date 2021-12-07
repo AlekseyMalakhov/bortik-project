@@ -20,7 +20,9 @@ const initialState = {
     items: null,
     categories: [],
     loading: true,
-    selectedCategory: null,
+    selectedGroup: null,
+    selectedCategory1: null,
+    selectedCategory2: null,
     cart: [],
     priceType: null,
     cartSum: 0,
@@ -49,8 +51,14 @@ export const manageSlice = createSlice({
         setCategories: (state, action) => {
             state.categories = action.payload;
         },
-        setSelectedCategory: (state, action) => {
-            state.selectedCategory = action.payload;
+        setSelectedGroup: (state, action) => {
+            state.selectedGroup = action.payload;
+        },
+        setSelectedCategory1: (state, action) => {
+            state.selectedCategory1 = action.payload;
+        },
+        setSelectedCategory2: (state, action) => {
+            state.selectedCategory2 = action.payload;
         },
         addItemToCart: (state, action) => {
             const newCart = [...state.cart];
@@ -106,7 +114,7 @@ export const manageSlice = createSlice({
             .addCase(getItems.fulfilled, (state, action) => {
                 state.loading = false;
                 if (action.payload) {
-                    state.items = action.payload.items;
+                    state.items = action.payload;
                     state.categories = action.payload.categories;
                     state.selectedCategory = action.payload.categories[0].name;
                     const cart = localStorage.getItem("cart");
@@ -136,7 +144,9 @@ export const {
     changeSideBarOpened,
     setScreenWidth,
     setMobileScreen,
-    setSelectedCategory,
+    setSelectedGroup,
+    setSelectedCategory1,
+    setSelectedCategory2,
     addItemToCart,
     removeItemFromCart,
     setPriceType,
