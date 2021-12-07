@@ -34,7 +34,6 @@ const ItemsList = styled.div({
 function Sidebar() {
     const dispatch = useDispatch();
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
-    const categories = useSelector((state) => state.manage.categories);
     const searchInput = useSelector((state) => state.manage.searchInput);
     const search = useSelector((state) => state.manage.search);
     const items = useSelector((state) => state.manage.items);
