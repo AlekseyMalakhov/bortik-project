@@ -115,8 +115,6 @@ export const manageSlice = createSlice({
                 state.loading = false;
                 if (action.payload) {
                     state.items = action.payload;
-                    state.categories = action.payload.categories;
-                    state.selectedCategory = action.payload.categories[0].name;
                     const cart = localStorage.getItem("cart");
                     if (cart) {
                         const data = JSON.parse(cart);

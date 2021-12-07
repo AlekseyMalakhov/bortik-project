@@ -20,32 +20,11 @@ for (let i = 0; i < groups.length; i++) {
         catalog[group][category1][category2] = [];
     }
 }
-//console.log(catalog);
 
 const generateListOfItems = () => {
     const buf = fs.readFileSync(path.join(__dirname, "..", "import.xlsx"));
     const list = XLSX.read(buf, { type: "buffer" });
     return list;
-};
-
-const getCategories = (arr) => {
-    const regex = new RegExp("A\\d*");
-    const arr2 = [];
-    for (let i = 0; i < arr.length; i++) {
-        if (regex.test(arr[i].cell)) {
-            if (i !== 0) {
-                arr2.push(arr[i].value);
-            }
-        }
-    }
-    const uniq = [...new Set(arr2)];
-    const result = uniq.map((item, i) => {
-        return {
-            id: i + 1,
-            name: item,
-        };
-    });
-    return result;
 };
 
 const getNumbersOfItems = (arr) => {
@@ -66,11 +45,6 @@ const workbook = generateListOfItems();
 const data = workbook.Sheets.TDSheet;
 
 const arr = [];
-const result = {
-    items: {},
-    categories: [],
-};
-
 const items = [];
 
 if (data) {
@@ -87,8 +61,6 @@ if (data) {
     const numberOfItems = getNumbersOfItems(arr);
 
     for (let i = 0; i < numberOfItems.length; i++) {
-        //for (let i = 0; i < 80; i++) {
-        //show only 80 items
         const number = numberOfItems[i];
         if (data[`B${number}`] && data[`C${number}`]) {
             const obj = {
@@ -107,12 +79,6 @@ if (data) {
             items.push(obj);
         }
     }
-    result.categories = getCategories(arr);
-
-    for (let i = 0; i < result.categories.length; i++) {
-        const name = result.categories[i].name;
-        result.items[name] = items.filter((item) => item.category === name);
-    }
 
     for (let group in catalog) {
         for (let category1 in catalog[group]) {
@@ -121,12 +87,12 @@ if (data) {
             }
         }
     }
-    result.catalog = catalog;
 }
 
 const getItems = (req, res) => {
-    if (result.items.length !== 0) {
-        res.send(result);
+    const groups = Object.keys(catalog);
+    if (groups !== 0) {
+        res.send(catalog);
     } else {
         res.status(500).send("Server error - please contact administrator");
     }

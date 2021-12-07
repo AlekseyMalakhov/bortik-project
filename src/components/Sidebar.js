@@ -50,23 +50,23 @@ function Sidebar() {
 
     useEffect(() => {
         console.log(items);
-        if (items && items.catalog) {
-            const groups = Object.keys(items.catalog);
+        if (items && items) {
+            const groups = Object.keys(items);
             setGroups(groups);
             console.log(groups);
         }
     }, [items]);
 
     useEffect(() => {
-        if (items && items.catalog && selectedGroup) {
-            const categories1 = Object.keys(items.catalog[selectedGroup]);
+        if (items && selectedGroup) {
+            const categories1 = Object.keys(items[selectedGroup]);
             setCategories1(categories1);
         }
     }, [items, selectedGroup]);
 
     useEffect(() => {
-        if (items && items.catalog && selectedGroup && selectedCategory1) {
-            const categories2 = Object.keys(items.catalog[selectedGroup][selectedCategory1]);
+        if (items && selectedGroup && selectedCategory1) {
+            const categories2 = Object.keys(items[selectedGroup][selectedCategory1]);
             setCategories2(categories2);
         }
     }, [items, selectedGroup, selectedCategory1]);
