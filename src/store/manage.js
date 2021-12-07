@@ -19,10 +19,12 @@ const initialState = {
     mobileScreen: true,
     items: null,
     groups: [],
-    categories1: [],
-    categories2: [],
+    // categories1: [],
+    // categories2: [],
     loading: true,
-    selectedCategory: null,
+    selectedCategory1: null,
+    selectedCategory2: null,
+    selectedGroup: null,
     cart: [],
     priceType: null,
     cartSum: 0,
@@ -48,12 +50,12 @@ export const manageSlice = createSlice({
         setItems: (state, action) => {
             state.items = action.payload;
         },
-        setCategories1: (state, action) => {
-            state.categories1 = action.payload;
-        },
-        setCategories2: (state, action) => {
-            state.categories2 = action.payload;
-        },
+        // setCategories1: (state, action) => {
+        //     state.categories1 = action.payload;
+        // },
+        // setCategories2: (state, action) => {
+        //     state.categories2 = action.payload;
+        // },
         setSelectedCategory1: (state, action) => {
             state.selectedCategory1 = action.payload;
         },
@@ -61,7 +63,7 @@ export const manageSlice = createSlice({
             state.selectedCategory2 = action.payload;
         },
         setSelectedGroup: (state, action) => {
-            state.group = action.payload;
+            state.selectedGroup = action.payload;
         },
         addItemToCart: (state, action) => {
             const newCart = [...state.cart];
@@ -147,8 +149,8 @@ export const {
     changeSideBarOpened,
     setScreenWidth,
     setMobileScreen,
-    setCategories1,
-    setCategories2,
+    // setCategories1,
+    // setCategories2,
     setSelectedCategory1,
     setSelectedCategory2,
     setSelectedGroup,

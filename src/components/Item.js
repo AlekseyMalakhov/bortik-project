@@ -53,11 +53,11 @@ function Item({ category }) {
 
     return (
         <ItemStyled
-            selected={category.name === selectedCategory1}
-            onClick={() => handleSelect(category.name)}
-            empty={items[category.name].length === 0}
+            selected={category === selectedCategory1}
+            onClick={() => handleSelect(category)}
+            //empty={items[category].length === 0}
         >
-            <Name>{category.name}</Name>
+            <Name>{category}</Name>
             {numberInCart > 0 ? <CircleCategory numberInCart={numberInCart} /> : null}
         </ItemStyled>
     );

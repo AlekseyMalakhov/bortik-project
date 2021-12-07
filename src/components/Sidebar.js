@@ -37,12 +37,24 @@ function Sidebar() {
     const categories = useSelector((state) => state.manage.categories);
     const searchInput = useSelector((state) => state.manage.searchInput);
     const search = useSelector((state) => state.manage.search);
+
     const items = useSelector((state) => state.manage.items);
+    const groups = useSelector((state) => state.manage.groups);
+    const selectedGroup = useSelector((state) => state.manage.selectedGroup);
     const selectedCategory1 = useSelector((state) => state.manage.selectedCategory1);
+    const selectedCategory2 = useSelector((state) => state.manage.selectedCategory2);
 
     const [searchedCategories, setSearchedCategories] = useState(null);
 
     const [list, setList] = useState([]);
+
+    useEffect(() => {
+        if (items) {
+            if (!selectedCategory1 && !selectedCategory2) {
+                setList(groups);
+            }
+        }
+    }, [items, groups, selectedGroup, selectedCategory1, selectedCategory2]);
 
     return (
         <SidebarStyled sideBarOpened={sideBarOpened}>
