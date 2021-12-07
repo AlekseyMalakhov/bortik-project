@@ -18,7 +18,9 @@ const initialState = {
     screenWidth: 0,
     mobileScreen: true,
     items: null,
-    categories: [],
+    groups: [],
+    categories1: [],
+    categories2: [],
     loading: true,
     selectedCategory: null,
     cart: [],
@@ -46,11 +48,20 @@ export const manageSlice = createSlice({
         setItems: (state, action) => {
             state.items = action.payload;
         },
-        setCategories: (state, action) => {
-            state.categories = action.payload;
+        setCategories1: (state, action) => {
+            state.categories1 = action.payload;
         },
-        setSelectedCategory: (state, action) => {
-            state.selectedCategory = action.payload;
+        setCategories2: (state, action) => {
+            state.categories2 = action.payload;
+        },
+        setSelectedCategory1: (state, action) => {
+            state.selectedCategory1 = action.payload;
+        },
+        setSelectedCategory2: (state, action) => {
+            state.selectedCategory2 = action.payload;
+        },
+        setSelectedGroup: (state, action) => {
+            state.group = action.payload;
         },
         addItemToCart: (state, action) => {
             const newCart = [...state.cart];
@@ -105,18 +116,18 @@ export const manageSlice = createSlice({
             })
             .addCase(getItems.fulfilled, (state, action) => {
                 state.loading = false;
-                // if (action.payload) {
-                //     state.items = action.payload.items;
-                //     state.categories = action.payload.categories;
-                //     state.selectedCategory = action.payload.categories[0].name;
-                //     const cart = localStorage.getItem("cart");
-                //     if (cart) {
-                //         const data = JSON.parse(cart);
-                //         state.cart = data;
-                //         const sum = calculateSum(data, state.priceType);
-                //         state.cartSum = sum;
-                //     }
-                // }
+                if (action.payload) {
+                    state.items = action.payload.items;
+                    state.groups = action.payload.groups;
+                    //state.selectedCategory = action.payload.categories[0].name;
+                    const cart = localStorage.getItem("cart");
+                    if (cart) {
+                        const data = JSON.parse(cart);
+                        state.cart = data;
+                        const sum = calculateSum(data, state.priceType);
+                        state.cartSum = sum;
+                    }
+                }
                 console.log(action.payload);
             });
         builder
@@ -136,7 +147,11 @@ export const {
     changeSideBarOpened,
     setScreenWidth,
     setMobileScreen,
-    setSelectedCategory,
+    setCategories1,
+    setCategories2,
+    setSelectedCategory1,
+    setSelectedCategory2,
+    setSelectedGroup,
     addItemToCart,
     removeItemFromCart,
     setPriceType,

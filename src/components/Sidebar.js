@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import colors from "../settings/colors";
 import Item from "./Item";
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedCategory } from "../store/manage";
+import { setSelectedCategory1 } from "../store/manage";
 
 const SidebarStyled = styled.div((props) => {
     return {
@@ -38,36 +38,20 @@ function Sidebar() {
     const searchInput = useSelector((state) => state.manage.searchInput);
     const search = useSelector((state) => state.manage.search);
     const items = useSelector((state) => state.manage.items);
-    const selectedCategory = useSelector((state) => state.manage.selectedCategory);
+    const selectedCategory1 = useSelector((state) => state.manage.selectedCategory1);
 
     const [searchedCategories, setSearchedCategories] = useState(null);
 
-    useEffect(() => {
-        if (search && searchInput.length > 0) {
-            const arr = categories.filter((category) => {
-                return items[category.name].find((item) => {
-                    for (let i = 0; i < searchInput.length; i++) {
-                        if (item.title.toLowerCase().includes(searchInput[i])) {
-                            return true;
-                        }
-                    }
-                    return false;
-                });
-            });
-            setSearchedCategories(arr);
-            const selectedCat = arr.find((category) => category.name === selectedCategory);
-            if (!selectedCat && arr.length > 0) {
-                dispatch(setSelectedCategory(arr[0].name));
-            }
-        } else {
-            setSearchedCategories(categories);
-        }
-    }, [categories, search, searchInput]);
+    const [list, setList] = useState([]);
 
     return (
         <SidebarStyled sideBarOpened={sideBarOpened}>
             <Header>Каталог</Header>
-            <ItemsList>{searchedCategories ? searchedCategories.map((category) => <Item key={category.id} category={category} />) : null}</ItemsList>
+            <ItemsList>
+                {list.map((category) => (
+                    <Item key={category} category={category} />
+                ))}
+            </ItemsList>
         </SidebarStyled>
     );
 }

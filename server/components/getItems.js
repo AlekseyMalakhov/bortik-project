@@ -86,6 +86,12 @@ if (data) {
         } else {
             item.category1 = "not found";
             item.group = "not found";
+            if (!uniqGroups.includes("not found")) {
+                uniqGroups.push("not found");
+            }
+            if (!uniqCategs1.includes("not found")) {
+                uniqCategs1.push("not found");
+            }
         }
     }
 }

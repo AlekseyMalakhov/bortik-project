@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedCategory } from "../store/manage";
+import { setSelectedCategory1 } from "../store/manage";
 import CircleCategory from "./CircleCategory";
 
 const ItemStyled = styled.div(({ selected, empty }) => {
@@ -33,7 +33,7 @@ const Name = styled.div({
 function Item({ category }) {
     const dispatch = useDispatch();
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
-    const selectedCategory = useSelector((state) => state.manage.selectedCategory);
+    const selectedCategory1 = useSelector((state) => state.manage.selectedCategory1);
     const cart = useSelector((state) => state.manage.cart);
     const items = useSelector((state) => state.manage.items);
 
@@ -45,7 +45,7 @@ function Item({ category }) {
     }, [cart]);
 
     const handleSelect = (name) => {
-        dispatch(setSelectedCategory(name));
+        dispatch(setSelectedCategory1(name));
         if (mobileScreen) {
             //dispatch(changeSideBarOpened(false));
         }
@@ -53,7 +53,7 @@ function Item({ category }) {
 
     return (
         <ItemStyled
-            selected={category.name === selectedCategory}
+            selected={category.name === selectedCategory1}
             onClick={() => handleSelect(category.name)}
             empty={items[category.name].length === 0}
         >
