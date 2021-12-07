@@ -3,59 +3,6 @@ const path = require("path");
 const fs = require("fs");
 const groupsFile = require("../groups");
 
-const catalog2 = [];
-let id = 1;
-for (let i = 0; i < groupsFile.length; i++) {
-    const item = groupsFile[i];
-    const group = item.group;
-    const category1 = item.category1;
-    const category2 = item.category2;
-
-    let groupIndex = catalog2.findIndex((gr) => gr.name === group);
-    if (groupIndex === -1) {
-        const obj = {
-            id,
-            name: group,
-            items: [],
-        };
-        catalog2.push(obj);
-        id++;
-    }
-    groupIndex = catalog2.findIndex((gr) => gr.name === group);
-    let category1Index = -1;
-
-    if (groupIndex !== -1) {
-        category1Index = catalog2[groupIndex].items.findIndex((cat1) => cat1.name === category1);
-
-        if (category1Index === -1) {
-            const obj = {
-                id,
-                name: category1,
-                items: [],
-            };
-            catalog2[groupIndex].items.push(obj);
-            id++;
-        }
-        category1Index = catalog2[groupIndex].items.findIndex((cat1) => cat1.name === category1);
-
-        let category2Index = -1;
-
-        if (category1Index !== -1) {
-            category2Index = catalog2[groupIndex].items[category1Index].items.findIndex((cat2) => cat2.name === category2);
-
-            if (category2Index === -1) {
-                const obj = {
-                    id,
-                    name: category2,
-                    //items: [],
-                };
-                catalog2[groupIndex].items[category1Index].items.push(obj);
-                id++;
-            }
-        }
-    }
-}
-
 const generateListOfItems = () => {
     const buf = fs.readFileSync(path.join(__dirname, "..", "import.xlsx"));
     const list = XLSX.read(buf, { type: "buffer" });
@@ -129,9 +76,62 @@ if (data) {
 
 //console.log(items);
 
+const catalog = [];
+let id = 1;
+for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    const group = item.group;
+    const category1 = item.category1;
+    const category2 = item.category2;
+
+    let groupIndex = catalog.findIndex((gr) => gr.name === group);
+    if (groupIndex === -1) {
+        const obj = {
+            id,
+            name: group,
+            items: [],
+        };
+        catalog.push(obj);
+        id++;
+    }
+    groupIndex = catalog.findIndex((gr) => gr.name === group);
+    let category1Index = -1;
+
+    if (groupIndex !== -1) {
+        category1Index = catalog[groupIndex].items.findIndex((cat1) => cat1.name === category1);
+
+        if (category1Index === -1) {
+            const obj = {
+                id,
+                name: category1,
+                items: [],
+            };
+            catalog[groupIndex].items.push(obj);
+            id++;
+        }
+        category1Index = catalog[groupIndex].items.findIndex((cat1) => cat1.name === category1);
+
+        let category2Index = -1;
+
+        if (category1Index !== -1) {
+            category2Index = catalog[groupIndex].items[category1Index].items.findIndex((cat2) => cat2.name === category2);
+
+            if (category2Index === -1) {
+                const obj = {
+                    id,
+                    name: category2,
+                    //items: [],
+                };
+                catalog[groupIndex].items[category1Index].items.push(obj);
+                id++;
+            }
+        }
+    }
+}
+
 const result = {
     items: items,
-    catalog2,
+    catalog: catalog,
 };
 
 const getItems = (req, res) => {
