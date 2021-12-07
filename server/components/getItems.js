@@ -3,40 +3,6 @@ const path = require("path");
 const fs = require("fs");
 const groupsFile = require("../groups");
 
-const groups = [];
-const categories1 = [];
-const categories2 = [];
-
-for (let i = 0; i < groupsFile.length; i++) {
-    const item = groupsFile[i];
-
-    groups.push(item.group);
-    categories1.push(item.category1);
-    categories2.push(item.category2);
-}
-
-const uniqGroups = [...new Set(groups)];
-const uniqCategs1 = [...new Set(categories1)];
-const uniqCategs2 = [...new Set(categories2)];
-
-const catalog = {};
-for (let i = 0; i < groupsFile.length; i++) {
-    const item = groupsFile[i];
-    const group = item.group;
-    const category1 = item.category1;
-    const category2 = item.category2;
-
-    if (!catalog[group]) {
-        catalog[group] = {};
-    }
-    if (!catalog[group][category1]) {
-        catalog[group][category1] = {};
-    }
-    if (!catalog[group][category1][category2]) {
-        catalog[group][category1][category2] = "";
-    }
-}
-
 const catalog2 = [];
 let id = 1;
 for (let i = 0; i < groupsFile.length; i++) {
@@ -46,8 +12,6 @@ for (let i = 0; i < groupsFile.length; i++) {
     const category2 = item.category2;
 
     let groupIndex = catalog2.findIndex((gr) => gr.name === group);
-    console.log(groupIndex);
-
     if (groupIndex === -1) {
         const obj = {
             id,
@@ -91,7 +55,6 @@ for (let i = 0; i < groupsFile.length; i++) {
         }
     }
 }
-console.log(catalog2);
 
 const generateListOfItems = () => {
     const buf = fs.readFileSync(path.join(__dirname, "..", "import.xlsx"));
@@ -160,12 +123,6 @@ if (data) {
         } else {
             item.category1 = "not found";
             item.group = "not found";
-            if (!uniqGroups.includes("not found")) {
-                uniqGroups.push("not found");
-            }
-            if (!uniqCategs1.includes("not found")) {
-                uniqCategs1.push("not found");
-            }
         }
     }
 }
@@ -174,10 +131,6 @@ if (data) {
 
 const result = {
     items: items,
-    groups: uniqGroups,
-    categories1: uniqCategs1,
-    categories2: uniqCategs2,
-    catalog,
     catalog2,
 };
 
