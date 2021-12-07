@@ -19,6 +19,24 @@ const uniqGroups = [...new Set(groups)];
 const uniqCategs1 = [...new Set(categories1)];
 const uniqCategs2 = [...new Set(categories2)];
 
+const catalog = {};
+for (let i = 0; i < groupsFile.length; i++) {
+    const item = groupsFile[i];
+    const group = item.group;
+    const category1 = item.category1;
+    const category2 = item.category2;
+
+    if (!catalog[group]) {
+        catalog[group] = {};
+    }
+    if (!catalog[group][category1]) {
+        catalog[group][category1] = {};
+    }
+    if (!catalog[group][category1][category2]) {
+        catalog[group][category1][category2] = "";
+    }
+}
+
 const generateListOfItems = () => {
     const buf = fs.readFileSync(path.join(__dirname, "..", "import.xlsx"));
     const list = XLSX.read(buf, { type: "buffer" });
@@ -103,6 +121,7 @@ const result = {
     groups: uniqGroups,
     categories1: uniqCategs1,
     categories2: uniqCategs2,
+    catalog,
 };
 
 const getItems = (req, res) => {
