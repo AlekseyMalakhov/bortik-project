@@ -38,7 +38,9 @@ function Sidebar() {
     const searchInput = useSelector((state) => state.manage.searchInput);
     const search = useSelector((state) => state.manage.search);
     const items = useSelector((state) => state.manage.items);
-    const selectedCategory = useSelector((state) => state.manage.selectedCategory);
+    const selectedGroup = useSelector((state) => state.manage.selectedGroup);
+    const selectedCategory1 = useSelector((state) => state.manage.selectedCategory1);
+    const selectedCategory2 = useSelector((state) => state.manage.selectedCategory2);
 
     const [searchedCategories, setSearchedCategories] = useState(null);
 
@@ -55,10 +57,36 @@ function Sidebar() {
         }
     }, [items]);
 
+    useEffect(() => {
+        if (items && items.catalog && selectedGroup) {
+            const categories1 = Object.keys(items.catalog[selectedGroup]);
+            setCategories1(categories1);
+        }
+    }, [items, selectedGroup]);
+
+    useEffect(() => {
+        if (items && items.catalog && selectedGroup && selectedCategory1) {
+            const categories2 = Object.keys(items.catalog[selectedGroup][selectedCategory1]);
+            setCategories2(categories2);
+        }
+    }, [items, selectedGroup, selectedCategory1]);
+
     return (
         <SidebarStyled sideBarOpened={sideBarOpened}>
             <Header>Каталог</Header>
-            <ItemsList>{groups.length > 0 ? groups.map((category) => <Item key={category} category={category} type="group" />) : null}</ItemsList>
+            {!selectedGroup ? (
+                <ItemsList>{groups.length > 0 ? groups.map((category) => <Item key={category} category={category} type="group" />) : null}</ItemsList>
+            ) : null}
+            {selectedGroup && !selectedCategory1 ? (
+                <ItemsList>
+                    {categories1.length > 0 ? categories1.map((category) => <Item key={category} category={category} type="category1" />) : null}
+                </ItemsList>
+            ) : null}
+            {selectedGroup && selectedCategory1 ? (
+                <ItemsList>
+                    {categories2.length > 0 ? categories2.map((category) => <Item key={category} category={category} type="category2" />) : null}
+                </ItemsList>
+            ) : null}
         </SidebarStyled>
     );
 }
