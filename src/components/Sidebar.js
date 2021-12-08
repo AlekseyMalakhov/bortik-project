@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import colors from "../settings/colors";
 import Item from "./Item";
-import { useSelector, useDispatch } from "react-redux";
-import { setSelectedCategory1, setSelectedCategory2, setSelectedGroup } from "../store/manage";
+import { useSelector } from "react-redux";
 import SidebarHeader from "./SidebarHeader";
 
 const SidebarStyled = styled.div((props) => {
@@ -35,54 +34,44 @@ const sortAlphabetically = (arr) => {
 };
 
 function Sidebar() {
-    const dispatch = useDispatch();
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
-
     const searchInput = useSelector((state) => state.manage.searchInput);
     const search = useSelector((state) => state.manage.search);
-
+    const selectedItems = useSelector((state) => state.manage.selectedItems);
     const items = useSelector((state) => state.manage.items);
     const catalog = useSelector((state) => state.manage.catalog);
     const selectedGroup = useSelector((state) => state.manage.selectedGroup);
     const selectedCategory1 = useSelector((state) => state.manage.selectedCategory1);
     const selectedCategory2 = useSelector((state) => state.manage.selectedCategory2);
-
     const sideBarShowType = useSelector((state) => state.manage.sideBarShowType);
-
-    const [searchedCategories, setSearchedCategories] = useState(null);
-
     const [list, setList] = useState([]);
-
-    // useEffect(() => {
-    //     if (search && searchInput.length > 0) {
-    //         const arr = categories.filter((category) => {
-    //             return items[category.name].find((item) => {
-    //                 for (let i = 0; i < searchInput.length; i++) {
-    //                     if (item.title.toLowerCase().includes(searchInput[i])) {
-    //                         return true;
-    //                     }
-    //                 }
-    //                 return false;
-    //             });
-    //         });
-    //         setSearchedCategories(arr);
-    //         const selectedCat = arr.find((category) => category.name === selectedCategory);
-    //         if (!selectedCat && arr.length > 0) {
-    //             dispatch(setSelectedCategory(arr[0].name));
-    //         }
-    //     } else {
-    //         setSearchedCategories(categories);
-    //     }
-    // }, [categories, search, searchInput]);
 
     const handleSearch = (categories) => {
         const result = categories.filter((category) => {
             for (let i = 0; i < searchInput.length; i++) {
                 const word = searchInput[i];
-                //const find = items.find((item) => item.title.toLowerCase().includes(word))
+                const find = selectedItems.find((item) => item.title.toLowerCase().includes(word));
+                if (find) {
+                    if (sideBarShowType === "groups") {
+                        if (find.group === category.name) {
+                            return true;
+                        }
+                    }
+                    if (sideBarShowType === "categories1") {
+                        if (find.category1 === category.name) {
+                            return true;
+                        }
+                    }
+                    if (sideBarShowType === "categories2") {
+                        if (find.category2 === category.name) {
+                            return true;
+                        }
+                    }
+                }
             }
+            return false;
         });
-        return items;
+        return result;
     };
 
     useEffect(() => {
@@ -105,7 +94,7 @@ function Sidebar() {
             }
             setList(sortAlphabetically(selected));
         }
-    }, [items, catalog, selectedGroup, selectedCategory1, selectedCategory2, sideBarShowType]);
+    }, [items, catalog, selectedGroup, selectedCategory1, selectedCategory2, sideBarShowType, selectedItems]);
 
     return (
         <SidebarStyled sideBarOpened={sideBarOpened}>
