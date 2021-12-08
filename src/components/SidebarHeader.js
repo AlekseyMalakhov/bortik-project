@@ -31,7 +31,27 @@ function SidebarHeader() {
         }
     };
 
-    return <SidebarHeaderStyled>{sideBarShowType === "groups" ? "Каталог" : <SidebarBackButton onClick={goUp} />}</SidebarHeaderStyled>;
+    const cleanCateg2 = () => {
+        dispatch(setSelectedCategory2(null));
+    };
+
+    if (sideBarShowType === "groups") {
+        return <SidebarHeaderStyled>Каталог</SidebarHeaderStyled>;
+    } else {
+        if (!selectedCategory2) {
+            return (
+                <SidebarHeaderStyled>
+                    <SidebarBackButton onClick={goUp} />
+                </SidebarHeaderStyled>
+            );
+        } else {
+            return (
+                <SidebarHeaderStyled>
+                    <SidebarExitButton onClick={cleanCateg2} />
+                </SidebarHeaderStyled>
+            );
+        }
+    }
 }
 
 export default SidebarHeader;
