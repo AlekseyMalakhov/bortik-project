@@ -15,6 +15,7 @@ export const getHistory = createAsyncThunk("manage/getHistory", async (userID) =
 
 const initialState = {
     sideBarOpened: true,
+    sideBarShowType: "groups",
     screenWidth: 0,
     mobileScreen: true,
     items: [],
@@ -38,6 +39,9 @@ export const manageSlice = createSlice({
     reducers: {
         changeSideBarOpened: (state, action) => {
             state.sideBarOpened = action.payload;
+        },
+        changeSideBarShowType: (state, action) => {
+            state.sideBarShowType = action.payload;
         },
         setScreenWidth: (state, action) => {
             state.screenWidth = action.payload;
@@ -139,10 +143,9 @@ export const manageSlice = createSlice({
 
 export const {
     changeSideBarOpened,
+    changeSideBarShowType,
     setScreenWidth,
     setMobileScreen,
-    // setCategories1,
-    // setCategories2,
     setSelectedCategory1,
     setSelectedCategory2,
     setSelectedGroup,

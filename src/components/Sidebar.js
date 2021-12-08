@@ -5,6 +5,7 @@ import Item from "./Item";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedCategory1, setSelectedCategory2, setSelectedGroup } from "../store/manage";
 import SidebarBackButton from "./SidebarBackButton";
+import { changeSideBarShowType } from "../store/manage";
 
 const SidebarStyled = styled.div((props) => {
     return {
@@ -45,41 +46,39 @@ function Sidebar() {
     const selectedCategory1 = useSelector((state) => state.manage.selectedCategory1);
     const selectedCategory2 = useSelector((state) => state.manage.selectedCategory2);
 
+    const sideBarShowType = useSelector((state) => state.manage.sideBarShowType);
+
     const [searchedCategories, setSearchedCategories] = useState(null);
 
     const [list, setList] = useState([]);
-    const [showType, setShowType] = useState("groups");
 
     useEffect(() => {
         if (items) {
-            if (!selectedGroup && !selectedCategory1 && !selectedCategory2) {
-                setShowType("groups");
+            if (sideBarShowType === "groups") {
                 setList(catalog);
                 return;
             }
-            if (selectedGroup && !selectedCategory1 && !selectedCategory2) {
+            if (sideBarShowType === "categories1") {
                 const index = catalog.findIndex((gr) => gr.name === selectedGroup);
-                setShowType("categories1");
                 setList(catalog[index].items);
                 return;
             }
-            if (selectedGroup && selectedCategory1 && !selectedCategory2) {
+            if (sideBarShowType === "categories2") {
                 const indexGr = catalog.findIndex((gr) => gr.name === selectedGroup);
                 const indexCat1 = catalog[indexGr].items.findIndex((categ1) => categ1.name === selectedCategory1);
-                setShowType("categories2");
                 setList(catalog[indexGr].items[indexCat1].items);
                 return;
             }
         }
-    }, [items, catalog, selectedGroup, selectedCategory1, selectedCategory2]);
+    }, [items, catalog, selectedGroup, selectedCategory1, selectedCategory2, sideBarShowType]);
 
     const goUp = () => {
-        if (showType === "categories2") {
-            setShowType("categories1");
+        if (sideBarShowType === "categories2") {
+            dispatch(changeSideBarShowType("categories1"));
             dispatch(setSelectedCategory2(null));
         }
-        if (showType === "categories1") {
-            setShowType("groups");
+        if (sideBarShowType === "categories1") {
+            dispatch(changeSideBarShowType("groups"));
             dispatch(setSelectedCategory1(null));
             dispatch(setSelectedGroup(null));
         }
@@ -87,11 +86,11 @@ function Sidebar() {
 
     return (
         <SidebarStyled sideBarOpened={sideBarOpened}>
-            {console.log("showType " + showType)}
-            <Header>{showType === "groups" ? "Каталог" : <SidebarBackButton onClick={goUp} />}</Header>
+            {console.log("showType " + sideBarShowType)}
+            <Header>{sideBarShowType === "groups" ? "Каталог" : <SidebarBackButton onClick={goUp} />}</Header>
             <ItemsList>
                 {list.map((category) => (
-                    <Item key={category.id} category={category.name} showType={showType} />
+                    <Item key={category.id} category={category.name} />
                 ))}
             </ItemsList>
         </SidebarStyled>
