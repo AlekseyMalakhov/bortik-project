@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSelectedCategory1, setSelectedCategory2, setSelectedGroup } from "../store/manage";
 import SidebarBackButton from "./SidebarBackButton";
 import { changeSideBarShowType } from "../store/manage";
+import SidebarHeader from "./SidebarHeader";
 
 const SidebarStyled = styled.div((props) => {
     return {
@@ -17,13 +18,6 @@ const SidebarStyled = styled.div((props) => {
         overflow: "auto",
         overflowX: "hidden",
     };
-});
-
-const Header = styled.div({
-    marginTop: "10px",
-    textAlign: "center",
-    fontSize: "20px",
-    fontWeight: "500",
 });
 
 const ItemsList = styled.div({
@@ -72,24 +66,10 @@ function Sidebar() {
         }
     }, [items, catalog, selectedGroup, selectedCategory1, selectedCategory2, sideBarShowType]);
 
-    const goUp = () => {
-        if (sideBarShowType === "categories2") {
-            dispatch(changeSideBarShowType("categories1"));
-            dispatch(setSelectedCategory1(null));
-            dispatch(setSelectedCategory2(null));
-        }
-        if (sideBarShowType === "categories1") {
-            dispatch(changeSideBarShowType("groups"));
-            dispatch(setSelectedCategory1(null));
-            dispatch(setSelectedCategory2(null));
-            dispatch(setSelectedGroup(null));
-        }
-    };
-
     return (
         <SidebarStyled sideBarOpened={sideBarOpened}>
             {console.log("showType " + sideBarShowType)}
-            <Header>{sideBarShowType === "groups" ? "Каталог" : <SidebarBackButton onClick={goUp} />}</Header>
+            <SidebarHeader />
             <ItemsList>
                 {list.map((category) => (
                     <Item key={category.id} category={category.name} />
