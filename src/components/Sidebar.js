@@ -3,7 +3,8 @@ import styled from "@emotion/styled";
 import colors from "../settings/colors";
 import Item from "./Item";
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedCategory1 } from "../store/manage";
+import { setSelectedCategory1, setSelectedCategory2, setSelectedGroup } from "../store/manage";
+import SidebarBackButton from "./SidebarBackButton";
 
 const SidebarStyled = styled.div((props) => {
     return {
@@ -72,9 +73,21 @@ function Sidebar() {
         }
     }, [items, catalog, selectedGroup, selectedCategory1, selectedCategory2]);
 
+    const goUp = () => {
+        if (showType === "categories2") {
+            setShowType("categories1");
+            dispatch(setSelectedCategory1(null));
+            dispatch(setSelectedCategory2(null));
+        }
+        if (showType === "categories1") {
+            setShowType("groups");
+            dispatch(setSelectedGroup(null));
+        }
+    };
+
     return (
         <SidebarStyled sideBarOpened={sideBarOpened}>
-            <Header>Каталог</Header>
+            <Header>{showType === "groups" ? "Каталог" : <SidebarBackButton onClick={goUp} />}</Header>
             <ItemsList>
                 {list.map((category) => (
                     <Item key={category.id} category={category.name} showType={showType} />
