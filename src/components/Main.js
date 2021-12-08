@@ -47,7 +47,34 @@ function Main() {
     const [searchedItems, setSearchedItems] = useState([]);
 
     useEffect(() => {
-        setSearchedItems(items);
+        console.log(selectedGroup);
+        console.log(selectedCategory1);
+        console.log(selectedCategory2);
+        if (!selectedGroup && !selectedCategory1 && !selectedCategory2) {
+            setSearchedItems(items);
+        }
+        if (selectedGroup && !selectedCategory1 && !selectedCategory2) {
+            const selected = items.filter((item) => item.group === selectedGroup);
+            setSearchedItems(selected);
+        }
+        if (selectedGroup && selectedCategory1 && !selectedCategory2) {
+            const selected = items.filter((item) => {
+                if (item.group === selectedGroup && item.category1 === selectedCategory1) {
+                    return true;
+                }
+                return false;
+            });
+            setSearchedItems(selected);
+        }
+        if (selectedGroup && selectedCategory1 && selectedCategory2) {
+            const selected = items.filter((item) => {
+                if (item.group === selectedGroup && item.category1 === selectedCategory1 && item.category2 === selectedCategory2) {
+                    return true;
+                }
+                return false;
+            });
+            setSearchedItems(selected);
+        }
     }, [items, selectedGroup, selectedCategory1, selectedCategory2]);
 
     const ref = React.createRef();
