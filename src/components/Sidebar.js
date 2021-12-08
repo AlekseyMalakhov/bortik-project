@@ -53,23 +53,57 @@ function Sidebar() {
 
     const [list, setList] = useState([]);
 
+    // useEffect(() => {
+    //     if (search && searchInput.length > 0) {
+    //         const arr = categories.filter((category) => {
+    //             return items[category.name].find((item) => {
+    //                 for (let i = 0; i < searchInput.length; i++) {
+    //                     if (item.title.toLowerCase().includes(searchInput[i])) {
+    //                         return true;
+    //                     }
+    //                 }
+    //                 return false;
+    //             });
+    //         });
+    //         setSearchedCategories(arr);
+    //         const selectedCat = arr.find((category) => category.name === selectedCategory);
+    //         if (!selectedCat && arr.length > 0) {
+    //             dispatch(setSelectedCategory(arr[0].name));
+    //         }
+    //     } else {
+    //         setSearchedCategories(categories);
+    //     }
+    // }, [categories, search, searchInput]);
+
+    const handleSearch = (categories) => {
+        const result = categories.filter((category) => {
+            for (let i = 0; i < searchInput.length; i++) {
+                const word = searchInput[i];
+                //const find = items.find((item) => item.title.toLowerCase().includes(word))
+            }
+        });
+        return items;
+    };
+
     useEffect(() => {
         if (items) {
+            let selected = [];
             if (sideBarShowType === "groups") {
-                setList(sortAlphabetically(catalog));
-                return;
+                selected = catalog;
             }
             if (sideBarShowType === "categories1") {
                 const index = catalog.findIndex((gr) => gr.name === selectedGroup);
-                setList(sortAlphabetically(catalog[index].items));
-                return;
+                selected = catalog[index].items;
             }
             if (sideBarShowType === "categories2") {
                 const indexGr = catalog.findIndex((gr) => gr.name === selectedGroup);
                 const indexCat1 = catalog[indexGr].items.findIndex((categ1) => categ1.name === selectedCategory1);
-                setList(sortAlphabetically(catalog[indexGr].items[indexCat1].items));
-                return;
+                selected = catalog[indexGr].items[indexCat1].items;
             }
+            if (search && searchInput.length > 0) {
+                selected = handleSearch(selected);
+            }
+            setList(sortAlphabetically(selected));
         }
     }, [items, catalog, selectedGroup, selectedCategory1, selectedCategory2, sideBarShowType]);
 

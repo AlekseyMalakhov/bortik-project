@@ -19,6 +19,7 @@ const initialState = {
     screenWidth: 0,
     mobileScreen: true,
     items: [],
+    selectedItems: [],
     catalog: [],
     loading: true,
     selectedCategory1: null,
@@ -51,6 +52,9 @@ export const manageSlice = createSlice({
         },
         setItems: (state, action) => {
             state.items = action.payload;
+        },
+        setSelectedItems: (state, action) => {
+            state.selectedItems = action.payload;
         },
         setSelectedCategory1: (state, action) => {
             state.selectedCategory1 = action.payload;
@@ -158,5 +162,6 @@ export const {
     setSearch,
     setSearchInput,
     setUser,
+    setSelectedItems,
 } = manageSlice.actions;
 export default manageSlice.reducer;

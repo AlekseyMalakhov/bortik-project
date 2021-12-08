@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Card from "./Card";
 import colors from "../settings/colors";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
+import { setSelectedItems } from "../store/manage";
 
 const MainStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
     return {
@@ -33,9 +34,10 @@ const MyButton = styled(Button)`
 `;
 
 function Main() {
+    const dispatch = useDispatch();
     const [showNumber, setShowNumber] = useState(20);
-    const [filteredItems, setFilteredItems] = useState([]);
     const items = useSelector((state) => state.manage.items);
+    const selectedItems = useSelector((state) => state.manage.selectedItems);
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const selectedCategory = useSelector((state) => state.manage.selectedCategory);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
@@ -87,7 +89,7 @@ function Main() {
         if (search && searchInput.length > 0) {
             selected = handleSearch(selected);
         }
-        setFilteredItems(selected);
+        dispatch(setSelectedItems(selected));
     }, [items, selectedGroup, selectedCategory1, selectedCategory2, searchInput, search]);
 
     const ref = React.createRef();
@@ -97,7 +99,7 @@ function Main() {
         if (ref.current) {
             ref.current.scroll(0, 0);
         }
-    }, [filteredItems, selectedCategory]);
+    }, [selectedItems, selectedCategory]);
 
     const showMore = () => {
         setShowNumber(showNumber + 20);
@@ -105,12 +107,12 @@ function Main() {
 
     return (
         <MainStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen} ref={ref}>
-            {filteredItems.length > 0 ? (
-                filteredItems.map((item, index) => (index <= showNumber ? <Card item={item} key={item.id} /> : null))
+            {selectedItems.length > 0 ? (
+                selectedItems.map((item, index) => (index <= showNumber ? <Card item={item} key={item.id} /> : null))
             ) : (
                 <Error>Нет товаров в данной категории</Error>
             )}
-            {showNumber < filteredItems.length ? (
+            {showNumber < selectedItems.length ? (
                 <MyButton variant="primary" size={mobileScreen ? "sm" : ""} onClick={showMore}>
                     Показать еще
                 </MyButton>
