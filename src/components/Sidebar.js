@@ -75,11 +75,13 @@ function Sidebar() {
     const goUp = () => {
         if (sideBarShowType === "categories2") {
             dispatch(changeSideBarShowType("categories1"));
+            dispatch(setSelectedCategory1(null));
             dispatch(setSelectedCategory2(null));
         }
         if (sideBarShowType === "categories1") {
             dispatch(changeSideBarShowType("groups"));
             dispatch(setSelectedCategory1(null));
+            dispatch(setSelectedCategory2(null));
             dispatch(setSelectedGroup(null));
         }
     };
