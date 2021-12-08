@@ -33,6 +33,7 @@ const Name = styled.div({
 function Item({ category }) {
     const dispatch = useDispatch();
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
+    const selectedGroup = useSelector((state) => state.manage.selectedGroup);
     const selectedCategory1 = useSelector((state) => state.manage.selectedCategory1);
     const selectedCategory2 = useSelector((state) => state.manage.selectedCategory2);
     const cart = useSelector((state) => state.manage.cart);
@@ -42,9 +43,18 @@ function Item({ category }) {
     const [numberInCart, setNumberInCart] = useState(0);
 
     useEffect(() => {
-        const arr = cart.filter((item) => item.category === category.name);
+        let arr = [];
+        if (sideBarShowType === "groups") {
+            arr = cart.filter((item) => item.group === category);
+        }
+        if (sideBarShowType === "categories1") {
+            arr = cart.filter((item) => item.category1 === category);
+        }
+        if (sideBarShowType === "categories2") {
+            arr = cart.filter((item) => item.category2 === category);
+        }
         setNumberInCart(arr.length);
-    }, [cart]);
+    }, [cart, sideBarShowType]);
 
     const handleSelect = (name) => {
         if (sideBarShowType === "groups") {

@@ -146,7 +146,9 @@ function CartForm({ cart, priceType, sum }) {
                 dispatch(setLoading(false));
                 if (response.status === 200) {
                     setOrderID(response.data.orderID);
-                    dispatch(getHistory(user.id));
+                    if (user) {
+                        dispatch(getHistory(user.id));
+                    }
                     setShowDone("OK");
                 } else {
                     setShowDone("Error");
