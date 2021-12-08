@@ -76,17 +76,18 @@ function Sidebar() {
     const goUp = () => {
         if (showType === "categories2") {
             setShowType("categories1");
-            dispatch(setSelectedCategory1(null));
             dispatch(setSelectedCategory2(null));
         }
         if (showType === "categories1") {
             setShowType("groups");
+            dispatch(setSelectedCategory1(null));
             dispatch(setSelectedGroup(null));
         }
     };
 
     return (
         <SidebarStyled sideBarOpened={sideBarOpened}>
+            {console.log("showType " + showType)}
             <Header>{showType === "groups" ? "Каталог" : <SidebarBackButton onClick={goUp} />}</Header>
             <ItemsList>
                 {list.map((category) => (
