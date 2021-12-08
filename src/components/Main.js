@@ -34,6 +34,7 @@ const MyButton = styled(Button)`
 
 function Main() {
     const [showNumber, setShowNumber] = useState(20);
+    const [filteredItems, setFilteredItems] = useState([]);
     const items = useSelector((state) => state.manage.items);
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const selectedCategory = useSelector((state) => state.manage.selectedCategory);
@@ -44,35 +45,50 @@ function Main() {
     const selectedCategory1 = useSelector((state) => state.manage.selectedCategory1);
     const selectedCategory2 = useSelector((state) => state.manage.selectedCategory2);
 
-    const [searchedItems, setSearchedItems] = useState([]);
+    const handleSearch = (items) => {
+        const result = items.filter((item) => {
+            const name = item.title.toLowerCase();
+            for (let i = 0; i < searchInput.length; i++) {
+                const word = searchInput[i];
+                if (name.includes(word)) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        return result;
+    };
 
     useEffect(() => {
+        let selected = [];
         if (!selectedGroup && !selectedCategory1 && !selectedCategory2) {
-            setSearchedItems(items);
+            selected = items;
         }
         if (selectedGroup && !selectedCategory1 && !selectedCategory2) {
-            const selected = items.filter((item) => item.group === selectedGroup);
-            setSearchedItems(selected);
+            selected = items.filter((item) => item.group === selectedGroup);
         }
         if (selectedGroup && selectedCategory1 && !selectedCategory2) {
-            const selected = items.filter((item) => {
+            selected = items.filter((item) => {
                 if (item.group === selectedGroup && item.category1 === selectedCategory1) {
                     return true;
                 }
                 return false;
             });
-            setSearchedItems(selected);
         }
         if (selectedGroup && selectedCategory1 && selectedCategory2) {
-            const selected = items.filter((item) => {
+            selected = items.filter((item) => {
                 if (item.group === selectedGroup && item.category1 === selectedCategory1 && item.category2 === selectedCategory2) {
                     return true;
                 }
                 return false;
             });
-            setSearchedItems(selected);
         }
-    }, [items, selectedGroup, selectedCategory1, selectedCategory2]);
+        if (search && searchInput.length > 0) {
+            selected = handleSearch(selected);
+        }
+        setFilteredItems(selected);
+    }, [items, selectedGroup, selectedCategory1, selectedCategory2, searchInput, search]);
 
     const ref = React.createRef();
 
@@ -81,7 +97,7 @@ function Main() {
         if (ref.current) {
             ref.current.scroll(0, 0);
         }
-    }, [searchedItems, selectedCategory]);
+    }, [filteredItems, selectedCategory]);
 
     const showMore = () => {
         setShowNumber(showNumber + 20);
@@ -89,12 +105,12 @@ function Main() {
 
     return (
         <MainStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen} ref={ref}>
-            {searchedItems.length > 0 ? (
-                searchedItems.map((item, index) => (index <= showNumber ? <Card item={item} key={item.id} /> : null))
+            {filteredItems.length > 0 ? (
+                filteredItems.map((item, index) => (index <= showNumber ? <Card item={item} key={item.id} /> : null))
             ) : (
                 <Error>Нет товаров в данной категории</Error>
             )}
-            {showNumber < searchedItems.length ? (
+            {showNumber < filteredItems.length ? (
                 <MyButton variant="primary" size={mobileScreen ? "sm" : ""} onClick={showMore}>
                     Показать еще
                 </MyButton>
