@@ -34,6 +34,7 @@ function Item({ category }) {
     const dispatch = useDispatch();
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
     const selectedCategory1 = useSelector((state) => state.manage.selectedCategory1);
+    const selectedCategory2 = useSelector((state) => state.manage.selectedCategory2);
     const cart = useSelector((state) => state.manage.cart);
     const items = useSelector((state) => state.manage.items);
     const sideBarShowType = useSelector((state) => state.manage.sideBarShowType);
@@ -61,7 +62,7 @@ function Item({ category }) {
 
     return (
         <ItemStyled
-            selected={category === selectedCategory1}
+            selected={sideBarShowType === "categories2" && selectedCategory2 === category}
             onClick={() => handleSelect(category)}
             //empty={items[category].length === 0}
         >
