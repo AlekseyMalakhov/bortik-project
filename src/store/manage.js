@@ -17,7 +17,7 @@ const initialState = {
     sideBarOpened: true,
     screenWidth: 0,
     mobileScreen: true,
-    items: null,
+    items: [],
     catalog: [],
     loading: true,
     selectedCategory1: null,

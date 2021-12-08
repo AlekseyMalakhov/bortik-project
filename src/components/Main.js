@@ -40,28 +40,15 @@ function Main() {
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
     const searchInput = useSelector((state) => state.manage.searchInput);
     const search = useSelector((state) => state.manage.search);
+    const selectedGroup = useSelector((state) => state.manage.selectedGroup);
+    const selectedCategory1 = useSelector((state) => state.manage.selectedCategory1);
+    const selectedCategory2 = useSelector((state) => state.manage.selectedCategory2);
 
-    const [searchedItems, setSearchedItems] = useState(null);
+    const [searchedItems, setSearchedItems] = useState([]);
 
     useEffect(() => {
-        if (search && searchInput.length > 0) {
-            const searchedItems = {};
-            for (const category in items) {
-                const arr = items[category].filter((item) => {
-                    for (let i = 0; i < searchInput.length; i++) {
-                        if (item.title.toLowerCase().includes(searchInput[i])) {
-                            return true;
-                        }
-                    }
-                    return false;
-                });
-                searchedItems[category] = arr;
-            }
-            setSearchedItems(searchedItems);
-        } else {
-            setSearchedItems(items);
-        }
-    }, [items, search, searchInput]);
+        setSearchedItems(items);
+    }, [items, selectedGroup, selectedCategory1, selectedCategory2]);
 
     const ref = React.createRef();
 
@@ -76,23 +63,20 @@ function Main() {
         setShowNumber(showNumber + 20);
     };
 
-    if (searchedItems && selectedCategory && searchedItems[selectedCategory]) {
-        return (
-            <MainStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen} ref={ref}>
-                {searchedItems[selectedCategory].length > 0 ? (
-                    searchedItems[selectedCategory].map((item, index) => (index <= showNumber ? <Card item={item} key={item.id} /> : null))
-                ) : (
-                    <Error>Нет товаров в данной категории</Error>
-                )}
-                {showNumber < searchedItems[selectedCategory].length ? (
-                    <MyButton variant="primary" size={mobileScreen ? "sm" : ""} onClick={showMore}>
-                        Показать еще
-                    </MyButton>
-                ) : null}
-            </MainStyled>
-        );
-    }
-    return null;
+    return (
+        <MainStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen} ref={ref}>
+            {searchedItems.length > 0 ? (
+                searchedItems.map((item, index) => (index <= showNumber ? <Card item={item} key={item.id} /> : null))
+            ) : (
+                <Error>Нет товаров в данной категории</Error>
+            )}
+            {showNumber < searchedItems.length ? (
+                <MyButton variant="primary" size={mobileScreen ? "sm" : ""} onClick={showMore}>
+                    Показать еще
+                </MyButton>
+            ) : null}
+        </MainStyled>
+    );
 }
 
 export default Main;
