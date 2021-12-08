@@ -4,8 +4,6 @@ import colors from "../settings/colors";
 import Item from "./Item";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedCategory1, setSelectedCategory2, setSelectedGroup } from "../store/manage";
-import SidebarBackButton from "./SidebarBackButton";
-import { changeSideBarShowType } from "../store/manage";
 import SidebarHeader from "./SidebarHeader";
 
 const SidebarStyled = styled.div((props) => {
@@ -27,10 +25,19 @@ const ItemsList = styled.div({
     alignItems: "center",
 });
 
+const sortAlphabetically = (arr) => {
+    let result = [];
+    const sortedArr = [...arr];
+    if (sortedArr.length > 0) {
+        result = sortedArr.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 0));
+    }
+    return result;
+};
+
 function Sidebar() {
     const dispatch = useDispatch();
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
-    const categories = useSelector((state) => state.manage.categories);
+
     const searchInput = useSelector((state) => state.manage.searchInput);
     const search = useSelector((state) => state.manage.search);
 
@@ -49,18 +56,18 @@ function Sidebar() {
     useEffect(() => {
         if (items) {
             if (sideBarShowType === "groups") {
-                setList(catalog);
+                setList(sortAlphabetically(catalog));
                 return;
             }
             if (sideBarShowType === "categories1") {
                 const index = catalog.findIndex((gr) => gr.name === selectedGroup);
-                setList(catalog[index].items);
+                setList(sortAlphabetically(catalog[index].items));
                 return;
             }
             if (sideBarShowType === "categories2") {
                 const indexGr = catalog.findIndex((gr) => gr.name === selectedGroup);
                 const indexCat1 = catalog[indexGr].items.findIndex((categ1) => categ1.name === selectedCategory1);
-                setList(catalog[indexGr].items[indexCat1].items);
+                setList(sortAlphabetically(catalog[indexGr].items[indexCat1].items));
                 return;
             }
         }
@@ -68,7 +75,6 @@ function Sidebar() {
 
     return (
         <SidebarStyled sideBarOpened={sideBarOpened}>
-            {console.log("showType " + sideBarShowType)}
             <SidebarHeader />
             <ItemsList>
                 {list.map((category) => (

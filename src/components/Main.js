@@ -47,9 +47,6 @@ function Main() {
     const [searchedItems, setSearchedItems] = useState([]);
 
     useEffect(() => {
-        console.log("selectedGroup " + selectedGroup);
-        console.log("selectedCategory1 " + selectedCategory1);
-        console.log("selectedCategory2 " + selectedCategory2);
         if (!selectedGroup && !selectedCategory1 && !selectedCategory2) {
             setSearchedItems(items);
         }
