@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 import AccountDataTable from "../components/AccountDataTable";
@@ -25,6 +25,16 @@ function Account() {
     const user = useSelector((state) => state.manage.user);
     const history = useSelector((state) => state.manage.history);
 
+    const [sortedHistory, setSortedHistory] = useState([]);
+
+    useEffect(() => {
+        if (history.length > 0) {
+            const arr = [...history];
+            const result = arr.sort((a, b) => (a.id < b.id ? 1 : b.id < a.id ? -1 : 0)); //descending order
+            setSortedHistory(result);
+        }
+    }, [history]);
+
     const edit = () => {
         navigate("/edit_account");
     };
@@ -36,7 +46,7 @@ function Account() {
                 Редактировать личные данные
             </Button>
             <Title>История покупок</Title>
-            {history.length > 0 ? <HistoryTable history={history} /> : null}
+            {sortedHistory.length > 0 ? <HistoryTable history={sortedHistory} /> : null}
         </AccountStyled>
     );
 }

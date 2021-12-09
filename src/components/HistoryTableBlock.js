@@ -86,7 +86,7 @@ function HistoryTableBlock({ order }) {
             <div style={{ fontWeight: "500" }}>Заказ №{order.id}</div>
             <div>Дата: {createDate(Number(order.date))}</div>
             <div>Тип цены: {order.price_type}</div>
-            <Table striped bordered hover style={{ fontSize: mobileScreen ? "14px" : "16px" }}>
+            <Table hover style={{ fontSize: mobileScreen ? "14px" : "16px" }}>
                 <thead>
                     <tr>
                         <th style={{ textAlign: "center" }}>Фото</th>
@@ -100,8 +100,10 @@ function HistoryTableBlock({ order }) {
                         <HistoryTableRow item={item} key={item.id} />
                     ))}
                     <tr>
-                        <th colSpan="3">Общая сумма</th>
-                        <th style={{ textAlign: "center" }}>{order.sum}</th>
+                        <th colSpan="3" style={{ borderBottomStyle: "none" }}>
+                            Общая сумма
+                        </th>
+                        <th style={{ textAlign: "center", borderBottomStyle: "none" }}>{order.sum}</th>
                     </tr>
                 </tbody>
             </Table>
