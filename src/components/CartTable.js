@@ -21,7 +21,7 @@ function CartTable({ cart, priceType, sum }) {
     if (cart.length > 0) {
         return (
             <CartTableStyled style={{ fontSize: mobileScreen ? "14px" : "16px" }}>
-                <Table striped bordered hover>
+                <Table hover>
                     <thead>
                         <tr>
                             <th style={{ textAlign: "center" }}>Фото</th>
@@ -34,9 +34,11 @@ function CartTable({ cart, priceType, sum }) {
                         {cart.map((item) => (
                             <TableRow item={item} priceType={priceType} key={item.id} />
                         ))}
-                        <tr>
-                            <th colSpan="3">Общая сумма</th>
-                            <th style={{ textAlign: "center" }}>{sum.toFixed(2)}</th>
+                        <tr style={{ borderBottomStyle: "none" }}>
+                            <th colSpan="3" style={{ borderBottomStyle: "none" }}>
+                                Общая сумма
+                            </th>
+                            <th style={{ textAlign: "center", borderBottomStyle: "none" }}>{sum.toFixed(2)}</th>
                         </tr>
                     </tbody>
                 </Table>

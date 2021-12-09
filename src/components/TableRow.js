@@ -14,13 +14,13 @@ function TableRow({ item, priceType }) {
     };
 
     return (
-        <tr>
-            <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                <img src={item.img} alt="" height="50"></img>
+        <tr style={{ borderBottomStyle: "none" }}>
+            <td style={{ textAlign: "center", verticalAlign: "middle", borderBottomStyle: "none" }}>
+                <img src={item.img} alt="" height="60"></img>
             </td>
-            <td style={{ verticalAlign: "middle" }}>{item.title}</td>
-            <td style={{ verticalAlign: "middle", textAlign: "center" }}>{item.number}</td>
-            <td style={{ verticalAlign: "middle", textAlign: "center" }}>{getPrice()}</td>
+            <td style={{ verticalAlign: "middle", borderBottomStyle: "none" }}>{item.title}</td>
+            <td style={{ verticalAlign: "middle", textAlign: "center", borderBottomStyle: "none" }}>{item.number}</td>
+            <td style={{ verticalAlign: "middle", textAlign: "center", borderBottomStyle: "none" }}>{getPrice()}</td>
         </tr>
     );
 }
