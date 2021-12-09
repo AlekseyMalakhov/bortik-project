@@ -48,26 +48,14 @@ function Sidebar() {
 
     const handleSearch = (categories) => {
         const result = categories.filter((category) => {
-            for (let i = 0; i < searchInput.length; i++) {
-                const word = searchInput[i];
-                const find = selectedItems.find((item) => item.title.toLowerCase().includes(word));
-                if (find) {
-                    if (sideBarShowType === "groups") {
-                        if (find.group === category.name) {
-                            return true;
-                        }
-                    }
-                    if (sideBarShowType === "categories1") {
-                        if (find.category1 === category.name) {
-                            return true;
-                        }
-                    }
-                    if (sideBarShowType === "categories2") {
-                        if (find.category2 === category.name) {
-                            return true;
-                        }
-                    }
-                }
+            if (sideBarShowType === "groups") {
+                return selectedItems.find((selectedItem) => selectedItem.group === category.name);
+            }
+            if (sideBarShowType === "categories1") {
+                return selectedItems.find((selectedItem) => selectedItem.category1 === category.name);
+            }
+            if (sideBarShowType === "categories2") {
+                return selectedItems.find((selectedItem) => selectedItem.category2 === category.name);
             }
             return false;
         });
