@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Table from "react-bootstrap/Table";
 import HistoryTableRow from "./HistoryTableRow";
 import Button from "react-bootstrap/Button";
 import { useSelector, useDispatch } from "react-redux";
-import { addItemToCart } from "../store/manage";
+import { addItemToCart, setCartSum } from "../store/manage";
 import AddHistoryToCartModal from "./AddHistoryToCartModal";
+import { calculateSum } from "../utilities/calculate";
 
 const HistoryTableBlockStyled = styled.div({
     marginBottom: "20px",
@@ -35,9 +36,12 @@ function HistoryTableBlock({ order }) {
     const [notFound, setNotFound] = useState([]);
     const items = useSelector((state) => state.manage.items);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
+    const cart = useSelector((state) => state.manage.cart);
+    const priceType = useSelector((state) => state.manage.priceType);
 
     const putItemToCart = (orderItem) => {
         const orderItemCheck = { ...orderItem };
+
         //for test only
         // if (orderItemCheck.article === "SMART.12026") {
         //     orderItemCheck.article = "test";
@@ -60,8 +64,17 @@ function HistoryTableBlock({ order }) {
         return orderItem;
     };
 
+    useEffect(() => {
+        if (cart.length > 0) {
+            const sum = calculateSum(cart, priceType);
+            dispatch(setCartSum(sum));
+        }
+        if (cart.length === 0) {
+            dispatch(setCartSum(0));
+        }
+    }, [cart, priceType]);
+
     const repeatOrder = () => {
-        //console.log(items);
         const notFound = order.items.filter((orderItem) => putItemToCart(orderItem));
         setNotFound(notFound);
         setShowAdded(true);
