@@ -8,7 +8,8 @@ import Dropdown from "react-bootstrap/Dropdown";
 import ThreeDotsButton from "./ThreeDotsButton";
 import Search from "./Search";
 import { useSelector, useDispatch } from "react-redux";
-import { setSearch, setUser } from "../store/manage";
+import { setUser } from "../store/manage";
+import SearchButton from "./SearchButton";
 
 const HeaderStyled = styled.div({
     display: "flex",
@@ -16,6 +17,12 @@ const HeaderStyled = styled.div({
     alignItems: "center",
     backgroundColor: colors.primaryColor,
     height: "50px",
+});
+
+const RightCornerPanel = styled.div({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
 });
 
 const BrandName = styled.div({
@@ -38,38 +45,35 @@ function Header() {
         navigate("/");
     };
 
-    const toggleSearch = () => {
-        dispatch(setSearch(true));
-        navigate("/");
-    };
-
     return (
         <HeaderStyled>
             {location.pathname === "/" ? <MenuButton /> : <HeaderBackButton />}
             {mobileScreen && search ? null : <BrandName onClick={() => navigate("/")}>Bortik Project</BrandName>}
             <Search show={search && location.pathname === "/"} />
-            <Dropdown align="end">
-                <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
-                <Dropdown.Menu>
-                    {location.pathname !== "/" ? <Dropdown.Item onClick={() => navigate("/")}>На главную</Dropdown.Item> : null}
-                    <Dropdown.Item onClick={toggleSearch}>Поиск</Dropdown.Item>
-                    <Dropdown.Item onClick={() => navigate("/about")}>О компании</Dropdown.Item>
-                    <Dropdown.Divider />
-                    {user ? (
-                        <React.Fragment>
-                            <Dropdown.Item onClick={() => navigate("/account")} style={{ fontWeight: 500 }}>
-                                {user.name}
-                            </Dropdown.Item>
-                            <Dropdown.Item onClick={logout}>Выход</Dropdown.Item>
-                        </React.Fragment>
-                    ) : (
-                        <React.Fragment>
-                            <Dropdown.Item onClick={() => navigate("/login")}>Вход в личный кабинет</Dropdown.Item>
-                            <Dropdown.Item onClick={() => navigate("/register")}>Регистрация</Dropdown.Item>
-                        </React.Fragment>
-                    )}
-                </Dropdown.Menu>
-            </Dropdown>
+            <RightCornerPanel>
+                {search ? null : <SearchButton />}
+                <Dropdown align="end">
+                    <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
+                    <Dropdown.Menu>
+                        {location.pathname !== "/" ? <Dropdown.Item onClick={() => navigate("/")}>На главную</Dropdown.Item> : null}
+                        <Dropdown.Item onClick={() => navigate("/about")}>О компании</Dropdown.Item>
+                        <Dropdown.Divider />
+                        {user ? (
+                            <React.Fragment>
+                                <Dropdown.Item onClick={() => navigate("/account")} style={{ fontWeight: 500 }}>
+                                    {user.name}
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={logout}>Выход</Dropdown.Item>
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                <Dropdown.Item onClick={() => navigate("/login")}>Вход в личный кабинет</Dropdown.Item>
+                                <Dropdown.Item onClick={() => navigate("/register")}>Регистрация</Dropdown.Item>
+                            </React.Fragment>
+                        )}
+                    </Dropdown.Menu>
+                </Dropdown>
+            </RightCornerPanel>
         </HeaderStyled>
     );
 }
