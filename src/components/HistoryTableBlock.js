@@ -37,31 +37,24 @@ function HistoryTableBlock({ order }) {
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
 
     const putItemToCart = (orderItem) => {
-        const orderItemTest = { ...orderItem };
-
+        const orderItemCheck = { ...orderItem };
         //for test only
-        // if (orderItemTest.article === "SMART.12026") {
-        //     orderItemTest.article = "test";
+        // if (orderItemCheck.article === "SMART.12026") {
+        //     orderItemCheck.article = "test";
         // }
-        // if (orderItemTest.article === "SMART.14001") {
-        //     orderItemTest.article = "test2";
+        // if (orderItemCheck.article === "SMART.14001") {
+        //     orderItemCheck.article = "test2";
         // }
         //end test
 
-        for (let x in items) {
-            const category = items[x];
-            if (category.length > 0) {
-                for (let i = 0; i < category.length; i++) {
-                    const item = category[i];
-                    if (item.article === orderItemTest.article) {
-                        const obj = {
-                            ...item,
-                            number: orderItemTest.number,
-                        };
-                        dispatch(addItemToCart(obj));
-                        return false;
-                    }
-                }
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].article === orderItemCheck.article) {
+                const itemForCart = {
+                    ...items[i],
+                    number: orderItemCheck.number,
+                };
+                dispatch(addItemToCart(itemForCart));
+                return false;
             }
         }
         return orderItem;
