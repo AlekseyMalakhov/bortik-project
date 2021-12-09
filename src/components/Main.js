@@ -50,13 +50,10 @@ function Main() {
     const handleSearch = (items) => {
         const result = items.filter((item) => {
             const name = item.title.toLowerCase();
-            for (let i = 0; i < searchInput.length; i++) {
-                const word = searchInput[i];
-                if (name.includes(word)) {
-                    return true;
-                }
-            }
-            return false;
+            return searchInput.every((word) => {
+                const regex = new RegExp(word, "gmiu");
+                return regex.test(name);
+            });
         });
 
         return result;
