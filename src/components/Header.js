@@ -48,7 +48,7 @@ function Header() {
     return (
         <HeaderStyled>
             {location.pathname === "/" ? <MenuButton /> : <HeaderBackButton />}
-            {mobileScreen && search ? null : <BrandName onClick={() => navigate("/")}>Bortik Project</BrandName>}
+            {mobileScreen && search ? null : <BrandName onClick={() => navigate("/")}>Test Slide 2</BrandName>}
             <Search show={search && location.pathname === "/"} />
             <RightCornerPanel>
                 {search ? null : <SearchButton />}

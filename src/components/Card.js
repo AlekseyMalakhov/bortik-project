@@ -67,9 +67,32 @@ function Card({ item }) {
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
     const cart = useSelector((state) => state.manage.cart);
     const priceType = useSelector((state) => state.manage.priceType);
-
     const [inCart, setInCart] = useState(false);
     const [showImage, setShowImage] = useState(false);
+
+    const [touchStart, setTouchStart] = React.useState(0);
+    const [touchEnd, setTouchEnd] = React.useState(0);
+
+    function handleTouchStart(e) {
+        setTouchStart(e.targetTouches[0].clientX);
+    }
+
+    function handleTouchMove(e) {
+        setTouchEnd(e.targetTouches[0].clientX);
+    }
+
+    function handleTouchEnd() {
+        if (touchStart - touchEnd > 70) {
+            dispatch(changeSideBarOpened(false));
+        }
+
+        if (touchStart - touchEnd < -70) {
+            // do your stuff here for right swipe
+            //moveSliderLeft();
+            //dispatch(changeSideBarOpened(false));
+            dispatch(changeSideBarOpened(true));
+        }
+    }
 
     useEffect(() => {
         if (cart.length > 0) {
@@ -91,7 +114,12 @@ function Card({ item }) {
     };
 
     return (
-        <CardStyled onClick={() => handleSelect()}>
+        <CardStyled
+            onClick={() => handleSelect()}
+            onTouchStart={(e) => handleTouchStart(e)}
+            onTouchMove={(e) => handleTouchMove(e)}
+            onTouchEnd={() => handleTouchEnd()}
+        >
             {inCart ? <IconCheck /> : null}
             <MyRow>
                 {item.img ? (

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import colors from "../settings/colors";
 import Item from "./Item";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import SidebarHeader from "./SidebarHeader";
+import { changeSideBarOpened } from "../store/manage";
 
 const SidebarStyled = styled.div((props) => {
     return {
@@ -34,6 +35,7 @@ const sortAlphabetically = (arr) => {
 };
 
 function Sidebar() {
+    const dispatch = useDispatch();
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const searchInput = useSelector((state) => state.manage.searchInput);
     const search = useSelector((state) => state.manage.search);
@@ -45,6 +47,29 @@ function Sidebar() {
     const selectedCategory2 = useSelector((state) => state.manage.selectedCategory2);
     const sideBarShowType = useSelector((state) => state.manage.sideBarShowType);
     const [list, setList] = useState([]);
+
+    const [touchStart, setTouchStart] = React.useState(0);
+    const [touchEnd, setTouchEnd] = React.useState(0);
+
+    function handleTouchStart(e) {
+        setTouchStart(e.targetTouches[0].clientX);
+    }
+
+    function handleTouchMove(e) {
+        setTouchEnd(e.targetTouches[0].clientX);
+    }
+
+    function handleTouchEnd() {
+        if (touchStart - touchEnd > 70) {
+            dispatch(changeSideBarOpened(false));
+        }
+
+        if (touchStart - touchEnd < -70) {
+            // do your stuff here for right swipe
+            //moveSliderLeft();
+            //dispatch(changeSideBarOpened(false));
+        }
+    }
 
     const handleSearch = (categories) => {
         const result = categories.filter((category) => {
@@ -85,7 +110,12 @@ function Sidebar() {
     }, [items, catalog, selectedGroup, selectedCategory1, selectedCategory2, sideBarShowType, selectedItems]);
 
     return (
-        <SidebarStyled sideBarOpened={sideBarOpened}>
+        <SidebarStyled
+            sideBarOpened={sideBarOpened}
+            onTouchStart={(e) => handleTouchStart(e)}
+            onTouchMove={(e) => handleTouchMove(e)}
+            onTouchEnd={() => handleTouchEnd()}
+        >
             <SidebarHeader />
             <ItemsList>
                 {list.map((category) => (
