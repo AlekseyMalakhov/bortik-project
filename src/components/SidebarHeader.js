@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import SidebarBackButton from "./SidebarBackButton";
 import SidebarExitButton from "./SidebarExitButton";
 import { changeSideBarShowType, setSelectedCategory1, setSelectedCategory2, setSelectedGroup } from "../store/manage";
+import { useTranslation, Trans } from "react-i18next";
 
 const SidebarHeaderStyled = styled.div({
     marginTop: "10px",
@@ -13,6 +14,7 @@ const SidebarHeaderStyled = styled.div({
 });
 
 function SidebarHeader() {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const sideBarShowType = useSelector((state) => state.manage.sideBarShowType);
     const selectedCategory2 = useSelector((state) => state.manage.selectedCategory2);
@@ -36,7 +38,7 @@ function SidebarHeader() {
     };
 
     if (sideBarShowType === "groups") {
-        return <SidebarHeaderStyled>Каталог</SidebarHeaderStyled>;
+        return <SidebarHeaderStyled>{t("catalog")}</SidebarHeaderStyled>;
     } else {
         if (!selectedCategory2) {
             return (
