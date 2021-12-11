@@ -19,12 +19,12 @@ i18n
         resources: {
             ru: {
                 translation: {
-                    catalog: "Каталог рус",
+                    catalog: "Каталог",
                 },
             },
             zh: {
                 translation: {
-                    catalog: "Каталог кит",
+                    catalog: "目录",
                 },
             },
             en: {

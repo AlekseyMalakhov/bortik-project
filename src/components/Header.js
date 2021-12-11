@@ -57,7 +57,6 @@ function Header() {
                     <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
                     <Dropdown.Menu>
                         {location.pathname !== "/" ? <Dropdown.Item onClick={() => navigate("/")}>На главную</Dropdown.Item> : null}
-                        <SelectLang />
                         <Dropdown.Item onClick={() => navigate("/about")}>О компании</Dropdown.Item>
                         <Dropdown.Divider />
                         {user ? (
@@ -73,6 +72,7 @@ function Header() {
                                 <Dropdown.Item onClick={() => navigate("/register")}>Регистрация</Dropdown.Item>
                             </React.Fragment>
                         )}
+                        <SelectLang />
                     </Dropdown.Menu>
                 </Dropdown>
             </RightCornerPanel>

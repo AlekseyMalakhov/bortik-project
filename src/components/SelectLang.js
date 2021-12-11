@@ -8,15 +8,46 @@ const MyDropdown = styled(Dropdown)({
     paddingLeft: "16px",
 });
 
+const langs = [
+    {
+        code: "ru",
+        name: "Русский (RU)",
+    },
+    {
+        code: "zh",
+        name: "中文 (ZH)",
+    },
+    {
+        code: "en",
+        name: "English (EN)",
+    },
+];
+
+const getFontWeight = (selectedLang, code) => {
+    if (selectedLang === code && selectedLang === "zh") {
+        return "bold";
+    }
+    if (selectedLang === code) {
+        return "500";
+    }
+    return "normal";
+};
+
 function SelectLang() {
     const { t, i18n } = useTranslation();
     return (
         <MyDropdown align="end" drop="start">
             <Dropdown.Toggle as={SelectLangText} id="select-lang" />
             <Dropdown.Menu>
-                <Dropdown.Item onClick={() => i18n.changeLanguage("ru")}>Русский (RU)</Dropdown.Item>
-                <Dropdown.Item onClick={() => i18n.changeLanguage("zh")}>中文 (ZH)</Dropdown.Item>
-                <Dropdown.Item onClick={() => i18n.changeLanguage("en")}>English (EN)</Dropdown.Item>
+                {langs.map((lang) => (
+                    <Dropdown.Item
+                        key={lang.code}
+                        onClick={() => i18n.changeLanguage(lang.code)}
+                        style={{ fontWeight: getFontWeight(i18n.resolvedLanguage, lang.code) }}
+                    >
+                        {lang.name}
+                    </Dropdown.Item>
+                ))}
             </Dropdown.Menu>
         </MyDropdown>
     );
