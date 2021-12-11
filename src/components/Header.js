@@ -10,6 +10,7 @@ import Search from "./Search";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../store/manage";
 import SearchButton from "./SearchButton";
+import SelectLang from "./SelectLang";
 
 const HeaderStyled = styled.div({
     display: "flex",
@@ -56,6 +57,7 @@ function Header() {
                     <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
                     <Dropdown.Menu>
                         {location.pathname !== "/" ? <Dropdown.Item onClick={() => navigate("/")}>На главную</Dropdown.Item> : null}
+                        <SelectLang />
                         <Dropdown.Item onClick={() => navigate("/about")}>О компании</Dropdown.Item>
                         <Dropdown.Divider />
                         {user ? (

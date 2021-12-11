@@ -22,9 +22,14 @@ i18n
                     catalog: "Каталог рус",
                 },
             },
-            ch: {
+            zh: {
                 translation: {
                     catalog: "Каталог кит",
+                },
+            },
+            en: {
+                translation: {
+                    catalog: "Catalog",
                 },
             },
         },
