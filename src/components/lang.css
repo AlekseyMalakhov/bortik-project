@@ -5,6 +5,6 @@
     justify-content: space-between;
 }
 
-#select-lang::before {
+#select-lang::after {
     content: none;
 }

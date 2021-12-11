@@ -36,7 +36,7 @@ const getFontWeight = (selectedLang, code) => {
 function SelectLang() {
     const { t, i18n } = useTranslation();
     return (
-        <MyDropdown align="end" drop="start">
+        <MyDropdown align="end" drop="down">
             <Dropdown.Toggle as={SelectLangText} id="select-lang" />
             <Dropdown.Menu>
                 {langs.map((lang) => (
