@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 function SelectLangText({ ...props }, ref) {
     const { i18n } = useTranslation();
     return (
-        <div {...props} ref={ref}>
+        <div {...props} ref={ref} style={{ marginTop: "5px" }}>
             <div style={{ display: "flex", alignItems: "center" }}>
                 <SelectLangIcon />
                 Lang
