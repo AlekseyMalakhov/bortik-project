@@ -13,6 +13,14 @@ const SidebarHeaderStyled = styled.div({
     fontWeight: "500",
 });
 
+const SidebarHeaderStyledCatalog = styled.div({
+    marginTop: "10px",
+    paddingBottom: "12px",
+    textAlign: "center",
+    fontSize: "20px",
+    fontWeight: "500",
+});
+
 function SidebarHeader() {
     const { t } = useTranslation();
     const dispatch = useDispatch();
@@ -38,7 +46,7 @@ function SidebarHeader() {
     };
 
     if (sideBarShowType === "groups") {
-        return <SidebarHeaderStyled>{t("catalog")}</SidebarHeaderStyled>;
+        return <SidebarHeaderStyledCatalog>{t("catalog")}</SidebarHeaderStyledCatalog>;
     } else {
         if (!selectedCategory2) {
             return (

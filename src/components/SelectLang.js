@@ -6,6 +6,11 @@ import { useTranslation, Trans } from "react-i18next";
 
 const MyDropdown = styled(Dropdown)({
     paddingLeft: "16px",
+    paddingTop: "5px",
+    paddingBottom: "5px",
+    "&:hover": {
+        backgroundColor: "#e9ecef",
+    },
 });
 
 const langs = [

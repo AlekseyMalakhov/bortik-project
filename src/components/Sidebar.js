@@ -19,7 +19,8 @@ const SidebarStyled = styled.div((props) => {
 });
 
 const ItemsList = styled.div({
-    margin: "10px 10px",
+    margin: "0px 10px",
+    marginBottom: "20px",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -57,24 +58,14 @@ function Sidebar() {
     }
 
     function handleTouchMove(e) {
-        //console.log("swiping");
         setSwiping(true);
         setTouchEnd(e.targetTouches[0].clientX);
     }
 
     function handleTouchEnd() {
-        // console.log(touchStart);
-        // console.log(touchEnd);
         if (touchStart - touchEnd > 70 && swiping) {
-            //console.log("close");
             dispatch(changeSideBarOpened(false));
             setSwiping(false);
-        }
-
-        if (touchStart - touchEnd < -70) {
-            // do your stuff here for right swipe
-            //moveSliderLeft();
-            //dispatch(changeSideBarOpened(false));
         }
     }
 
