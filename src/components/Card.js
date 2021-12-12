@@ -72,26 +72,26 @@ function Card({ item }) {
 
     const [touchStart, setTouchStart] = React.useState(0);
     const [touchEnd, setTouchEnd] = React.useState(0);
+    const [swiping, setSwiping] = useState(false);
 
     function handleTouchStart(e) {
         setTouchStart(e.targetTouches[0].clientX);
     }
 
     function handleTouchMove(e) {
+        setSwiping(true);
         setTouchEnd(e.targetTouches[0].clientX);
     }
 
     function handleTouchEnd() {
-        if (touchStart - touchEnd > 70) {
+        if (touchStart - touchEnd > 70 && swiping) {
             dispatch(changeSideBarOpened(false));
         }
 
-        if (touchStart - touchEnd < -70) {
-            // do your stuff here for right swipe
-            //moveSliderLeft();
-            //dispatch(changeSideBarOpened(false));
+        if (touchStart - touchEnd < -70 && swiping) {
             dispatch(changeSideBarOpened(true));
         }
+        setSwiping(false);
     }
 
     useEffect(() => {

@@ -50,18 +50,25 @@ function Sidebar() {
 
     const [touchStart, setTouchStart] = React.useState(0);
     const [touchEnd, setTouchEnd] = React.useState(0);
+    const [swiping, setSwiping] = useState(false);
 
     function handleTouchStart(e) {
         setTouchStart(e.targetTouches[0].clientX);
     }
 
     function handleTouchMove(e) {
+        //console.log("swiping");
+        setSwiping(true);
         setTouchEnd(e.targetTouches[0].clientX);
     }
 
     function handleTouchEnd() {
-        if (touchStart - touchEnd > 70) {
+        // console.log(touchStart);
+        // console.log(touchEnd);
+        if (touchStart - touchEnd > 70 && swiping) {
+            //console.log("close");
             dispatch(changeSideBarOpened(false));
+            setSwiping(false);
         }
 
         if (touchStart - touchEnd < -70) {
