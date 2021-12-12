@@ -8,6 +8,11 @@ export const getItems = createAsyncThunk("manage/getItems", async () => {
     return response;
 });
 
+export const getTranslations = createAsyncThunk("manage/getTranslations", async () => {
+    const response = await itemsAPI.getTranslations();
+    return response;
+});
+
 export const getHistory = createAsyncThunk("manage/getHistory", async (userID) => {
     const response = await userAPI.getHistory({ userID });
     return response;
@@ -32,6 +37,7 @@ const initialState = {
     searchInput: [],
     user: null,
     history: [],
+    translations: null,
 };
 
 export const manageSlice = createSlice({
@@ -140,6 +146,18 @@ export const manageSlice = createSlice({
                 state.loading = false;
                 if (action.payload) {
                     state.history = action.payload;
+                }
+            });
+
+        builder
+            .addCase(getTranslations.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(getTranslations.fulfilled, (state, action) => {
+                state.loading = false;
+                if (action.payload) {
+                    console.log(action.payload);
+                    //state.translations = action.payload;
                 }
             });
     },

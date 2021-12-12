@@ -1,6 +1,7 @@
 const compression = require("compression");
 const express = require("express");
 const getItems = require("./components/getItems");
+const getTranslations = require("./components/getTranslations");
 const sendCart = require("./components/sendCart");
 const db = require("./db/queries");
 const app = express();
@@ -25,6 +26,7 @@ app.put("/api/editAccount/:id", db.editAccount);
 app.post("/api/login", db.login);
 app.post("/api/forgotPassword", db.forgotPassword);
 app.post("/api/getHistory", db.getHistory);
+app.post("/api/getTranslations", getTranslations);
 
 // Error handler
 app.use(function (err, req, res, next) {
