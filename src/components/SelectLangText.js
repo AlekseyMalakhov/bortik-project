@@ -12,7 +12,6 @@ function SelectLangText({ ...props }, ref) {
                 <SelectLangIcon />
                 Lang
             </div>
-
             <div style={{ textTransform: "uppercase", marginRight: "20px", fontWeight: "500" }}>{i18n.resolvedLanguage}</div>
         </div>
     );

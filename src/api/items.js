@@ -1,4 +1,5 @@
 import client from "./client";
+import i18n from "../i18n";
 
 const getItems = () => {
     return client
@@ -20,7 +21,10 @@ const getTranslations = () => {
         .post("/getTranslations")
         .then((response) => {
             if (response.status === 200) {
-                return response.data;
+                const translations = response.data;
+                for (let x in translations) {
+                    i18n.addResourceBundle(x, "translation", translations[x]);
+                }
             } else {
                 console.log("error");
             }

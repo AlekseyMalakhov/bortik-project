@@ -17,6 +17,7 @@ import ForgotPassword from "./views/ForgotPassword";
 import EditAccount from "./views/EditAccount";
 import priceTypes from "./settings/priceTypes";
 import { getHistory } from "./store/manage";
+import itemsAPI from "./api/items";
 
 const AppStyled = styled.div({
     height: "100%",
@@ -40,6 +41,7 @@ function App() {
         } else {
             dispatch(setPriceType(priceTypes[0]));
         }
+        itemsAPI.getTranslations();
     }, []);
     return (
         <AppStyled>

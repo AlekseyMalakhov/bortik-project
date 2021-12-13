@@ -46,7 +46,7 @@ function SidebarHeader() {
     };
 
     if (sideBarShowType === "groups") {
-        return <SidebarHeaderStyledCatalog>{t("catalog")}</SidebarHeaderStyledCatalog>;
+        return <SidebarHeaderStyledCatalog>{t("Каталог")}</SidebarHeaderStyledCatalog>;
     } else {
         if (!selectedCategory2) {
             return (
