@@ -27,20 +27,14 @@ for (let x in data2) {
     }
 }
 
-const ru = {
-    translation: {},
-};
-const zh = {
-    translation: {},
-};
-const en = {
-    translation: {},
-};
+const ru = {};
+const zh = {};
+const en = {};
 
 for (let i = 2; i < numberOfRows; i++) {
-    ru.translation[data2[`A${i}`].v] = data2[`B${i}`].v;
-    zh.translation[data2[`A${i}`].v] = data2[`C${i}`].v;
-    en.translation[data2[`A${i}`].v] = data2[`D${i}`].v;
+    ru[data2[`A${i}`].v] = data2[`B${i}`].v;
+    zh[data2[`A${i}`].v] = data2[`C${i}`].v;
+    en[data2[`A${i}`].v] = data2[`D${i}`].v;
 }
 
 const result = {

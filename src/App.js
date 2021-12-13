@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Header from "./components/Header";
 import styled from "@emotion/styled";
 import handleScreenSize from "./settings/screenWidth";
-import { getItems, setUser, setPriceType, getTranslations } from "./store/manage";
+import { getItems, setUser, setPriceType } from "./store/manage";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
@@ -40,8 +40,6 @@ function App() {
         } else {
             dispatch(setPriceType(priceTypes[0]));
         }
-
-        dispatch(getTranslations());
     }, []);
     return (
         <AppStyled>
