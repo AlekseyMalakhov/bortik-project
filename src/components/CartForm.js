@@ -118,7 +118,7 @@ function CartForm({ cart, priceType, sum }) {
         const newCart = [];
         for (let i = 0; i < cart.length; i++) {
             const item = {
-                title: cart[i].title,
+                title: cart[i].title.ru,
                 article: cart[i].article,
                 number: cart[i].number,
                 price: getPrice(cart[i]),
