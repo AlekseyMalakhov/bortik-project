@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { changeSideBarOpened } from "../store/manage";
 import IconCheck from "./IconCheck";
 import ShowPic from "./ShowPic";
+import { useTranslation } from "react-i18next";
 
 const CardStyled = styled(Container)`
     position: relative;
@@ -62,6 +63,7 @@ const Tip = styled.div({
 });
 
 function Card({ item }) {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
@@ -139,7 +141,7 @@ function Card({ item }) {
                     </Col>
                 ) : null}
                 <MyCol style={{ fontWeight: "500" }} xs={12} sm={12} md={5}>
-                    {item.title}
+                    {t(item.title)}
                 </MyCol>
                 <Prices sm={12} md={3}>
                     {priceType === "с НДС" ? (
