@@ -1,0 +1,50 @@
+const XLSX = require("xlsx");
+const path = require("path");
+const fs = require("fs");
+
+const generateListOfItems = () => {
+    const buf = fs.readFileSync(path.join(__dirname, "..", "translations_items.xlsx"));
+    const list = XLSX.read(buf, { type: "buffer" });
+    return list;
+};
+
+const workbook = generateListOfItems();
+const data = workbook.Sheets.Sheet1;
+
+const data2 = {};
+const regex = new RegExp("[A-Z]\\d*");
+for (let x in data) {
+    if (regex.test(x)) {
+        data2[x] = data[x];
+    }
+}
+
+const regex2 = new RegExp("A\\d*");
+let numberOfRows = 0;
+for (let x in data2) {
+    if (regex2.test(x)) {
+        numberOfRows++;
+    }
+}
+
+const ru = {};
+const zh = {};
+const en = {};
+
+for (let i = 2; i < numberOfRows; i++) {
+    ru[data2[`A${i}`].v] = data2[`B${i}`].v;
+    zh[data2[`A${i}`].v] = data2[`C${i}`].v;
+    en[data2[`A${i}`].v] = data2[`D${i}`].v;
+}
+
+const result = {
+    ru,
+    zh,
+    en,
+};
+
+// console.log(ru);
+//console.log(zh);
+// console.log(en);
+
+module.exports = result;

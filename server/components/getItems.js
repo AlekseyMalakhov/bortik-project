@@ -2,6 +2,7 @@ const XLSX = require("xlsx");
 const path = require("path");
 const fs = require("fs");
 const groupsFile = require("../groups");
+const translations = require("./getItemNamesTranslations");
 
 const generateListOfItems = () => {
     const buf = fs.readFileSync(path.join(__dirname, "..", "import.xlsx"));
@@ -133,6 +134,8 @@ const result = {
     items: items,
     catalog: catalog,
 };
+
+console.log(translations.zh);
 
 const getItems = (req, res) => {
     if (result.items.length !== 0) {
