@@ -40,8 +40,8 @@ const createHTML = (data, newUser, orderId) => {
         <th style="border: 1px solid black; padding: 5px 5px;">Наименование товара</th>
         <th style="border: 1px solid black; padding: 5px 5px;">Артикул</th>
         <th style="border: 1px solid black; padding: 5px 5px;">Количество в заказе</th>
-        <th style="border: 1px solid black; padding: 5px 5px;">Цена за 1 шт. руб</th>
-        <th style="border: 1px solid black; padding: 5px 5px;">Сумма, руб</th>
+        <th style="border: 1px solid black; padding: 5px 5px;">Цена за 1 шт. BYN</th>
+        <th style="border: 1px solid black; padding: 5px 5px;">Сумма, BYN</th>
     </tr>`;
     const part2 = createRows(data.cart);
     const part3 = `<tr style="font-weight: bold;">

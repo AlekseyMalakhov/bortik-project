@@ -93,7 +93,7 @@ function CartPanel() {
             </MyButton>
             <PricePanel>
                 <SelectPrice />
-                <Price mobileScreen={mobileScreen}>{sum.toFixed(2)} руб</Price>
+                <Price mobileScreen={mobileScreen}>{sum.toFixed(2)} BYN</Price>
             </PricePanel>
             {cart.length > 0 ? <CleanCartButton onClick={() => setShowAsk(true)} mobileScreen={mobileScreen} /> : null}
             <AskCleanCartModal show={showAsk} onHide={() => setShowAsk(false)} onClean={handleCleanCart} />
