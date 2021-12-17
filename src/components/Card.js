@@ -63,7 +63,7 @@ const Tip = styled.div({
 });
 
 function Card({ item }) {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
@@ -141,7 +141,7 @@ function Card({ item }) {
                     </Col>
                 ) : null}
                 <MyCol style={{ fontWeight: "500" }} xs={12} sm={12} md={5}>
-                    {t(item.title)}
+                    {item.title[i18n.resolvedLanguage]}
                 </MyCol>
                 <Prices sm={12} md={3}>
                     {priceType === "с НДС" ? (

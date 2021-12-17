@@ -5,6 +5,7 @@ import colors from "../settings/colors";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import { setSelectedItems } from "../store/manage";
+import { useTranslation } from "react-i18next";
 
 const MainStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
     return {
@@ -34,6 +35,7 @@ const MyButton = styled(Button)`
 `;
 
 function Main() {
+    const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
     const [showNumber, setShowNumber] = useState(20);
     const items = useSelector((state) => state.manage.items);
@@ -49,7 +51,7 @@ function Main() {
 
     const handleSearch = (items) => {
         const result = items.filter((item) => {
-            const name = item.title.toLowerCase();
+            const name = item.title[i18n.resolvedLanguage].toLowerCase();
             return searchInput.every((word) => {
                 const regex = new RegExp(word, "gmiu");
                 return regex.test(name);

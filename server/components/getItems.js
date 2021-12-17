@@ -46,6 +46,19 @@ if (data) {
         const number = numberOfItems[i];
         if (data[`B${number}`] && data[`C${number}`]) {
             const titleName = data[`C${number}`].v;
+
+            //check
+            if (!(titleName in translations.ru)) {
+                console.log(titleName);
+            }
+            if (!(titleName in translations.zh)) {
+                console.log(titleName);
+            }
+            if (!(titleName in translations.en)) {
+                console.log(titleName);
+            }
+            //end check
+
             const obj = {
                 id: data[`B${number}`].v + "_" + i,
                 category2: data[`A${number}`].v,
@@ -137,8 +150,6 @@ const result = {
     items: items,
     catalog: catalog,
 };
-
-//console.log(translations.zh);
 
 const getItems = (req, res) => {
     if (result.items.length !== 0) {
