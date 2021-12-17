@@ -45,11 +45,16 @@ if (data) {
     for (let i = 0; i < numberOfItems.length; i++) {
         const number = numberOfItems[i];
         if (data[`B${number}`] && data[`C${number}`]) {
+            const titleName = data[`C${number}`].v;
             const obj = {
                 id: data[`B${number}`].v + "_" + i,
                 category2: data[`A${number}`].v,
                 article: data[`B${number}`].v,
-                title: data[`C${number}`].v,
+                title: {
+                    ru: translations.ru[titleName],
+                    zh: translations.zh[titleName],
+                    en: translations.en[titleName],
+                },
                 presence: data[`D${number}`] ? data[`D${number}`].v : 0,
                 unit: data[`E${number}`].v,
                 img: data[`F${number}`] ? "https://smartikon.by/uploads/" + data[`F${number}`].v : "",
@@ -74,8 +79,6 @@ if (data) {
         }
     }
 }
-
-//console.log(items);
 
 const catalog = [];
 let id = 1;
@@ -135,7 +138,7 @@ const result = {
     catalog: catalog,
 };
 
-console.log(translations.zh);
+//console.log(translations.zh);
 
 const getItems = (req, res) => {
     if (result.items.length !== 0) {
