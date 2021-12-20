@@ -3,6 +3,9 @@ const XLSX = require("xlsx");
 const groupsFile = require("../groups");
 const translations = require("./getItemNamesTranslations");
 
+const CyrillicToTranslit = require("cyrillic-to-translit-js");
+const cyrillicToTranslit = new CyrillicToTranslit();
+
 const getData = () => {
     axios
         .get("https://smartikon.by/public/import/import.xlsx", { responseType: "arraybuffer" })
@@ -53,17 +56,20 @@ function createItemsData(workbook) {
         for (let i = 0; i < numberOfItems.length; i++) {
             const number = numberOfItems[i];
             if (data[`B${number}`] && data[`C${number}`]) {
-                const titleName = data[`C${number}`].v;
+                const titleName1 = cyrillicToTranslit.transform(data[`C${number}`].v).toLowerCase();
+                const titleName = titleName1.replace(/\s/g, "");
+                //const key1 = cyrillicToTranslit.transform(data2[`A${i}`].v).toLowerCase();
+                //const key = key1.replace(/\s/g, "");
 
                 //check
                 if (!(titleName in translations.ru)) {
-                    console.log(titleName);
+                    //console.log(titleName);
                 }
                 if (!(titleName in translations.zh)) {
                     console.log(titleName);
                 }
                 if (!(titleName in translations.en)) {
-                    console.log(titleName);
+                    //console.log(titleName);
                 }
                 //end check
 

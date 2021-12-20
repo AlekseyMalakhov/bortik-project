@@ -2,6 +2,9 @@ const XLSX = require("xlsx");
 const path = require("path");
 const fs = require("fs");
 
+const CyrillicToTranslit = require("cyrillic-to-translit-js");
+const cyrillicToTranslit = new CyrillicToTranslit();
+
 const generateListOfItems = () => {
     const buf = fs.readFileSync(path.join(__dirname, "..", "translations_items.xlsx"));
     const list = XLSX.read(buf, { type: "buffer" });
@@ -32,9 +35,11 @@ const zh = {};
 const en = {};
 
 for (let i = 2; i < numberOfRows; i++) {
-    ru[data2[`A${i}`].v] = data2[`B${i}`].v;
-    zh[data2[`A${i}`].v] = data2[`C${i}`].v;
-    en[data2[`A${i}`].v] = data2[`D${i}`].v;
+    const key1 = cyrillicToTranslit.transform(data2[`A${i}`].v).toLowerCase();
+    const key = key1.replace(/\s/g, "");
+    ru[key] = data2[`B${i}`].v;
+    zh[key] = data2[`C${i}`].v;
+    en[key] = data2[`D${i}`].v;
 }
 
 const result = {
@@ -43,7 +48,7 @@ const result = {
     en,
 };
 
-// console.log(ru);
+console.log(ru.zubochistkikomfivbanke500sht);
 //console.log(zh);
 // console.log(en);
 
