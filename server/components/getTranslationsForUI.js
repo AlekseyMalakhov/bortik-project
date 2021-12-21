@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 
 const generateListOfItems = () => {
-    const buf = fs.readFileSync(path.join(__dirname, "..", "translations_interface.xlsx"));
+    const buf = fs.readFileSync(path.join(__dirname, "..", "translations_for_ui.xlsx"));
     const list = XLSX.read(buf, { type: "buffer" });
     return list;
 };
