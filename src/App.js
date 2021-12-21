@@ -41,7 +41,7 @@ function App() {
         } else {
             dispatch(setPriceType(priceTypes[0]));
         }
-        itemsAPI.getTranslations();
+        itemsAPI.getTranslationsForUI();
     }, []);
     return (
         <AppStyled>

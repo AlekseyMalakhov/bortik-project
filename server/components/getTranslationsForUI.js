@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 
 const generateListOfItems = () => {
-    const buf = fs.readFileSync(path.join(__dirname, "..", "translations.xlsx"));
+    const buf = fs.readFileSync(path.join(__dirname, "..", "translations_interface.xlsx"));
     const list = XLSX.read(buf, { type: "buffer" });
     return list;
 };
@@ -47,7 +47,7 @@ const result = {
 // console.log(zh);
 // console.log(en);
 
-const getTranslations = (req, res) => {
+const getTranslationsForUI = (req, res) => {
     if (result) {
         res.send(result);
     } else {
@@ -55,4 +55,4 @@ const getTranslations = (req, res) => {
     }
 };
 
-module.exports = getTranslations;
+module.exports = getTranslationsForUI;

@@ -16,9 +16,9 @@ const getItems = () => {
         });
 };
 
-const getTranslations = () => {
+const getTranslationsForUI = () => {
     return client
-        .post("/getTranslations")
+        .post("/getTranslationsForUI")
         .then((response) => {
             if (response.status === 200) {
                 const translations = response.data;
@@ -48,7 +48,7 @@ const sendCart = (data) => {
 const itemsAPI = {
     getItems,
     sendCart,
-    getTranslations,
+    getTranslationsForUI,
 };
 
 export default itemsAPI;
