@@ -56,20 +56,22 @@ function createItemsData(workbook) {
         for (let i = 0; i < numberOfItems.length; i++) {
             const number = numberOfItems[i];
             if (data[`B${number}`] && data[`C${number}`]) {
-                const titleName1 = cyrillicToTranslit.transform(data[`C${number}`].v).toLowerCase();
-                const titleName = titleName1.replace(/\s/g, "");
+                // const titleName1 = cyrillicToTranslit.transform(data[`C${number}`].v).toLowerCase();
+                // const titleName = titleName1.replace(/\s/g, "");
                 //const key1 = cyrillicToTranslit.transform(data2[`A${i}`].v).toLowerCase();
                 //const key = key1.replace(/\s/g, "");
 
+                const key = data[`C${number}`].v;
+
                 //check
-                if (!(titleName in translations.ru)) {
-                    //console.log(titleName);
+                if (!(key in translations.ru)) {
+                    console.log(key);
                 }
-                if (!(titleName in translations.zh)) {
-                    console.log(titleName);
+                if (!(key in translations.zh)) {
+                    //console.log(key);
                 }
-                if (!(titleName in translations.en)) {
-                    //console.log(titleName);
+                if (!(key in translations.en)) {
+                    //console.log(key);
                 }
                 //end check
 
@@ -98,9 +100,9 @@ function createItemsData(workbook) {
                     category2: data[`A${number}`].v,
                     article: data[`B${number}`].v,
                     title: {
-                        ru: translations.ru[titleName],
-                        zh: translations.zh[titleName],
-                        en: translations.en[titleName],
+                        ru: translations.ru[key],
+                        zh: translations.zh[key],
+                        en: translations.en[key],
                     },
                     presence: data[`D${number}`] ? data[`D${number}`].v : 0,
                     unit: data[`E${number}`].v,
