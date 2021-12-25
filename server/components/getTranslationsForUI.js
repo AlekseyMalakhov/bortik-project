@@ -9,7 +9,7 @@ const generateListOfItems = () => {
 };
 
 const workbook = generateListOfItems();
-const data = workbook.Sheets.Sheet1;
+const data = workbook.Sheets.Лист1;
 
 const data2 = {};
 const regex = new RegExp("[A-Z]\\d*");
