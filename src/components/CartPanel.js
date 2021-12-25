@@ -9,6 +9,7 @@ import CleanCartButton from "./CleanCartButton";
 import AskCleanCartModal from "./AskCleanCartModal";
 import { cleanCart } from "../store/manage";
 import { calculateSum } from "../utilities/calculate";
+import { useTranslation } from "react-i18next";
 
 const CartPanelStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
     const getLeft = () => {
@@ -56,6 +57,7 @@ const PricePanel = styled.div({
 });
 
 function CartPanel() {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
@@ -89,7 +91,7 @@ function CartPanel() {
                 style={{ marginLeft: mobileScreen ? "15px" : "50px" }}
                 onClick={() => navigate("/cart")}
             >
-                Оформить
+                {t("Оформить")}
             </MyButton>
             <PricePanel>
                 <SelectPrice />
