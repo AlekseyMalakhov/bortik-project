@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../store/manage";
 import SearchButton from "./SearchButton";
 import SelectLang from "./SelectLang";
+import { useTranslation } from "react-i18next";
 
 const HeaderStyled = styled.div({
     display: "flex",
@@ -33,6 +34,7 @@ const BrandName = styled.div({
 });
 
 function Header() {
+    const { t } = useTranslation();
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -56,20 +58,20 @@ function Header() {
                 <Dropdown align="end">
                     <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
                     <Dropdown.Menu>
-                        {location.pathname !== "/" ? <Dropdown.Item onClick={() => navigate("/")}>На главную</Dropdown.Item> : null}
-                        <Dropdown.Item onClick={() => navigate("/about")}>О компании</Dropdown.Item>
+                        {location.pathname !== "/" ? <Dropdown.Item onClick={() => navigate("/")}>{t("На главную")}</Dropdown.Item> : null}
+                        <Dropdown.Item onClick={() => navigate("/about")}>{t("О компании")}</Dropdown.Item>
                         <Dropdown.Divider />
                         {user ? (
                             <React.Fragment>
                                 <Dropdown.Item onClick={() => navigate("/account")} style={{ fontWeight: 500 }}>
                                     {user.name}
                                 </Dropdown.Item>
-                                <Dropdown.Item onClick={logout}>Выход</Dropdown.Item>
+                                <Dropdown.Item onClick={logout}>{t("Выход")}</Dropdown.Item>
                             </React.Fragment>
                         ) : (
                             <React.Fragment>
-                                <Dropdown.Item onClick={() => navigate("/login")}>Вход в личный кабинет</Dropdown.Item>
-                                <Dropdown.Item onClick={() => navigate("/register")}>Регистрация</Dropdown.Item>
+                                <Dropdown.Item onClick={() => navigate("/login")}>{t("Вход в личный кабинет")}</Dropdown.Item>
+                                <Dropdown.Item onClick={() => navigate("/register")}>{t("Регистрация")}</Dropdown.Item>
                             </React.Fragment>
                         )}
                         <SelectLang />
