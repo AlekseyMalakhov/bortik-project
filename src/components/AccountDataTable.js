@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Table from "react-bootstrap/Table";
+import { useTranslation } from "react-i18next";
 
 const AccountDataTableStyled = styled.div({
     width: "100%",
@@ -8,12 +9,13 @@ const AccountDataTableStyled = styled.div({
 });
 
 function AccountDataTable({ user }) {
+    const { t } = useTranslation();
     return (
         <AccountDataTableStyled>
             <Table striped bordered hover>
                 <tbody>
                     <tr>
-                        <td>ФИО</td>
+                        <td>{t("ФИО")}</td>
                         <td>{user.name}</td>
                     </tr>
                     <tr>
@@ -21,11 +23,11 @@ function AccountDataTable({ user }) {
                         <td>{user.email}</td>
                     </tr>
                     <tr>
-                        <td>Телефон</td>
+                        <td>{t("Телефон")}</td>
                         <td>{user.phone}</td>
                     </tr>
                     <tr>
-                        <td>Адрес доставки</td>
+                        <td>{t("Адрес доставки")}</td>
                         <td>{user.address}</td>
                     </tr>
                 </tbody>
