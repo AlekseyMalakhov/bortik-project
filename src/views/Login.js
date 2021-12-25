@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { setLoading } from "../store/manage";
 import userAPI from "../api/user";
 import { setUser, getHistory } from "../store/manage";
+import { useTranslation } from "react-i18next";
 
 const LoginStyled = styled.div({
     margin: "10px 20px",
@@ -43,6 +44,7 @@ const validationSchema = Yup.object().shape({
 });
 
 function Login() {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [error, setError] = useState("");
@@ -77,7 +79,7 @@ function Login() {
     };
     return (
         <LoginStyled>
-            <Title>Вход в личный кабинет</Title>
+            <Title>{t("Вход в личный кабинет")}</Title>
             <Formik
                 initialValues={{
                     email: process.env.NODE_ENV === "development" ? "www1@www.ww" : "",
@@ -91,23 +93,23 @@ function Login() {
                 {({ handleSubmit }) => (
                     <Form noValidate onSubmit={handleSubmit} style={{ maxWidth: "400px", width: "100%" }}>
                         <FormInput name="email" label="Email*" inputMode="email" />
-                        <FormInput name="password" label="Пароль*" type="password" />
+                        <FormInput name="password" label={t("Пароль") + "*"} type="password" />
 
                         {error !== "" ? <Error>{error}</Error> : null}
 
                         <div style={{ marginBottom: "10px" }}>
-                            <Link to="/forgot_password">Забыл пароль</Link>
+                            <Link to="/forgot_password">{t("Забыл пароль")}</Link>
                         </div>
                         <div>
-                            <Link to="/register">Зарегистрироваться</Link>
+                            <Link to="/register">{t("Зарегистрироваться")}</Link>
                         </div>
 
                         <ButtonGroup>
                             <Button variant="outline-primary" onClick={cancel}>
-                                Отмена
+                                {t("Отмена")}
                             </Button>
                             <Button variant="primary" type="submit" style={{ width: "80px" }}>
-                                Войти
+                                {t("Войти")}
                             </Button>
                         </ButtonGroup>
                     </Form>
