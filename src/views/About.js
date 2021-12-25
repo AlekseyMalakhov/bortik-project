@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { useTranslation } from "react-i18next";
 
 const AboutStyled = styled.div({
     margin: "10px 20px",
@@ -15,15 +16,15 @@ const Title = styled.div({
 });
 
 function About() {
+    const { t } = useTranslation();
     return (
         <AboutStyled>
-            <Title>О компании</Title>
+            <Title>{t("О компании")}</Title>
             <div>
                 <p>
-                    <span style={{ fontWeight: "500" }}>5A.com</span> - молодая и динамично развивающаяся компания, которая за короткое время сумела
-                    занять прочное место среди ведущих поставщиков хозяйственных товаров в Беларуси.
+                    <span style={{ fontWeight: "500" }}>5A.com</span> - {t("about1")}
                 </p>
-                <p>Залог нашего успеха - ответственность и внимательный подход к каждому клиенту.</p>
+                <p>{t("about2")}</p>
             </div>
         </AboutStyled>
     );
