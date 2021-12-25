@@ -12,7 +12,9 @@ const generateListOfItems = () => {
 };
 
 const workbook = generateListOfItems();
-const data = workbook.Sheets.Sheet1;
+const data = workbook.Sheets.Лист1;
+
+//console.log(workbook.Sheets.Лист1);
 
 const data2 = {};
 const regex = new RegExp("[A-Z]\\d*");
@@ -37,11 +39,11 @@ const en = {};
 for (let i = 2; i < numberOfRows; i++) {
     // const key1 = cyrillicToTranslit.transform(data2[`A${i}`].v).toLowerCase();
     // const key = key1.replace(/\s/g, "");
-    const key = data2[`A${i}`].v
+    const key = data2[`A${i}`].v;
     ru[key] = data2[`B${i}`].v;
     zh[key] = data2[`C${i}`].v;
     en[key] = data2[`D${i}`].v;
-}    
+}
 
 const result = {
     ru,
