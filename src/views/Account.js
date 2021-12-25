@@ -5,6 +5,7 @@ import AccountDataTable from "../components/AccountDataTable";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router";
 import HistoryTable from "../components/HistoryTable";
+import { useTranslation } from "react-i18next";
 
 const AccountStyled = styled.div({
     margin: "10px 20px",
@@ -21,6 +22,7 @@ const Title = styled.div({
 });
 
 function Account() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const user = useSelector((state) => state.manage.user);
     const history = useSelector((state) => state.manage.history);
@@ -40,12 +42,12 @@ function Account() {
     };
     return (
         <AccountStyled>
-            <Title>Личный кабинет</Title>
-            {user ? <AccountDataTable user={user} /> : <div>Ошибка</div>}
+            <Title>{t("Личный кабинет")}</Title>
+            {user ? <AccountDataTable user={user} /> : <div>{t("Ошибка")}</div>}
             <Button variant="primary" onClick={edit} style={{ marginTop: "20px", marginBottom: "20px" }}>
-                Редактировать личные данные
+                {t("Редактировать личные данные")}
             </Button>
-            <Title>История покупок</Title>
+            <Title>{t("История покупок")}</Title>
             {sortedHistory.length > 0 ? <HistoryTable history={sortedHistory} /> : null}
         </AccountStyled>
     );
