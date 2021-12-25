@@ -75,34 +75,14 @@ function createItemsData(workbook) {
                 }
                 //end check
 
-                /*
-                {
-                    "item": {
-                        "id": "SMART.36006_543",
-                        "category2": "Хомуты, шпагаты и сетки",
-                        "article": "SMART.36006",
-                        "title": "{}",
-                        "presence": 2,
-                        "unit": "рул",
-                        "img": "https://smartikon.by/uploads/SMART.36006.webp",
-                        "price": 104,
-                        "priceopt": 100,
-                        "pricemegaopt": 96,
-                        "discount": null,
-                        "category1": "Товары для упаковки и фасовки",
-                        "group": "Хозяйственные товары"
-                    }
-                    }
-                */
-
                 const obj = {
                     id: data[`B${number}`].v + "_" + i,
                     category2: data[`A${number}`].v,
                     article: data[`B${number}`].v,
                     title: {
-                        ru: translations.ru[key],
-                        zh: translations.zh[key],
-                        en: translations.en[key],
+                        ru: translations.ru[key] ? translations.ru[key] : key,
+                        zh: translations.zh[key] ? translations.zh[key] : key,
+                        en: translations.en[key] ? translations.en[key] : key,
                     },
                     presence: data[`D${number}`] ? data[`D${number}`].v : 0,
                     unit: data[`E${number}`].v,
