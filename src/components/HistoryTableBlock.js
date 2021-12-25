@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addItemToCart, setCartSum } from "../store/manage";
 import AddHistoryToCartModal from "./AddHistoryToCartModal";
 import { calculateSum } from "../utilities/calculate";
+import { useTranslation } from "react-i18next";
 
 const HistoryTableBlockStyled = styled.div({
     marginBottom: "20px",
@@ -31,6 +32,7 @@ const createDate = (dateString) => {
 };
 
 function HistoryTableBlock({ order }) {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const [showAdded, setShowAdded] = useState(false);
     const [notFound, setNotFound] = useState([]);
@@ -83,16 +85,20 @@ function HistoryTableBlock({ order }) {
 
     return (
         <HistoryTableBlockStyled>
-            <div style={{ fontWeight: "500" }}>Заказ №{order.id}</div>
-            <div>Дата: {createDate(Number(order.date))}</div>
-            <div>Тип цены: {order.price_type}</div>
+            <div style={{ fontWeight: "500" }}>{t("Заказ №") + " " + order.id}</div>
+            <div>
+                {t("Дата")}: {createDate(Number(order.date))}
+            </div>
+            <div>
+                {t("Тип цены")}: {order.price_type}
+            </div>
             <Table hover style={{ fontSize: mobileScreen ? "14px" : "16px" }}>
                 <thead>
                     <tr>
-                        <th style={{ textAlign: "center" }}>Фото</th>
-                        <th>Наименование</th>
-                        <th style={{ textAlign: "center" }}>Кол.</th>
-                        <th style={{ textAlign: "center" }}>Цена</th>
+                        <th style={{ textAlign: "center" }}>{t("Фото")}</th>
+                        <th>{t("Наименование")}</th>
+                        <th style={{ textAlign: "center" }}>{t("Кол.")}</th>
+                        <th style={{ textAlign: "center" }}>{t("Цена")}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -101,7 +107,7 @@ function HistoryTableBlock({ order }) {
                     ))}
                     <tr>
                         <th colSpan="3" style={{ borderBottomStyle: "none" }}>
-                            Общая сумма
+                            {t("Общая сумма")}
                         </th>
                         <th style={{ textAlign: "center", borderBottomStyle: "none" }}>{order.sum}</th>
                     </tr>
@@ -109,7 +115,7 @@ function HistoryTableBlock({ order }) {
             </Table>
             <Divider>
                 <Button variant="primary" onClick={repeatOrder}>
-                    Повторить заказ
+                    {t("Повторить заказ")}
                 </Button>
             </Divider>
             <AddHistoryToCartModal show={showAdded} onHide={() => setShowAdded(false)} notFound={notFound} />

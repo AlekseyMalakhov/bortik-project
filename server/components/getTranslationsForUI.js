@@ -31,7 +31,8 @@ const ru = {};
 const zh = {};
 const en = {};
 
-for (let i = 2; i < numberOfRows; i++) {
+console.log(numberOfRows);
+for (let i = 2; i < numberOfRows + 1; i++) {
     ru[data2[`A${i}`].v] = data2[`B${i}`].v;
     zh[data2[`A${i}`].v] = data2[`C${i}`].v;
     en[data2[`A${i}`].v] = data2[`D${i}`].v;
@@ -44,7 +45,8 @@ const result = {
 };
 
 // console.log(ru);
-// console.log(zh);
+//console.log(data);
+//console.log(zh["Дата"]);
 // console.log(en);
 
 const getTranslationsForUI = (req, res) => {
