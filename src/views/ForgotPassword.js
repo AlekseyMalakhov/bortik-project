@@ -6,6 +6,7 @@ import userAPI from "../api/user";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../store/manage";
 import ForgottenPasswordSentModal from "../components/ForgottenPasswordSentModal";
+import { useTranslation } from "react-i18next";
 
 const ForgotPasswordStyled = styled.div({
     margin: "10px 20px",
@@ -29,6 +30,7 @@ const MyInput = styled(Form.Control)({
 });
 
 function ForgotPassword() {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const [error, setError] = useState("");
     const [email, setEmail] = useState("");
@@ -58,12 +60,12 @@ function ForgotPassword() {
 
     return (
         <ForgotPasswordStyled>
-            <Title>Если Вы забыли пароль от своего аккаунта, введите свой email и мы пришлем Вам его.</Title>
+            <Title>{t("Если Вы забыли пароль от своего аккаунта, введите свой email и мы пришлем Вам его.")}</Title>
             <div style={{ display: "flex", width: "100%", flexDirection: "column", alignItems: "center", marginTop: "20px" }}>
                 <MyInput value={email} onChange={(e) => setEmail(e.target.value)} placeholder="example@example.com" />
                 {error !== "" ? <Error>{error}</Error> : null}
                 <Button variant="primary" style={{ marginTop: "20px" }} onClick={send}>
-                    Отправить
+                    {t("Отправить")}
                 </Button>
             </div>
             <ForgottenPasswordSentModal show={done} onHide={() => setDone(false)} />
