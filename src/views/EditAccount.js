@@ -12,6 +12,7 @@ import userAPI from "../api/user";
 import AccountEditedModal from "../components/AccountEditedModal";
 import { useSelector } from "react-redux";
 import FormCheckBoxSwitch from "../components/FormCheckBoxSwitch";
+import { useTranslation } from "react-i18next";
 
 const EditAccountStyled = styled.div({
     margin: "10px 20px",
@@ -55,6 +56,7 @@ const validationSchema = Yup.object().shape({
 });
 
 function EditAccount() {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector((state) => state.manage.user);
@@ -97,14 +99,14 @@ function EditAccount() {
                     setUpdatedUser(updatedUser);
                     setDone(true);
                 } else if (response.status === 401) {
-                    setError("Неверный пароль");
+                    setError(t("Неверный пароль"));
                 } else {
-                    setError("Неизвестная ошибка! Обратитесь в службу поддержки.");
+                    setError(t("Неизвестная ошибка! Обратитесь в службу поддержки."));
                 }
             })
             .catch((err) => {
                 dispatch(setLoading(false));
-                setError("Неизвестная ошибка! Обратитесь в службу поддержки.");
+                setError(t("Неизвестная ошибка! Обратитесь в службу поддержки."));
                 console.log(err);
             });
     };
@@ -115,7 +117,7 @@ function EditAccount() {
 
     return (
         <EditAccountStyled>
-            <Title>Редактировать личные данные</Title>
+            <Title>{t("Редактировать личные данные")}</Title>
             {user ? (
                 <Formik
                     initialValues={{
@@ -133,27 +135,27 @@ function EditAccount() {
                 >
                     {({ handleSubmit, values }) => (
                         <Form noValidate onSubmit={handleSubmit} style={{ maxWidth: "400px", width: "100%" }}>
-                            <FormInput name="name" label="ФИО*" />
-                            <FormInput name="phone" label="Телефон*" inputMode="tel" placeholder={"+375xxxxxxxxx"} />
+                            <FormInput name="name" label={t("ФИО") + "*"} />
+                            <FormInput name="phone" label={t("Телефон") + "*"} inputMode="tel" placeholder={"+375xxxxxxxxx"} />
                             <FormInput name="email" label="Email*" inputMode="email" />
-                            <FormInput name="address" label="Адрес доставки по умолчанию" />
-                            <FormInput name="password" label={values.changePassword ? "Текущий пароль*" : "Пароль*"} type="password" />
+                            <FormInput name="address" label={t("Адрес доставки по умолчанию")} />
+                            <FormInput name="password" label={values.changePassword ? t("Текущий пароль*") : t("Пароль") + "*"} type="password" />
                             {error !== "" ? <Error>{error}</Error> : null}
 
-                            <FormCheckBoxSwitch name="changePassword" label="Изменить пароль" />
+                            <FormCheckBoxSwitch name="changePassword" label={t("Изменить пароль")} />
                             {values.changePassword ? (
                                 <PasswordGroup>
-                                    <FormInput name="newPassword" label="Новый пароль*" type="password" />
-                                    <FormInput name="repeatNewPassword" label="Повторите новый пароль*" type="password" />
+                                    <FormInput name="newPassword" label={t("Новый пароль*")} type="password" />
+                                    <FormInput name="repeatNewPassword" label={t("Повторите новый пароль*")} type="password" />
                                 </PasswordGroup>
                             ) : null}
 
                             <ButtonGroup>
                                 <Button variant="outline-primary" onClick={cancel}>
-                                    Отмена
+                                    {t("Отмена")}
                                 </Button>
                                 <Button variant="primary" type="submit">
-                                    Отправить
+                                    {t("Отправить")}
                                 </Button>
                             </ButtonGroup>
                         </Form>
