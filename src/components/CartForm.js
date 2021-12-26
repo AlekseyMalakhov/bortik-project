@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading, getHistory } from "../store/manage";
 import CartSentModal from "./CartSentModal";
+import { useTranslation } from "react-i18next";
 
 const CartFormStyled = styled.div({
     marginTop: "30px",
@@ -76,6 +77,7 @@ const validationSchema = Yup.object().shape({
 });
 
 function CartForm({ cart, priceType, sum }) {
+    const { t } = useTranslation();
     const user = useSelector((state) => state.manage.user);
     const [showDone, setShowDone] = useState("hide");
     const [email, setEmail] = useState("");
@@ -184,15 +186,15 @@ function CartForm({ cart, priceType, sum }) {
             >
                 {({ handleSubmit }) => (
                     <Form noValidate onSubmit={handleSubmit}>
-                        <FormInput name="name" label="ФИО*" />
-                        <FormInput name="phone" label="Телефон*" inputMode="tel" placeholder={"+375xxxxxxxxx"} />
+                        <FormInput name="name" label={t("ФИО") + "*"} />
+                        <FormInput name="phone" label={t("Телефон") + "*"} inputMode="tel" placeholder={"+375xxxxxxxxx"} />
                         <FormInput name="email" label="Email*" inputMode="email" />
-                        <FormInput name="address" label="Адрес доставки" />
-                        <FormInput name="comment" label="Комментарий" as="textarea" />
+                        <FormInput name="address" label={t("Адрес доставки")} />
+                        <FormInput name="comment" label={t("Комментарий")} as="textarea" />
                         <CheckGroup>
-                            <Form.Label>Способ оплаты:</Form.Label>
+                            <Form.Label>{t("Способ оплаты:")}</Form.Label>
                             {payment_methods.map((method) => (
-                                <FormCheckBoxRadio name="payment_method" label={method.label} value={method.value} key={method.id} />
+                                <FormCheckBoxRadio name="payment_method" label={method.label} value={t(method.value)} key={method.id} />
                             ))}
                         </CheckGroup>
                         <CheckGroup>
@@ -203,10 +205,10 @@ function CartForm({ cart, priceType, sum }) {
                         </CheckGroup>
                         <ButtonGroup>
                             <Button variant="outline-primary" onClick={cancel}>
-                                Отмена
+                                {t("Отмена")}
                             </Button>
                             <Button variant="primary" type="submit">
-                                Отправить
+                                {t("Отправить")}
                             </Button>
                         </ButtonGroup>
                     </Form>
