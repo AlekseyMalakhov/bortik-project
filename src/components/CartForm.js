@@ -198,7 +198,7 @@ function CartForm({ cart, priceType, sum }) {
                             ))}
                         </CheckGroup>
                         <CheckGroup>
-                            <Form.Label>Доставка:</Form.Label>
+                            <Form.Label>{t("Доставка")}:</Form.Label>
                             {delivery_methods.map((method) => (
                                 <FormCheckBoxRadio name="delivery" label={method.label} value={method.value} key={method.id} />
                             ))}

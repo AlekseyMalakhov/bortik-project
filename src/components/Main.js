@@ -109,11 +109,11 @@ function Main() {
             {selectedItems.length > 0 ? (
                 selectedItems.map((item, index) => (index <= showNumber ? <Card item={item} key={item.id} /> : null))
             ) : (
-                <Error>Нет товаров в данной категории</Error>
+                <Error>{t("Нет товаров в данной категории. Измените параметры поиска.")}</Error>
             )}
             {showNumber < selectedItems.length ? (
                 <MyButton variant="primary" size={mobileScreen ? "sm" : ""} onClick={showMore}>
-                    Показать еще
+                    {t("Показать еще")}
                 </MyButton>
             ) : null}
         </MainStyled>
