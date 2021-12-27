@@ -2,6 +2,7 @@ const Pool = require("pg").Pool;
 require("dotenv").config({ path: "../../project_env/.env" }); //just for dev environment
 const transporter = require("../components/nodeMailerClient");
 const format = require("pg-format");
+const translations = require("../components/getItemNamesTranslations");
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -223,7 +224,13 @@ const getHistory = async (req, res) => {
                 const response2 = await pool.query(query2);
                 const items = response2.rows;
                 const itemsWithImages = items.map((item) => {
+                    const key = item.title;
                     item.img = "https://smartikon.by/uploads/" + item.article + ".webp";
+                    item.title = {
+                        ru: translations.ru[key] ? translations.ru[key] : key,
+                        zh: translations.zh[key] ? translations.zh[key] : key,
+                        en: translations.en[key] ? translations.en[key] : key,
+                    };
                     return item;
                 });
                 const newOrder = { ...order };

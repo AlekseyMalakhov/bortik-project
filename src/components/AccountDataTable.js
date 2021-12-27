@@ -39,10 +39,3 @@ function AccountDataTable({ user }) {
 }
 
 export default AccountDataTable;
-
-{
-    /* <div>ФИО: {user.name}</div>
-                    <div>Email: {user.email}</div>
-                    <div>Телефон: {user.phone}</div>
-                    <div>Адрес доставки: {user.address}</div> */
-}
