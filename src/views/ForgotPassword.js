@@ -46,14 +46,14 @@ function ForgotPassword() {
                 if (response.status === 200) {
                     setDone(true);
                 } else if (response.status === 404 && response.data === "Email not found") {
-                    setError(`Аккаунт ${email} не обнаружен!`);
+                    setError(`${t("Аккаунт")} ${email} ${t("не обнаружен!")}`);
                 } else {
-                    setError("Неизвестная ошибка! Обратитесь в службу поддержки.");
+                    setError(t("Неизвестная ошибка! Обратитесь в службу поддержки."));
                 }
             })
             .catch((err) => {
                 dispatch(setLoading(false));
-                setError("Неизвестная ошибка! Обратитесь в службу поддержки.");
+                setError(t("Неизвестная ошибка! Обратитесь в службу поддержки."));
                 console.log(err);
             });
     };
