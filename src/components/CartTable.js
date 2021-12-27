@@ -7,6 +7,8 @@ import CartItem from "./CartItem";
 const CartTableStyled = styled.div({
     width: "100%",
     maxWidth: "1000px",
+    paddingLeft: "10px",
+    paddingRight: "10px",
 });
 
 const EmptyCart = styled.div({

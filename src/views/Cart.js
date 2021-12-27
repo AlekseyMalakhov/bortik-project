@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import CartTable from "../components/CartTable";
 import CartForm from "../components/CartForm";
 import { useTranslation } from "react-i18next";
+import colors from "../settings/colors";
 
 const Title = styled.div({
     textAlign: "center",
@@ -17,9 +18,7 @@ const CartStyled = styled.div({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginBottom: "20px",
-    marginRight: "10px",
-    marginLeft: "10px",
+    backgroundColor: colors.lightGreyBackground,
 });
 
 function Cart() {

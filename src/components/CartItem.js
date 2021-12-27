@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import AddRemove from "./AddRemove";
 import { useSelector, useDispatch } from "react-redux";
 
 import { useTranslation } from "react-i18next";
@@ -10,9 +11,11 @@ import { useTranslation } from "react-i18next";
 const CartItemStyled = styled(Container)`
     position: relative;
     background-color: white;
-    margin: 10px 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 10px 10px;
-    max-width: 1210px;
+    max-width: 1000px;
+    border-radius: 8px;
 `;
 
 const MyRow = styled(Row)`
@@ -75,6 +78,10 @@ function CartItem({ item, priceType }) {
                 <MyCol style={{ fontWeight: "500" }} xs={12} sm={12} md={5}>
                     {item.title[i18n.resolvedLanguage]}
                 </MyCol>
+
+                <Col xs="auto">
+                    <AddRemove item={item} inCart={item} />
+                </Col>
                 <Prices sm={12} md={3}>
                     <RetailPrice>{getPrice()} BYN</RetailPrice>
                 </Prices>

@@ -13,9 +13,21 @@ import { setLoading, getHistory } from "../store/manage";
 import CartSentModal from "./CartSentModal";
 import { useTranslation } from "react-i18next";
 
+const MyContainer = styled.div({
+    paddingRight: "10px",
+    paddingLeft: "10px",
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    maxWidth: "1000px",
+});
+
 const CartFormStyled = styled.div({
     marginTop: "30px",
-    maxWidth: "1000px",
+    marginBottom: "20px",
+    backgroundColor: "white",
+    padding: "20px 20px",
+    borderRadius: "8px",
     width: "100%",
 });
 
@@ -169,61 +181,63 @@ function CartForm({ cart, priceType, sum }) {
     };
 
     return (
-        <CartFormStyled>
-            <Formik
-                initialValues={{
-                    name: user ? user.name : "",
-                    email: user ? user.email : "",
-                    phone: user ? user.phone : "",
-                    payment_method: "Безналичный расчет (для юридических лиц)",
-                    delivery: "по Минску",
-                    address: user ? user.address : "",
-                    comment: "",
-                }}
-                enableReinitialize
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-            >
-                {({ handleSubmit }) => (
-                    <Form noValidate onSubmit={handleSubmit}>
-                        <FormInput name="name" label={t("ФИО") + "*"} />
-                        <FormInput name="phone" label={t("Телефон") + "*"} inputMode="tel" placeholder={"+375xxxxxxxxx"} />
-                        <FormInput name="email" label="Email*" inputMode="email" />
-                        <FormInput name="address" label={t("Адрес доставки")} />
-                        <FormInput name="comment" label={t("Комментарий")} as="textarea" />
-                        <CheckGroup>
-                            <Form.Label>{t("Способ оплаты:")}</Form.Label>
-                            {payment_methods.map((method) => (
-                                <FormCheckBoxRadio name="payment_method" label={method.label} value={t(method.value)} key={method.id} />
-                            ))}
-                        </CheckGroup>
-                        <CheckGroup>
-                            <Form.Label>{t("Доставка")}:</Form.Label>
-                            {delivery_methods.map((method) => (
-                                <FormCheckBoxRadio name="delivery" label={method.label} value={method.value} key={method.id} />
-                            ))}
-                        </CheckGroup>
-                        <ButtonGroup>
-                            <Button variant="outline-primary" onClick={cancel}>
-                                {t("Отмена")}
-                            </Button>
-                            <Button variant="primary" type="submit">
-                                {t("Отправить")}
-                            </Button>
-                        </ButtonGroup>
-                    </Form>
-                )}
-            </Formik>
-            <CartSentModal
-                show={showDone !== "hide"}
-                onHide={() => setShowDone("hide")}
-                backdrop="static"
-                keyboard={false}
-                email={email}
-                showDone={showDone}
-                orderID={orderID}
-            />
-        </CartFormStyled>
+        <MyContainer>
+            <CartFormStyled>
+                <Formik
+                    initialValues={{
+                        name: user ? user.name : "",
+                        email: user ? user.email : "",
+                        phone: user ? user.phone : "",
+                        payment_method: "Безналичный расчет (для юридических лиц)",
+                        delivery: "по Минску",
+                        address: user ? user.address : "",
+                        comment: "",
+                    }}
+                    enableReinitialize
+                    validationSchema={validationSchema}
+                    onSubmit={handleSubmit}
+                >
+                    {({ handleSubmit }) => (
+                        <Form noValidate onSubmit={handleSubmit}>
+                            <FormInput name="name" label={t("ФИО") + "*"} />
+                            <FormInput name="phone" label={t("Телефон") + "*"} inputMode="tel" placeholder={"+375xxxxxxxxx"} />
+                            <FormInput name="email" label="Email*" inputMode="email" />
+                            <FormInput name="address" label={t("Адрес доставки")} />
+                            <FormInput name="comment" label={t("Комментарий")} as="textarea" />
+                            <CheckGroup>
+                                <Form.Label>{t("Способ оплаты:")}</Form.Label>
+                                {payment_methods.map((method) => (
+                                    <FormCheckBoxRadio name="payment_method" label={method.label} value={t(method.value)} key={method.id} />
+                                ))}
+                            </CheckGroup>
+                            <CheckGroup>
+                                <Form.Label>{t("Доставка")}:</Form.Label>
+                                {delivery_methods.map((method) => (
+                                    <FormCheckBoxRadio name="delivery" label={method.label} value={method.value} key={method.id} />
+                                ))}
+                            </CheckGroup>
+                            <ButtonGroup>
+                                <Button variant="outline-primary" onClick={cancel}>
+                                    {t("Отмена")}
+                                </Button>
+                                <Button variant="primary" type="submit">
+                                    {t("Отправить")}
+                                </Button>
+                            </ButtonGroup>
+                        </Form>
+                    )}
+                </Formik>
+                <CartSentModal
+                    show={showDone !== "hide"}
+                    onHide={() => setShowDone("hide")}
+                    backdrop="static"
+                    keyboard={false}
+                    email={email}
+                    showDone={showDone}
+                    orderID={orderID}
+                />
+            </CartFormStyled>
+        </MyContainer>
     );
 }
 
