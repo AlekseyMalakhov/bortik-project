@@ -45,16 +45,6 @@ const ButtonGroup = styled.div({
     marginBottom: "30px",
 });
 
-const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Укажите имя"),
-    phone: Yup.string().required("Укажите телефон"),
-    email: Yup.string().required("Укажите email").email("Укажите email"),
-    changePassword: Yup.boolean(),
-    password: Yup.string().required("Введите пароль"),
-    newPassword: Yup.string().when("changePassword", { is: true, then: Yup.string().required("Введите пароль") }),
-    repeatNewPassword: Yup.string().when("changePassword", { is: true, then: Yup.string().required("Введите пароль") }),
-});
-
 function EditAccount() {
     const { t } = useTranslation();
     const dispatch = useDispatch();
@@ -64,9 +54,19 @@ function EditAccount() {
     const [done, setDone] = useState(false);
     const [updatedUser, setUpdatedUser] = useState(null);
 
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required(t("Укажите имя")),
+        phone: Yup.string().required(t("Укажите телефон")),
+        email: Yup.string().required(t("Укажите email")).email(t("Укажите email")),
+        changePassword: Yup.boolean(),
+        password: Yup.string().required(t("Введите пароль")),
+        newPassword: Yup.string().when("changePassword", { is: true, then: Yup.string().required(t("Введите пароль")) }),
+        repeatNewPassword: Yup.string().when("changePassword", { is: true, then: Yup.string().required(t("Введите пароль")) }),
+    });
+
     const handleSubmit = (values) => {
         if (values.changePassword && values.newPassword !== values.repeatNewPassword) {
-            setError("Пароль и повтор пароля не совпадают!");
+            setError(t("Пароль и повтор пароля не совпадают!"));
             return;
         }
         let data;
