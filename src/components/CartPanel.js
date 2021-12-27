@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Button from "react-bootstrap/Button";
 import { useSelector, useDispatch } from "react-redux";
-import { setCartSum } from "../store/manage";
 import SelectPrice from "./SelectPrice";
 import { useNavigate } from "react-router-dom";
 import CleanCartButton from "./CleanCartButton";
 import AskCleanCartModal from "./AskCleanCartModal";
 import { cleanCart } from "../store/manage";
-import { calculateSum } from "../utilities/calculate";
 import { useTranslation } from "react-i18next";
 
 const CartPanelStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
@@ -62,20 +60,9 @@ function CartPanel() {
     const navigate = useNavigate();
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
-    const priceType = useSelector((state) => state.manage.priceType);
     const cart = useSelector((state) => state.manage.cart);
     const sum = useSelector((state) => state.manage.cartSum);
     const [showAsk, setShowAsk] = useState(false);
-
-    useEffect(() => {
-        if (cart.length > 0) {
-            const sum = calculateSum(cart, priceType);
-            dispatch(setCartSum(sum));
-        }
-        if (cart.length === 0) {
-            dispatch(setCartSum(0));
-        }
-    }, [cart, priceType]);
 
     const handleCleanCart = () => {
         dispatch(cleanCart());

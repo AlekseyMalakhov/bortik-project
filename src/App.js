@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Header from "./components/Header";
 import styled from "@emotion/styled";
 import handleScreenSize from "./settings/screenWidth";
-import { getItems, setUser, setPriceType } from "./store/manage";
+import { getItems, setUser, setPriceType, setCartSum } from "./store/manage";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
@@ -18,6 +18,7 @@ import EditAccount from "./views/EditAccount";
 import priceTypes from "./settings/priceTypes";
 import { getHistory } from "./store/manage";
 import itemsAPI from "./api/items";
+import { calculateSum } from "./utilities/calculate";
 
 const AppStyled = styled.div({
     height: "100%",
@@ -26,6 +27,9 @@ const AppStyled = styled.div({
 function App() {
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.manage.loading);
+    const cart = useSelector((state) => state.manage.cart);
+    const priceType = useSelector((state) => state.manage.priceType);
+
     useEffect(() => {
         handleScreenSize();
         dispatch(getItems());
@@ -43,6 +47,17 @@ function App() {
         }
         itemsAPI.getTranslationsForUI();
     }, []);
+
+    useEffect(() => {
+        if (cart.length > 0) {
+            const sum = calculateSum(cart, priceType);
+            dispatch(setCartSum(sum));
+        }
+        if (cart.length === 0) {
+            dispatch(setCartSum(0));
+        }
+    }, [cart, priceType]);
+
     return (
         <AppStyled>
             <Header />
