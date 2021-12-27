@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import AddRemove from "./AddRemove";
-import { useSelector, useDispatch } from "react-redux";
-
 import { useTranslation } from "react-i18next";
 
 const CartItemStyled = styled(Container)`
@@ -23,6 +21,14 @@ const MyRow = styled(Row)`
     align-items: center;
 `;
 
+const BottomCol = styled(Col)({
+    display: "flex",
+    justifyContent: "center",
+    "@media screen and (max-width: 768px)": {
+        marginTop: "20px",
+    },
+});
+
 const MyCol = styled(Col)`
     display: flex;
     justify-content: center;
@@ -32,19 +38,7 @@ const MyCol = styled(Col)`
     text-align: center;
 `;
 
-const Prices = styled(Col)`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    padding: 10px 10px;
-    text-align: center;
-    max-width: 200px;
-`;
-
 const RetailPrice = styled.div({
-    //backgroundColor: "#69F0AE",
     fontSize: "18px",
     fontWeight: "500",
     padding: "2px 5px",
@@ -53,7 +47,6 @@ const RetailPrice = styled.div({
 
 function CartItem({ item, priceType }) {
     const { t, i18n } = useTranslation();
-    const mobileScreen = useSelector((state) => state.manage.mobileScreen);
 
     const getPrice = () => {
         if (priceType === "с НДС") {
@@ -78,13 +71,12 @@ function CartItem({ item, priceType }) {
                 <MyCol style={{ fontWeight: "500" }} xs={8} sm={8} md={5}>
                     {item.title[i18n.resolvedLanguage]}
                 </MyCol>
-
-                <Col xs={6}>
-                    <AddRemove item={item} inCart={item} type="cart_item" />
-                </Col>
-                <Prices xs={6} sm={12} md={3}>
+                <BottomCol xs={7} sm={6} md={3}>
+                    <AddRemove item={item} inCart={item} type="small" />
+                </BottomCol>
+                <BottomCol xs={5} sm={6} md={2}>
                     <RetailPrice>{getPrice()} BYN</RetailPrice>
-                </Prices>
+                </BottomCol>
             </MyRow>
         </CartItemStyled>
     );

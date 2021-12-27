@@ -13,7 +13,7 @@ const AddRemoveStyled = styled.div({
 });
 
 const MyInput = styled(Form.Control)(({ type }) => {
-    if (type === "cart_item") {
+    if (type === "small") {
         return {
             width: "70px",
             margin: "auto 10px",

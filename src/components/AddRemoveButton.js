@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import Button from "react-bootstrap/Button";
 
 const AddRemoveButtonStyled = styled(Button)(({ type }) => {
-    if (type === "cart_item") {
+    if (type === "small") {
         return {
             width: "27px",
             height: "27px",
