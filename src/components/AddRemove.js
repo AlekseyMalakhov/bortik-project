@@ -12,10 +12,19 @@ const AddRemoveStyled = styled.div({
     width: "162px",
 });
 
-const MyInput = styled(Form.Control)`
-    width: 70px;
-    margin: auto 10px;
-`;
+const MyInput = styled(Form.Control)(({ type }) => {
+    if (type === "cart_item") {
+        return {
+            width: "70px",
+            margin: "auto 10px",
+            padding: "0.1rem 0.75rem",
+        };
+    }
+    return {
+        width: "70px",
+        margin: "auto 10px",
+    };
+});
 
 const allowOnlyNumbers = (text) => {
     const regex1 = /[^\d]/g;
@@ -99,8 +108,9 @@ function AddRemove({ item, inCart, type }) {
 
     return (
         <AddRemoveStyled>
-            <AddRemoveButton icon="minus" onClick={minusItem} />
+            <AddRemoveButton icon="minus" onClick={minusItem} type={type} />
             <MyInput
+                type={type}
                 onChange={handleInput}
                 value={number}
                 onFocus={(e) => e.target.select()}
@@ -108,7 +118,7 @@ function AddRemove({ item, inCart, type }) {
                 inputMode="numeric"
                 onBlur={handleEmptyString}
             />
-            <AddRemoveButton icon="plus" onClick={plusItem} />
+            <AddRemoveButton icon="plus" onClick={plusItem} type={type} />
         </AddRemoveStyled>
     );
 }
