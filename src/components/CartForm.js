@@ -82,12 +82,6 @@ const delivery_methods = [
     },
 ];
 
-const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Укажите имя"),
-    email: Yup.string().required("Укажите email").email("Укажите email"),
-    phone: Yup.string().required("Укажите телефон"),
-});
-
 function CartForm({ cart, priceType, sum }) {
     const { t } = useTranslation();
     const user = useSelector((state) => state.manage.user);
@@ -96,6 +90,12 @@ function CartForm({ cart, priceType, sum }) {
     const [orderID, setOrderID] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required(t("Укажите имя")),
+        email: Yup.string().required(t("Укажите email")).email(t("Укажите email")),
+        phone: Yup.string().required(t("Укажите телефон")),
+    });
 
     const calcSum = (item) => {
         let sum;
@@ -207,13 +207,13 @@ function CartForm({ cart, priceType, sum }) {
                             <CheckGroup>
                                 <Form.Label>{t("Способ оплаты:")}</Form.Label>
                                 {payment_methods.map((method) => (
-                                    <FormCheckBoxRadio name="payment_method" label={method.label} value={t(method.value)} key={method.id} />
+                                    <FormCheckBoxRadio name="payment_method" label={t(method.label)} value={method.value} key={method.id} />
                                 ))}
                             </CheckGroup>
                             <CheckGroup>
                                 <Form.Label>{t("Доставка")}:</Form.Label>
                                 {delivery_methods.map((method) => (
-                                    <FormCheckBoxRadio name="delivery" label={method.label} value={method.value} key={method.id} />
+                                    <FormCheckBoxRadio name="delivery" label={t(method.label)} value={method.value} key={method.id} />
                                 ))}
                             </CheckGroup>
                             <ButtonGroup>
