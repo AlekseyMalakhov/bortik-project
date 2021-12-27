@@ -38,16 +38,16 @@ const ButtonGroup = styled.div({
     marginTop: "30px",
 });
 
-const validationSchema = Yup.object().shape({
-    email: Yup.string().required("Укажите email").email("Укажите email"),
-    password: Yup.string().required("Введите пароль"),
-});
-
 function Login() {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [error, setError] = useState("");
+
+    const validationSchema = Yup.object().shape({
+        email: Yup.string().required(t("Укажите email")).email(t("Укажите email")),
+        password: Yup.string().required(t("Введите пароль")),
+    });
 
     const handleSubmit = (values) => {
         setError("");
@@ -62,14 +62,14 @@ function Login() {
                     navigate("/account");
                     dispatch(getHistory(response.data.id));
                 } else if (response.status === 401) {
-                    setError("Неверный логин или пароль");
+                    setError(t("Неверный логин или пароль"));
                 } else {
-                    setError("Неизвестная ошибка! Обратитесь в службу поддержки.");
+                    setError(t("Неизвестная ошибка! Обратитесь в службу поддержки."));
                 }
             })
             .catch((err) => {
                 dispatch(setLoading(false));
-                setError("Неизвестная ошибка! Обратитесь в службу поддержки.");
+                setError(t("Неизвестная ошибка! Обратитесь в службу поддержки."));
                 console.log(err);
             });
     };
@@ -84,8 +84,6 @@ function Login() {
                 initialValues={{
                     email: process.env.NODE_ENV === "development" ? "www1@www.ww" : "",
                     password: process.env.NODE_ENV === "development" ? "12345" : "",
-                    // email: "",
-                    // password: "",
                 }}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
