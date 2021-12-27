@@ -5,6 +5,8 @@ import HistoryTableBlock from "./HistoryTableBlock";
 const HistoryTableStyled = styled.div({
     width: "100%",
     maxWidth: "1000px",
+    paddingLeft: "10px",
+    paddingRight: "10px",
 });
 
 function HistoryTable({ history }) {

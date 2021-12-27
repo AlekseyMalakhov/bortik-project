@@ -6,12 +6,13 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router";
 import HistoryTable from "../components/HistoryTable";
 import { useTranslation } from "react-i18next";
+import colors from "../settings/colors";
 
 const AccountStyled = styled.div({
-    margin: "10px 20px",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    backgroundColor: colors.lightGreyBackground,
 });
 
 const Title = styled.div({

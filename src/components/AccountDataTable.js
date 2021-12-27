@@ -6,6 +6,8 @@ import { useTranslation } from "react-i18next";
 const AccountDataTableStyled = styled.div({
     width: "100%",
     maxWidth: "700px",
+    paddingLeft: "10px",
+    paddingRight: "10px",
 });
 
 function AccountDataTable({ user }) {

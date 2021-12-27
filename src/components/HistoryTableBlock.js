@@ -79,27 +79,12 @@ function HistoryTableBlock({ order }) {
             <div>
                 {t("Тип цены")}: {order.price_type}
             </div>
-            <Table hover style={{ fontSize: mobileScreen ? "14px" : "16px" }}>
-                <thead>
-                    <tr>
-                        <th style={{ textAlign: "center" }}>{t("Фото")}</th>
-                        <th>{t("Наименование")}</th>
-                        <th style={{ textAlign: "center" }}>{t("Кол.")}</th>
-                        <th style={{ textAlign: "center" }}>{t("Цена")}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {order.items.map((item) => (
-                        <HistoryTableRow item={item} key={item.id} />
-                    ))}
-                    <tr>
-                        <th colSpan="3" style={{ borderBottomStyle: "none" }}>
-                            {t("Общая сумма")}
-                        </th>
-                        <th style={{ textAlign: "center", borderBottomStyle: "none" }}>{order.sum}</th>
-                    </tr>
-                </tbody>
-            </Table>
+
+            {order.items.map((item) => (
+                <HistoryTableRow item={item} key={item.id} />
+            ))}
+            <div style={{ fontWeight: "500", paddingLeft: "20px" }}>{t("Общая сумма") + ": " + order.sum + " BYN"}</div>
+
             <Divider>
                 <Button variant="primary" onClick={repeatOrder}>
                     {t("Повторить заказ")}
