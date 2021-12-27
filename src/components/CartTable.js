@@ -19,7 +19,6 @@ const EmptyCart = styled.div({
 
 function CartTable({ cart, priceType, sum }) {
     const { t } = useTranslation();
-    const mobileScreen = useSelector((state) => state.manage.mobileScreen);
 
     if (cart.length > 0) {
         return (
@@ -27,9 +26,9 @@ function CartTable({ cart, priceType, sum }) {
                 {cart.map((item) => (
                     <CartItem item={item} priceType={priceType} key={item.id} />
                 ))}
-                <div style={{ fontWeight: "500" }}>{t("Общая сумма") + ": " + sum.toFixed(2) + " BYN"}</div>
+                <div style={{ fontWeight: "500", paddingLeft: "20px" }}>{t("Общая сумма") + ": " + sum.toFixed(2) + " BYN"}</div>
 
-                <div style={{ fontSize: "16px" }}>
+                <div style={{ fontSize: "16px", paddingLeft: "20px" }}>
                     {t("Цена")}: {t(priceType)}
                 </div>
             </CartTableStyled>
