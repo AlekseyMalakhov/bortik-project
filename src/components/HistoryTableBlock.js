@@ -77,13 +77,13 @@ function HistoryTableBlock({ order }) {
                 {t("Дата")}: {createDate(Number(order.date))}
             </div>
             <div>
-                {t("Тип цены")}: {order.price_type}
+                {t("Тип цены")}: {t(order.price_type)}
             </div>
 
             {order.items.map((item) => (
                 <HistoryTableRow item={item} key={item.id} />
             ))}
-            <div style={{ fontWeight: "500", paddingLeft: "20px" }}>{t("Общая сумма") + ": " + order.sum + " BYN"}</div>
+            <div style={{ fontWeight: "500", paddingTop: "10px", paddingBottom: "20px" }}>{t("Общая сумма") + ": " + order.sum + " BYN"}</div>
 
             <Divider>
                 <Button variant="primary" onClick={repeatOrder}>

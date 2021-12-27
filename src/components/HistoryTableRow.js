@@ -46,7 +46,7 @@ const RetailPrice = styled.div({
 });
 
 function HistoryTableRow({ item }) {
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     return (
         <HistoryTableRowStyled>
@@ -60,9 +60,9 @@ function HistoryTableRow({ item }) {
                     {item.title[i18n.resolvedLanguage]}
                 </MyCol>
 
-                <MyCol style={{ fontWeight: "500" }} xs={7} sm={6} md={3}>
-                    {item.number}
-                </MyCol>
+                <BottomCol style={{ fontWeight: "500", fontSize: "14px" }} xs={7} sm={6} md={3}>
+                    {t("Количество")}: {item.number}
+                </BottomCol>
 
                 <BottomCol xs={5} sm={6} md={2}>
                     <RetailPrice>{item.price} BYN</RetailPrice>
