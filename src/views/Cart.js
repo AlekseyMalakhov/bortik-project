@@ -8,7 +8,8 @@ import colors from "../settings/colors";
 
 const Title = styled.div({
     textAlign: "center",
-    margin: "20px 10px",
+    marginTop: "20px",
+    marginBottom: "10px",
     fontSize: "20px",
     fontWeight: "500",
     maxWidth: "1000px",

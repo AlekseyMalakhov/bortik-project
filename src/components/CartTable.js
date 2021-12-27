@@ -27,10 +27,7 @@ function CartTable({ cart, priceType, sum }) {
                 {cart.map((item) => (
                     <CartItem item={item} priceType={priceType} key={item.id} />
                 ))}
-                <div>
-                    <div>{t("Общая сумма")}</div>
-                    <div>{sum.toFixed(2)}</div>
-                </div>
+                <div style={{ fontWeight: "500" }}>{t("Общая сумма") + ": " + sum.toFixed(2) + " BYN"}</div>
 
                 <div style={{ fontSize: "16px" }}>
                     {t("Цена")}: {t(priceType)}
