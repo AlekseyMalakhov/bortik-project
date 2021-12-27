@@ -72,17 +72,17 @@ function CartItem({ item, priceType }) {
             <MyRow>
                 {item.img ? (
                     <Col xs="auto">
-                        <img src={item.img} alt={""} width="100" height="100"></img>
+                        <img src={item.img} alt={""} width="80" height="80"></img>
                     </Col>
                 ) : null}
-                <MyCol style={{ fontWeight: "500" }} xs={12} sm={12} md={5}>
+                <MyCol style={{ fontWeight: "500" }} xs={8} sm={8} md={5}>
                     {item.title[i18n.resolvedLanguage]}
                 </MyCol>
 
-                <Col xs="auto">
-                    <AddRemove item={item} inCart={item} />
+                <Col xs={6}>
+                    <AddRemove item={item} inCart={item} type="cart_item" />
                 </Col>
-                <Prices sm={12} md={3}>
+                <Prices xs={6} sm={12} md={3}>
                     <RetailPrice>{getPrice()} BYN</RetailPrice>
                 </Prices>
             </MyRow>

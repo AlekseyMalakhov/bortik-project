@@ -24,7 +24,7 @@ const allowOnlyNumbers = (text) => {
     return number;
 };
 
-function AddRemove({ item, inCart }) {
+function AddRemove({ item, inCart, type }) {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.manage.cart);
     const [number, setNumber] = useState(0);
