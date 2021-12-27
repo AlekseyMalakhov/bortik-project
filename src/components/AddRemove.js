@@ -4,6 +4,7 @@ import AddRemoveButton from "./AddRemoveButton";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, removeItemFromCart } from "../store/manage";
+import AskRemoveItemFromCart from "./AskRemoveItemFromCart";
 
 const AddRemoveStyled = styled.div({
     display: "flex",
@@ -37,6 +38,7 @@ function AddRemove({ item, inCart, type }) {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.manage.cart);
     const [number, setNumber] = useState(0);
+    const [showAsk, setShowAsk] = useState(false);
 
     useEffect(() => {
         if (cart.length === 0) {
@@ -81,6 +83,11 @@ function AddRemove({ item, inCart, type }) {
         }
     };
 
+    const handleDeleteItem = () => {
+        setNumber(0);
+        dispatch(removeItemFromCart(item));
+    };
+
     const minusItem = () => {
         if (number - 1 > 0) {
             setNumber(number - 1);
@@ -88,8 +95,11 @@ function AddRemove({ item, inCart, type }) {
             return;
         }
         if (number - 1 === 0) {
-            setNumber(0);
-            dispatch(removeItemFromCart(item));
+            if (type === "small") {
+                setShowAsk(true);
+            } else {
+                handleDeleteItem();
+            }
             return;
         }
     };
@@ -119,6 +129,7 @@ function AddRemove({ item, inCart, type }) {
                 onBlur={handleEmptyString}
             />
             <AddRemoveButton icon="plus" onClick={plusItem} type={type} />
+            <AskRemoveItemFromCart show={showAsk} onHide={() => setShowAsk(false)} onDelete={handleDeleteItem} />
         </AddRemoveStyled>
     );
 }
