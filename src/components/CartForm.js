@@ -13,6 +13,7 @@ import { setLoading, getHistory } from "../store/manage";
 import CartSentModal from "./CartSentModal";
 import { useTranslation } from "react-i18next";
 import { getPrice } from "../utilities/calculate";
+import FormSelect from "./FormSelect";
 
 const MyContainer = styled.div({
     paddingRight: "10px",
@@ -177,6 +178,7 @@ function CartForm({ cart, priceType, sum }) {
                         payment_method: "Безналичный расчет (для юридических лиц)",
                         delivery: "по Минску",
                         address: user ? user.address : "",
+                        address2: "",
                         comment: "",
                     }}
                     enableReinitialize
@@ -189,6 +191,7 @@ function CartForm({ cart, priceType, sum }) {
                             <FormInput name="phone" label={t("Телефон") + "*"} inputMode="tel" placeholder={"+375xxxxxxxxx"} />
                             <FormInput name="email" label="Email*" inputMode="email" />
                             <FormInput name="address" label={t("Адрес доставки")} />
+                            <FormSelect name="address2" label={t("Адрес доставки")} />
                             <FormInput name="comment" label={t("Комментарий")} as="textarea" />
                             <CheckGroup>
                                 <Form.Label>{t("Способ оплаты:")}</Form.Label>
