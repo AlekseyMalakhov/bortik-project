@@ -50,13 +50,10 @@ function CartItem({ item, priceType }) {
 
     const getPrice = () => {
         if (priceType === "с НДС") {
-            return item.price;
+            return item.priceIncVAT;
         }
         if (priceType === "без НДС") {
-            return item.priceopt;
-        }
-        if (priceType === "без НДС (от 250р)") {
-            return item.pricemegaopt;
+            return item.priceExcVAT;
         }
     };
 

@@ -100,13 +100,10 @@ function CartForm({ cart, priceType, sum }) {
     const calcSum = (item) => {
         let sum;
         if (priceType === "с НДС") {
-            sum = item.price * item.number;
+            sum = item.priceIncVAT * item.number;
         }
         if (priceType === "без НДС") {
-            sum = item.priceopt * item.number;
-        }
-        if (priceType === "без НДС (от 250р)") {
-            sum = item.pricemegaopt * item.number;
+            sum = item.priceExcVAT * item.number;
         }
 
         return Number(sum.toFixed(2));
@@ -114,13 +111,10 @@ function CartForm({ cart, priceType, sum }) {
 
     const getPrice = (item) => {
         if (priceType === "с НДС") {
-            return item.price;
+            return item.priceIncVAT;
         }
         if (priceType === "без НДС") {
-            return item.priceopt;
-        }
-        if (priceType === "без НДС (от 250р)") {
-            return item.pricemegaopt;
+            return item.priceExcVAT;
         }
     };
 

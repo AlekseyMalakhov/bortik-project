@@ -3,13 +3,10 @@ export const calculateSum = (cart, priceType) => {
     for (let i = 0; i < cart.length; i++) {
         let price;
         if (priceType === "с НДС") {
-            price = cart[i].price;
+            price = cart[i].priceIncVAT;
         }
         if (priceType === "без НДС") {
-            price = cart[i].priceopt;
-        }
-        if (priceType === "без НДС (от 250р)") {
-            price = cart[i].pricemegaopt;
+            price = cart[i].priceExcVAT;
         }
         sum = sum + price * cart[i].number;
     }

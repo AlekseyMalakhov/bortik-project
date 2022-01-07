@@ -146,20 +146,14 @@ function Card({ item }) {
                 <Prices sm={12} md={3}>
                     {priceType === "с НДС" ? (
                         <div>
-                            <RetailPrice>{item.price} BYN</RetailPrice>
+                            <RetailPrice>{item.priceIncVAT} BYN</RetailPrice>
                             <Tip>{t("Цена с НДС")}</Tip>
                         </div>
                     ) : null}
                     {priceType === "без НДС" ? (
                         <div>
-                            <RetailPrice>{item.priceopt} BYN</RetailPrice>
+                            <RetailPrice>{item.priceExcVAT} BYN</RetailPrice>
                             <Tip>{t("Цена без НДС")}</Tip>
-                        </div>
-                    ) : null}
-                    {priceType === "без НДС (от 250р)" ? (
-                        <div>
-                            <RetailPrice>{item.pricemegaopt} BYN</RetailPrice>
-                            <Tip>{t("Цена без НДС при общей сумме заказа от 250 BYN")}</Tip>
                         </div>
                     ) : null}
                 </Prices>

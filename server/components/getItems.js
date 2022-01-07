@@ -74,7 +74,7 @@ function createItemsData(workbook) {
                     //console.log(key);
                 }
                 //end check
-
+                const price = data[`G${number}`].v;
                 const obj = {
                     id: data[`B${number}`].v + "_" + i,
                     category2: data[`A${number}`].v,
@@ -87,14 +87,17 @@ function createItemsData(workbook) {
                     presence: data[`D${number}`] ? data[`D${number}`].v : 0,
                     unit: data[`E${number}`].v,
                     img: data[`F${number}`] ? "https://smartikon.by/uploads/" + data[`F${number}`].v : "",
-                    price: data[`G${number}`].v,
-                    priceopt: data[`H${number}`] ? data[`H${number}`].v : null,
-                    pricemegaopt: data[`I${number}`] ? data[`I${number}`].v : null,
+                    priceExcVAT: price,
+                    priceIncVAT: Math.round((price * 1.2 + Number.EPSILON) * 100) / 100,
+                    // priceopt: data[`H${number}`] ? data[`H${number}`].v : null,
+                    // pricemegaopt: data[`I${number}`] ? data[`I${number}`].v : null,
                     discount: data[`J${number}`] ? data[`J${number}`].v : null,
                 };
                 items.push(obj);
             }
         }
+
+        //Math.round( ( price * 1.2 + Number.EPSILON ) * 100 ) / 100
 
         for (let i = 0; i < items.length; i++) {
             const item = items[i];
