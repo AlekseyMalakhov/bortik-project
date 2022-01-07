@@ -3,7 +3,11 @@ const express = require("express");
 const getItems = require("./components/getItems");
 const getTranslationsForUI = require("./components/getTranslationsForUI");
 const sendCart = require("./components/sendCart");
-const db = require("./db/queries");
+const createAccount = require("./db/createAccount");
+const editAccount = require("./db/editAccount");
+const login = require("./db/login");
+const forgotPassword = require("./db/forgotPassword");
+const getHistory = require("./db/getHistory");
 const app = express();
 const port = process.env.PORT || 3010;
 const cors = require("cors");
@@ -21,11 +25,11 @@ app.get("*", function (req, res) {
 
 app.post("/api/getItems", getItems);
 app.post("/api/sendCart", sendCart);
-app.post("/api/createAccount", db.createAccount);
-app.put("/api/editAccount/:id", db.editAccount);
-app.post("/api/login", db.login);
-app.post("/api/forgotPassword", db.forgotPassword);
-app.post("/api/getHistory", db.getHistory);
+app.post("/api/createAccount", createAccount);
+app.put("/api/editAccount/:id", editAccount);
+app.post("/api/login", login);
+app.post("/api/forgotPassword", forgotPassword);
+app.post("/api/getHistory", getHistory);
 app.post("/api/getTranslationsForUI", getTranslationsForUI);
 
 // Error handler
