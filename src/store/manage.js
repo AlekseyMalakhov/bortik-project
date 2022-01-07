@@ -110,6 +110,9 @@ export const manageSlice = createSlice({
         setUser: (state, action) => {
             state.user = action.payload;
         },
+        cleanHistory: (state, action) => {
+            state.history = [];
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -163,5 +166,6 @@ export const {
     setSearchInput,
     setUser,
     setSelectedItems,
+    cleanHistory,
 } = manageSlice.actions;
 export default manageSlice.reducer;

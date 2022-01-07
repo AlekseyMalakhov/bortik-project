@@ -66,7 +66,8 @@ function Register() {
             .then((response) => {
                 dispatch(setLoading(false));
                 if (response.status === 201) {
-                    setNewUser(values);
+                    const user = { ...values, id: response.data.userID };
+                    setNewUser(user);
                     setDone(true);
                 } else if (response.status === 409) {
                     setError(t("Данный email уже зарегистрирован!"));

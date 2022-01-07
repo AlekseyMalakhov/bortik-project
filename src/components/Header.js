@@ -8,7 +8,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import ThreeDotsButton from "./ThreeDotsButton";
 import Search from "./Search";
 import { useSelector, useDispatch } from "react-redux";
-import { setUser } from "../store/manage";
+import { setUser, cleanHistory } from "../store/manage";
 import SearchButton from "./SearchButton";
 import SelectLang from "./SelectLang";
 import { useTranslation } from "react-i18next";
@@ -44,6 +44,7 @@ function Header() {
 
     const logout = () => {
         dispatch(setUser(null));
+        dispatch(cleanHistory());
         localStorage.removeItem("user");
         navigate("/");
     };

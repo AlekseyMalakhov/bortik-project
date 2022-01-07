@@ -15,7 +15,7 @@ const createAccount = async (req, res) => {
                 values: [name, email, password, phone, address],
             };
             const response2 = await pool.query(query2);
-            res.status(201).send(`User added with ID: ${response2.rows[0].id}`);
+            res.status(201).send({ userID: response2.rows[0].id });
         } else {
             res.status(409).send("Current email already exists");
             return null;
