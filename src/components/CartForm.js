@@ -167,6 +167,8 @@ function CartForm({ cart, priceType, sum }) {
         navigate("/");
     };
 
+    const deliveryAddresses = ["Address 1", "Address 2", "Address 3"];
+
     return (
         <MyContainer>
             <CartFormStyled>
@@ -191,7 +193,7 @@ function CartForm({ cart, priceType, sum }) {
                             <FormInput name="phone" label={t("Телефон") + "*"} inputMode="tel" placeholder={"+375xxxxxxxxx"} />
                             <FormInput name="email" label="Email*" inputMode="email" />
                             <FormInput name="address" label={t("Адрес доставки")} />
-                            <FormSelect name="address2" label={t("Адрес доставки")} />
+                            <FormSelect name="address2" label={t("Адрес доставки")} options={deliveryAddresses} />
                             <FormInput name="comment" label={t("Комментарий")} as="textarea" />
                             <CheckGroup>
                                 <Form.Label>{t("Способ оплаты:")}</Form.Label>
