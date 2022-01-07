@@ -12,3 +12,12 @@ export const calculateSum = (cart, priceType) => {
     }
     return Number(sum.toFixed(2));
 };
+
+export const getPrice = (item, priceType) => {
+    if (priceType === "с НДС") {
+        return item.priceIncVAT;
+    }
+    if (priceType === "без НДС") {
+        return item.priceExcVAT;
+    }
+};

@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoading, getHistory } from "../store/manage";
 import CartSentModal from "./CartSentModal";
 import { useTranslation } from "react-i18next";
+import { getPrice } from "../utilities/calculate";
 
 const MyContainer = styled.div({
     paddingRight: "10px",
@@ -109,15 +110,6 @@ function CartForm({ cart, priceType, sum }) {
         return Number(sum.toFixed(2));
     };
 
-    const getPrice = (item) => {
-        if (priceType === "с НДС") {
-            return item.priceIncVAT;
-        }
-        if (priceType === "без НДС") {
-            return item.priceExcVAT;
-        }
-    };
-
     const handleSubmit = (values) => {
         setEmail(values.email);
         console.log(values);
@@ -129,7 +121,7 @@ function CartForm({ cart, priceType, sum }) {
                 title: cart[i].title.ru,
                 article: cart[i].article,
                 number: cart[i].number,
-                price: getPrice(cart[i]),
+                price: getPrice(cart[i], priceType),
                 sum: calcSum(cart[i]),
             };
             newCart.push(item);

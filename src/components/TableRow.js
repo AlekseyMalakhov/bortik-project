@@ -1,16 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { getPrice } from "../utilities/calculate";
 
 function TableRow({ item, priceType }) {
     const { t, i18n } = useTranslation();
-    const getPrice = () => {
-        if (priceType === "с НДС") {
-            return item.priceIncVAT;
-        }
-        if (priceType === "без НДС") {
-            return item.priceExcVAT;
-        }
-    };
 
     return (
         <tr style={{ borderBottomStyle: "none" }}>
@@ -19,7 +12,7 @@ function TableRow({ item, priceType }) {
             </td>
             <td style={{ verticalAlign: "middle", borderBottomStyle: "none" }}>{item.title[i18n.resolvedLanguage]}</td>
             <td style={{ verticalAlign: "middle", textAlign: "center", borderBottomStyle: "none" }}>{item.number}</td>
-            <td style={{ verticalAlign: "middle", textAlign: "center", borderBottomStyle: "none" }}>{getPrice()}</td>
+            <td style={{ verticalAlign: "middle", textAlign: "center", borderBottomStyle: "none" }}>{getPrice(item, priceType)}</td>
         </tr>
     );
 }

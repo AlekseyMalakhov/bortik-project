@@ -5,6 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import AddRemove from "./AddRemove";
 import { useTranslation } from "react-i18next";
+import { getPrice } from "../utilities/calculate";
 
 const CartItemStyled = styled(Container)`
     position: relative;
@@ -48,15 +49,6 @@ const RetailPrice = styled.div({
 function CartItem({ item, priceType }) {
     const { t, i18n } = useTranslation();
 
-    const getPrice = () => {
-        if (priceType === "с НДС") {
-            return item.priceIncVAT;
-        }
-        if (priceType === "без НДС") {
-            return item.priceExcVAT;
-        }
-    };
-
     return (
         <CartItemStyled>
             <MyRow>
@@ -72,7 +64,7 @@ function CartItem({ item, priceType }) {
                     <AddRemove item={item} inCart={item} type="small" />
                 </BottomCol>
                 <BottomCol xs={5} sm={6} md={2}>
-                    <RetailPrice>{getPrice()} BYN</RetailPrice>
+                    <RetailPrice>{getPrice(item, priceType)} BYN</RetailPrice>
                 </BottomCol>
             </MyRow>
         </CartItemStyled>
