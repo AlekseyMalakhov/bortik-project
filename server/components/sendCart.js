@@ -1,5 +1,6 @@
-const db = require("../db/queries");
 const transporter = require("./nodeMailerClient");
+const createAccountAuto = require("../db/createAccountAuto");
+const createOrder = require("../db/createOrder");
 
 async function run(html, email, orderID) {
     let info = await transporter.sendMail({
@@ -81,13 +82,13 @@ const sendCart = async (req, res) => {
     if (data.customer.id) {
         userID = data.customer.id;
     } else {
-        const user = await db.createAccountAuto(req, res);
+        const user = await createAccountAuto(req, res);
         if (user.new) {
             newUser = user;
         }
         userID = user.id;
     }
-    const orderID = await db.createOrder(req, res, userID);
+    const orderID = await createOrder(req, res, userID);
     const html = createHTML(data, newUser, orderID);
     run(html, data.customer.email, orderID)
         .then(() => {
