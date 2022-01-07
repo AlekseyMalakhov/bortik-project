@@ -13,6 +13,7 @@ const AccountStyled = styled.div({
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: colors.lightGreyBackground,
+    height: "100vh",
 });
 
 const Title = styled.div({
@@ -49,7 +50,7 @@ function Account() {
                 {t("Редактировать личные данные")}
             </Button>
             <Title>{t("История покупок")}</Title>
-            {sortedHistory.length > 0 ? <HistoryTable history={sortedHistory} /> : null}
+            {sortedHistory.length > 0 ? <HistoryTable history={sortedHistory} /> : "Ваша история покупок пуста"}
         </AccountStyled>
     );
 }

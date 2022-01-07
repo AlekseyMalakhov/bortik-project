@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -41,6 +41,13 @@ const ButtonGroup = styled.div({
     display: "flex",
     justifyContent: "space-evenly",
     marginTop: "30px",
+});
+
+const OneButtonContainer = styled.div({
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "10px",
+    marginBottom: "10px",
 });
 
 const payment_methods = [
@@ -98,6 +105,13 @@ function CartForm({ cart, priceType, sum }) {
         email: Yup.string().required(t("Укажите email")).email(t("Укажите email")),
         phone: Yup.string().required(t("Укажите телефон")),
     });
+
+    const [newAdress, setNewAdress] = useState(false);
+    useEffect(() => {
+        if (!user) {
+            setNewAdress(true);
+        }
+    }, [user]);
 
     const calcSum = (item) => {
         let sum;
@@ -180,7 +194,6 @@ function CartForm({ cart, priceType, sum }) {
                         payment_method: "Безналичный расчет (для юридических лиц)",
                         delivery: "по Минску",
                         address: user ? user.address : "",
-                        address2: "",
                         comment: "",
                     }}
                     enableReinitialize
@@ -192,8 +205,26 @@ function CartForm({ cart, priceType, sum }) {
                             <FormInput name="name" label={t("ФИО") + "*"} />
                             <FormInput name="phone" label={t("Телефон") + "*"} inputMode="tel" placeholder={"+375xxxxxxxxx"} />
                             <FormInput name="email" label="Email*" inputMode="email" />
-                            <FormInput name="address" label={t("Адрес доставки")} />
-                            <FormSelect name="address2" label={t("Адрес доставки")} options={deliveryAddresses} />
+                            {newAdress ? (
+                                <FormInput name="address" label={t("Адрес доставки")} />
+                            ) : (
+                                <FormSelect name="address" label={t("Адрес доставки")} options={deliveryAddresses} />
+                            )}
+
+                            {user ? (
+                                <OneButtonContainer>
+                                    {newAdress ? (
+                                        <Button variant="primary" onClick={() => setNewAdress(false)}>
+                                            {t("Адрес из списка")}
+                                        </Button>
+                                    ) : (
+                                        <Button variant="primary" onClick={() => setNewAdress(true)}>
+                                            {t("Другой адрес")}
+                                        </Button>
+                                    )}
+                                </OneButtonContainer>
+                            ) : null}
+
                             <FormInput name="comment" label={t("Комментарий")} as="textarea" />
                             <CheckGroup>
                                 <Form.Label>{t("Способ оплаты:")}</Form.Label>
