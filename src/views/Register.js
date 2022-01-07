@@ -59,14 +59,18 @@ function Register() {
             setError(t("Пароль и повтор пароля не совпадают!"));
             return;
         }
+        const addressArr = JSON.stringify([values.address]);
+        const newUser = { ...values };
+        newUser.address = addressArr;
         setError("");
         dispatch(setLoading(true));
         userAPI
-            .createAccount(values)
+            .createAccount(newUser)
             .then((response) => {
                 dispatch(setLoading(false));
                 if (response.status === 201) {
-                    const user = { ...values, id: response.data.userID };
+                    const user = { ...newUser, id: response.data.userID };
+                    user.address = [values.address];
                     setNewUser(user);
                     setDone(true);
                 } else if (response.status === 409) {
