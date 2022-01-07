@@ -1,5 +1,4 @@
 require("dotenv").config({ path: "../../project_env/.env" }); //just for dev environment
-const transporter = require("../components/nodeMailerClient");
 const format = require("pg-format");
 const translations = require("../components/getItemNamesTranslations");
 const pool = require("./pool");
@@ -7,75 +6,8 @@ const pool = require("./pool");
 const createAccountAuto = require("./createAccountAuto");
 const createAccount = require("./createAccount");
 const editAccount = require("./editAccount");
-
-const login = async (req, res) => {
-    const { email, password } = req.body;
-    const query1 = {
-        text: "SELECT * FROM users WHERE email = $1",
-        values: [email],
-    };
-    try {
-        const response1 = await pool.query(query1);
-        const user = response1.rows[0];
-        if (!user || user.password !== password) {
-            return res.status(401).send("Invalid email or password.");
-        }
-        const sendUser = { ...user };
-        delete sendUser.password;
-        // const accessToken = jwt.sign(sendUser, accessTokenSecret, { expiresIn: "1m" });
-        // const refreshToken = jwt.sign(sendUser, refreshTokenSecret, { expiresIn: "100m" });
-        // const tokens = { accessToken, refreshToken };
-        // res.status(200).send(tokens);
-        res.status(200).send(sendUser);
-    } catch (error) {
-        res.status(500).send(error.stack);
-        console.log(error.stack);
-    }
-};
-
-const sendForgottenPassword = async (email, password) => {
-    let info = await transporter.sendMail({
-        from: '"Bortik Project" <cart@bortikproject.com>',
-        to: email,
-        subject: "Bortik Project. Восстановление пароля.",
-        text: "Ваш пароль успешно восстановлен",
-        html: `
-        <div>Пароль успешно восстановлен!</div>
-        <div>Ваш пароль: ${password}</div>
-        <br>
-        <br>
-        <div>С уважением,</div>
-        <div>Служба поддержки Bortik Project</div>
-        `,
-    });
-    console.log(info);
-};
-
-const forgotPassword = async (req, res) => {
-    const { email } = req.body;
-    const query1 = {
-        text: "SELECT password FROM users WHERE email = $1",
-        values: [email],
-    };
-    try {
-        const response1 = await pool.query(query1);
-        const passwordObj = response1.rows[0];
-        if (passwordObj) {
-            sendForgottenPassword(email, passwordObj.password)
-                .then(() => {
-                    res.status(200).send("Mail sent");
-                })
-                .catch((err) => {
-                    res.status(500).send(err);
-                });
-        } else {
-            res.status(404).send("Email not found");
-        }
-    } catch (error) {
-        res.status(500).send(error.stack);
-        console.log(error.stack);
-    }
-};
+const login = require("./login");
+const forgotPassword = require("./forgotPassword");
 
 const createOrder = async (req, res, userID) => {
     const { cart, date, priceType, sum } = req.body;
