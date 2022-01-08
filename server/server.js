@@ -32,7 +32,7 @@ app.post("/api/login", login);
 app.post("/api/forgotPassword", forgotPassword);
 app.post("/api/getHistory", getHistory);
 app.post("/api/getTranslationsForUI", getTranslationsForUI);
-app.post("/api/addAddress", addAddress);
+app.put("/api/addAddress/:id", addAddress);
 
 // Error handler
 app.use(function (err, req, res, next) {

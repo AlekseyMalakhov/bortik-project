@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { getPrice } from "../utilities/calculate";
 import FormSelect from "./FormSelect";
 import userAPI from "../api/user";
+import { setUser } from "../store/manage";
 
 const MyContainer = styled.div({
     paddingRight: "10px",
@@ -156,10 +157,22 @@ function CartForm({ cart, priceType, sum }) {
         }
 
         if (newAdress) {
-            const isNew = user.address.find((address) => address.name === values.address);
-            if (!isNew) {
-                console.log("add address " + values.address);
-                userAPI.addAddress({ address: values.address }, user.id);
+            const isOld = user.address.find((address) => address.name === values.address);
+            if (!isOld) {
+                const newAddr = {
+                    id: Date.now(),
+                    name: values.address,
+                };
+                const newAddresses = [...user.address, newAddr];
+                const addressesString = JSON.stringify(newAddresses);
+                userAPI.addAddress({ address: addressesString }, user.id).then((response) => {
+                    if (response.status === 200) {
+                        const updatedUser = { ...user };
+                        updatedUser.address = newAddresses;
+                        dispatch(setUser(updatedUser));
+                        localStorage.setItem("user", JSON.stringify(updatedUser));
+                    }
+                });
             }
         }
 
