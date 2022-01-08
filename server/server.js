@@ -8,6 +8,7 @@ const editAccount = require("./db/editAccount");
 const login = require("./db/login");
 const forgotPassword = require("./db/forgotPassword");
 const getHistory = require("./db/getHistory");
+const addAddress = require("./db/addAddress");
 const app = express();
 const port = process.env.PORT || 3010;
 const cors = require("cors");
@@ -31,6 +32,7 @@ app.post("/api/login", login);
 app.post("/api/forgotPassword", forgotPassword);
 app.post("/api/getHistory", getHistory);
 app.post("/api/getTranslationsForUI", getTranslationsForUI);
+app.post("/api/addAddress", addAddress);
 
 // Error handler
 app.use(function (err, req, res, next) {
