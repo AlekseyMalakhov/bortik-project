@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useTranslation } from "react-i18next";
 
-function AskCleanCartModal({ show, onHide, onClean, ...otherProps }) {
+function CleanCartModal({ show, onHide, onClean, ...otherProps }) {
     const { t } = useTranslation();
     return (
         <Modal show={show} {...otherProps} size="sm" centered onHide={onHide}>
@@ -22,4 +22,4 @@ function AskCleanCartModal({ show, onHide, onClean, ...otherProps }) {
     );
 }
 
-export default AskCleanCartModal;
+export default CleanCartModal;

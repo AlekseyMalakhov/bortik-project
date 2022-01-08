@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import SelectPrice from "./SelectPrice";
 import { useNavigate } from "react-router-dom";
 import CleanCartButton from "./CleanCartButton";
-import AskCleanCartModal from "./AskCleanCartModal";
+import CleanCartModal from "./CleanCartModal";
 import { cleanCart } from "../store/manage";
 import { useTranslation } from "react-i18next";
 
@@ -85,7 +85,7 @@ function CartPanel() {
                 <Price mobileScreen={mobileScreen}>{sum.toFixed(2)} BYN</Price>
             </PricePanel>
             {cart.length > 0 ? <CleanCartButton onClick={() => setShowAsk(true)} mobileScreen={mobileScreen} /> : null}
-            <AskCleanCartModal show={showAsk} onHide={() => setShowAsk(false)} onClean={handleCleanCart} />
+            <CleanCartModal show={showAsk} onHide={() => setShowAsk(false)} onClean={handleCleanCart} />
         </CartPanelStyled>
     );
 }

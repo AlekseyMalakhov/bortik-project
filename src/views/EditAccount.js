@@ -156,7 +156,7 @@ function EditAccount() {
                                     {t("Отмена")}
                                 </Button>
                                 <Button variant="primary" type="submit">
-                                    {t("Отправить")}
+                                    {t("Сохранить")}
                                 </Button>
                             </ButtonGroup>
                         </Form>
