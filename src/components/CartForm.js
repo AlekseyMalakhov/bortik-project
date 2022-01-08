@@ -14,6 +14,7 @@ import CartSentModal from "./CartSentModal";
 import { useTranslation } from "react-i18next";
 import { getPrice } from "../utilities/calculate";
 import FormSelect from "./FormSelect";
+import userAPI from "../api/user";
 
 const MyContainer = styled.div({
     paddingRight: "10px",
@@ -154,6 +155,14 @@ function CartForm({ cart, priceType, sum }) {
             data.customer.id = user.id;
         }
 
+        if (newAdress) {
+            const isNew = user.address.find((address) => address.name === values.address);
+            if (!isNew) {
+                console.log("add address " + values.address);
+                userAPI.addAddress({ address: values.address }, user.id);
+            }
+        }
+
         dispatch(setLoading(true));
         itemsAPI
             .sendCart(data)
@@ -180,8 +189,6 @@ function CartForm({ cart, priceType, sum }) {
     const cancel = () => {
         navigate("/");
     };
-
-    const deliveryAddresses = ["Address 1", "Address 2", "Address 3"];
 
     return (
         <MyContainer>

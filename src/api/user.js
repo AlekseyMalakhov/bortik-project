@@ -45,12 +45,22 @@ const getHistory = (userID) => {
         .catch((error) => error.response);
 };
 
+const addAddress = (address, userId) => {
+    return client
+        .put("/addAddress/" + userId, address)
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => error.response);
+};
+
 const userAPI = {
     createAccount,
     login,
     forgotPassword,
     editAccount,
     getHistory,
+    addAddress,
 };
 
 export default userAPI;
