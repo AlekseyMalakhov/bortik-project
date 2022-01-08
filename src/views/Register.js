@@ -59,17 +59,22 @@ function Register() {
             setError(t("Пароль и повтор пароля не совпадают!"));
             return;
         }
-        const adressObj = [
-            {
-                id: Date.now(),
-                name: values.address,
-            },
-        ];
-        const addressArr = JSON.stringify(adressObj);
+        let adressObj;
         const newUser = { ...values };
-        newUser.address = addressArr;
+        if (values.address) {
+            adressObj = [
+                {
+                    id: Date.now(),
+                    name: values.address,
+                },
+            ];
+            const addressArr = JSON.stringify(adressObj);
+            newUser.address = addressArr;
+        }
+
         setError("");
         dispatch(setLoading(true));
+        console.log(newUser);
         userAPI
             .createAccount(newUser)
             .then((response) => {

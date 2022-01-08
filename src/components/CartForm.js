@@ -108,10 +108,12 @@ function CartForm({ cart, priceType, sum }) {
         phone: Yup.string().required(t("Укажите телефон")),
     });
 
-    const [newAdress, setNewAdress] = useState(false);
+    const [manualAddress, setManualAddress] = useState(false);
     useEffect(() => {
-        if (!user) {
-            setNewAdress(true);
+        if (!user || (user && !user.address)) {
+            setManualAddress(true);
+        } else {
+            setManualAddress(false);
         }
     }, [user]);
 
@@ -129,14 +131,10 @@ function CartForm({ cart, priceType, sum }) {
 
     const handleSubmit = (values) => {
         setEmail(values.email);
-        const addr = [
-            {
-                id: Date.now(),
-                name: values.address,
-            },
-        ];
         const customer = { ...values };
-        customer.address = JSON.stringify(addr);
+        if (user) {
+            customer.id = user.id;
+        }
 
         const newCart = [];
         for (let i = 0; i < cart.length; i++) {
@@ -158,12 +156,11 @@ function CartForm({ cart, priceType, sum }) {
             date: Date.now(),
         };
 
-        if (user) {
-            data.customer.id = user.id;
-        }
-
-        if (user && newAdress) {
-            const isOld = user.address.find((address) => address.name === values.address);
+        if (user && manualAddress && values.address) {
+            let isOld;
+            if (user.address) {
+                isOld = user.address.find((address) => address.name === values.address);
+            }
             if (!isOld) {
                 const newAddr = {
                     id: Date.now(),
@@ -219,7 +216,7 @@ function CartForm({ cart, priceType, sum }) {
                         phone: user ? user.phone : "",
                         payment_method: "Безналичный расчет (для юридических лиц)",
                         delivery: "по Минску",
-                        address: user ? user.address[0].name : "",
+                        address: user && user.address ? user.address[0].name : "",
                         comment: "",
                     }}
                     enableReinitialize
@@ -231,20 +228,20 @@ function CartForm({ cart, priceType, sum }) {
                             <FormInput name="name" label={t("ФИО") + "*"} />
                             <FormInput name="phone" label={t("Телефон") + "*"} inputMode="tel" placeholder={"+375xxxxxxxxx"} />
                             <FormInput name="email" label="Email*" inputMode="email" />
-                            {newAdress ? (
+                            {manualAddress ? (
                                 <FormInput name="address" label={t("Адрес доставки")} />
                             ) : (
                                 <FormSelect name="address" label={t("Адрес доставки")} options={user ? user.address : []} />
                             )}
 
-                            {user ? (
+                            {user && user.address ? (
                                 <OneButtonContainer>
-                                    {newAdress ? (
-                                        <Button variant="primary" onClick={() => setNewAdress(false)}>
+                                    {manualAddress ? (
+                                        <Button variant="primary" onClick={() => setManualAddress(false)}>
                                             {t("Адрес из списка")}
                                         </Button>
                                     ) : (
-                                        <Button variant="primary" onClick={() => setNewAdress(true)}>
+                                        <Button variant="primary" onClick={() => setManualAddress(true)}>
                                             {t("Другой адрес")}
                                         </Button>
                                     )}

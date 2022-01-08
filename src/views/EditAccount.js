@@ -73,7 +73,6 @@ function EditAccount() {
         let data;
         if (values.changePassword) {
             data = { ...values };
-            data.address = JSON.stringify(values.address);
             delete data.repeatNewPassword;
             delete data.changePassword;
         } else {
@@ -81,9 +80,13 @@ function EditAccount() {
                 name: values.name,
                 phone: values.phone,
                 email: values.email,
-                address: JSON.stringify(values.address),
                 password: values.password,
             };
+        }
+        if (values.address.length > 0) {
+            data.address = JSON.stringify(values.address);
+        } else {
+            data.address = "";
         }
         setError("");
         dispatch(setLoading(true));
@@ -93,7 +96,11 @@ function EditAccount() {
                 dispatch(setLoading(false));
                 if (response.status === 200) {
                     const updatedUser = { ...data };
-                    updatedUser.address = values.address;
+                    if (values.address.length > 0) {
+                        updatedUser.address = values.address;
+                    } else {
+                        updatedUser.address = "";
+                    }
                     delete updatedUser.password;
                     if (updatedUser.newPassword) {
                         delete updatedUser.newPassword;

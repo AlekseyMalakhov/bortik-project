@@ -28,14 +28,19 @@ function AccountDataTable({ user }) {
                         <td>{t("Телефон")}</td>
                         <td>{user.phone}</td>
                     </tr>
-                    {user
-                        ? user.address.map((address, index) => (
-                              <tr key={address.id}>
-                                  <td>{t("Адрес доставки") + " " + (index + 1)}</td>
-                                  <td>{address.name}</td>
-                              </tr>
-                          ))
-                        : null}
+                    {user && user.address ? (
+                        user.address.map((address, index) => (
+                            <tr key={address.id}>
+                                <td>{t("Адрес доставки") + " " + (index + 1)}</td>
+                                <td>{address.name}</td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td>{t("Адрес доставки")}</td>
+                            <td></td>
+                        </tr>
+                    )}
                 </tbody>
             </Table>
         </AccountDataTableStyled>

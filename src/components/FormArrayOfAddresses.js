@@ -49,7 +49,7 @@ function FormArrayOfAddresses({ values }) {
                                       index={index}
                                       label={t("Адрес доставки") + " " + (index + 1)}
                                   />
-                                  {values.address.length > 1 ? <DeleteButton onClick={() => askToDelete(index)} /> : null}
+                                  <DeleteButton onClick={() => askToDelete(index)} />
                               </ArrayFieldRow>
                           ))
                         : null}

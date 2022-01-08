@@ -13,7 +13,9 @@ const login = async (req, res) => {
             return res.status(401).send("Invalid email or password.");
         }
         const sendUser = { ...user };
-        sendUser.address = JSON.parse(user.address);
+        if (user.address) {
+            sendUser.address = JSON.parse(user.address);
+        }
         delete sendUser.password;
         // const accessToken = jwt.sign(sendUser, accessTokenSecret, { expiresIn: "1m" });
         // const refreshToken = jwt.sign(sendUser, refreshTokenSecret, { expiresIn: "100m" });
