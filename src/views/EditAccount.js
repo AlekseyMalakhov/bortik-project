@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Formik } from "formik";
+import { Formik, FieldArray, Field } from "formik";
 import * as Yup from "yup";
 import FormInput from "../components/FormInput";
 import { useNavigate } from "react-router";
@@ -124,7 +124,7 @@ function EditAccount() {
                         name: user.name,
                         phone: user.phone,
                         email: user.email,
-                        address: user.address ? user.address : "",
+                        address: user.address ? user.address : [],
                         password: "",
                         changePassword: false,
                         newPassword: "",
@@ -138,7 +138,43 @@ function EditAccount() {
                             <FormInput name="name" label={t("ФИО") + "*"} />
                             <FormInput name="phone" label={t("Телефон") + "*"} inputMode="tel" placeholder={"+375xxxxxxxxx"} />
                             <FormInput name="email" label="Email*" inputMode="email" />
-                            <FormInput name="address" label={t("Адрес доставки по умолчанию")} />
+
+                            {user ? user.address.map((address, index) => <FormInput name="address" label={t("Адрес доставки")} />) : null}
+
+                            <FieldArray
+                                name="address"
+                                render={(arrayHelpers) => (
+                                    <div>
+                                        {values.address && values.address.length > 0 ? (
+                                            values.address.map((address, index) => (
+                                                <div key={index}>
+                                                    <Field name={`address.${index}.name`} />
+
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                                                    >
+                                                        -
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => arrayHelpers.insert(index, "")} // insert an empty string at a position
+                                                    >
+                                                        +
+                                                    </button>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <button type="button" onClick={() => arrayHelpers.push("")}>
+                                                {/* show this when user has removed all friends from the list */}
+                                                Add a friend
+                                            </button>
+                                        )}
+                                    </div>
+                                )}
+                            />
+
                             <FormInput name="password" label={values.changePassword ? t("Текущий пароль*") : t("Пароль") + "*"} type="password" />
                             {error !== "" ? <Error>{error}</Error> : null}
 
