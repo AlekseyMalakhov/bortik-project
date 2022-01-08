@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import FormCheckBoxSwitch from "../components/FormCheckBoxSwitch";
 import { useTranslation } from "react-i18next";
 import FormArrayInput from "../components/FormArrayInput";
+import DeleteButton from "../components/DeleteButton";
 
 const EditAccountStyled = styled.div({
     margin: "10px 20px",
@@ -152,26 +153,18 @@ function EditAccount() {
                                         {values.address && values.address.length > 0
                                             ? values.address.map((address, index) => (
                                                   <ArrayFieldRow key={index}>
-                                                      {/* <Field name={`address.${index}.name`} /> */}
                                                       <FormArrayInput
                                                           name={`address.${index}.name`}
                                                           rootName="address"
                                                           index={index}
-                                                          label={t("Адрес доставки")}
+                                                          label={t("Адрес доставки") + " " + (index + 1)}
                                                       />
-
-                                                      <button
-                                                          type="button"
-                                                          onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
-                                                      >
-                                                          -
-                                                      </button>
+                                                      <DeleteButton onClick={() => arrayHelpers.remove(index)} />
                                                   </ArrayFieldRow>
                                               ))
                                             : null}
-                                        <button type="button" onClick={() => arrayHelpers.push("")}>
-                                            {/* show this when user has removed all friends from the list */}
-                                            Add a friend
+                                        <button type="button" onClick={() => arrayHelpers.push({ id: Date.now(), name: "" })}>
+                                            {t("Добавить адрес")}
                                         </button>
                                     </div>
                                 )}
