@@ -46,6 +46,11 @@ const ButtonGroup = styled.div({
     marginBottom: "30px",
 });
 
+const ArrayFieldRow = styled.div({
+    display: "flex",
+    width: "100%",
+});
+
 function EditAccount() {
     const { t } = useTranslation();
     const dispatch = useDispatch();
@@ -144,38 +149,30 @@ function EditAccount() {
                                 name="address"
                                 render={(arrayHelpers) => (
                                     <div>
-                                        {values.address && values.address.length > 0 ? (
-                                            values.address.map((address, index) => (
-                                                <div key={index}>
-                                                    {/* <Field name={`address.${index}.name`} /> */}
-                                                    <FormArrayInput
-                                                        name={`address.${index}.name`}
-                                                        rootName="address"
-                                                        index={index}
-                                                        label={t("Адрес доставки")}
-                                                    />
+                                        {values.address && values.address.length > 0
+                                            ? values.address.map((address, index) => (
+                                                  <ArrayFieldRow key={index}>
+                                                      {/* <Field name={`address.${index}.name`} /> */}
+                                                      <FormArrayInput
+                                                          name={`address.${index}.name`}
+                                                          rootName="address"
+                                                          index={index}
+                                                          label={t("Адрес доставки")}
+                                                      />
 
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
-                                                    >
-                                                        -
-                                                    </button>
-
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => arrayHelpers.insert(index, "")} // insert an empty string at a position
-                                                    >
-                                                        +
-                                                    </button>
-                                                </div>
-                                            ))
-                                        ) : (
-                                            <button type="button" onClick={() => arrayHelpers.push("")}>
-                                                {/* show this when user has removed all friends from the list */}
-                                                Add a friend
-                                            </button>
-                                        )}
+                                                      <button
+                                                          type="button"
+                                                          onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                                                      >
+                                                          -
+                                                      </button>
+                                                  </ArrayFieldRow>
+                                              ))
+                                            : null}
+                                        <button type="button" onClick={() => arrayHelpers.push("")}>
+                                            {/* show this when user has removed all friends from the list */}
+                                            Add a friend
+                                        </button>
                                     </div>
                                 )}
                             />

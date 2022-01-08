@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 function FormArrayInput({ name, rootName, index, label, ...otherProps }) {
     const { setFieldTouched, setFieldValue, errors, touched, values } = useFormikContext();
     return (
-        <Form.Group className="mb-3" controlId={"cart_form_" + [name]}>
+        <Form.Group className="mb-3" controlId={"cart_form_" + [name]} style={{ width: "100%" }}>
             <Form.Label>{label}</Form.Label>
             <Form.Control
                 type="text"
