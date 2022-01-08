@@ -13,6 +13,7 @@ import AccountEditedModal from "../components/AccountEditedModal";
 import { useSelector } from "react-redux";
 import FormCheckBoxSwitch from "../components/FormCheckBoxSwitch";
 import { useTranslation } from "react-i18next";
+import FormArrayInput from "../components/FormArrayInput";
 
 const EditAccountStyled = styled.div({
     margin: "10px 20px",
@@ -139,8 +140,6 @@ function EditAccount() {
                             <FormInput name="phone" label={t("Телефон") + "*"} inputMode="tel" placeholder={"+375xxxxxxxxx"} />
                             <FormInput name="email" label="Email*" inputMode="email" />
 
-                            {user ? user.address.map((address, index) => <FormInput name="address" label={t("Адрес доставки")} />) : null}
-
                             <FieldArray
                                 name="address"
                                 render={(arrayHelpers) => (
@@ -148,7 +147,13 @@ function EditAccount() {
                                         {values.address && values.address.length > 0 ? (
                                             values.address.map((address, index) => (
                                                 <div key={index}>
-                                                    <Field name={`address.${index}.name`} />
+                                                    {/* <Field name={`address.${index}.name`} /> */}
+                                                    <FormArrayInput
+                                                        name={`address.${index}.name`}
+                                                        rootName="address"
+                                                        index={index}
+                                                        label={t("Адрес доставки")}
+                                                    />
 
                                                     <button
                                                         type="button"
