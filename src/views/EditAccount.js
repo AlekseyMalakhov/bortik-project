@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Formik, FieldArray } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import FormInput from "../components/FormInput";
 import { useNavigate } from "react-router";
@@ -13,8 +13,6 @@ import AccountEditedModal from "../components/AccountEditedModal";
 import { useSelector } from "react-redux";
 import FormCheckBoxSwitch from "../components/FormCheckBoxSwitch";
 import { useTranslation } from "react-i18next";
-import FormArrayInput from "../components/FormArrayInput";
-import DeleteButton from "../components/DeleteButton";
 import FormArrayOfAddresses from "../components/FormArrayOfAddresses";
 
 const EditAccountStyled = styled.div({
@@ -46,11 +44,6 @@ const ButtonGroup = styled.div({
     justifyContent: "space-evenly",
     marginTop: "30px",
     marginBottom: "30px",
-});
-
-const ArrayFieldRow = styled.div({
-    display: "flex",
-    width: "100%",
 });
 
 function EditAccount() {
@@ -146,9 +139,7 @@ function EditAccount() {
                             <FormInput name="name" label={t("ФИО") + "*"} />
                             <FormInput name="phone" label={t("Телефон") + "*"} inputMode="tel" placeholder={"+375xxxxxxxxx"} />
                             <FormInput name="email" label="Email*" inputMode="email" />
-
                             <FormArrayOfAddresses values={values} />
-
                             <FormInput name="password" label={values.changePassword ? t("Текущий пароль*") : t("Пароль") + "*"} type="password" />
                             {error !== "" ? <Error>{error}</Error> : null}
 
