@@ -193,7 +193,7 @@ function CartForm({ cart, priceType, sum }) {
                         phone: user ? user.phone : "",
                         payment_method: "Безналичный расчет (для юридических лиц)",
                         delivery: "по Минску",
-                        address: user ? user.address : "",
+                        address: user ? user.address[0].name : "",
                         comment: "",
                     }}
                     enableReinitialize
@@ -208,7 +208,7 @@ function CartForm({ cart, priceType, sum }) {
                             {newAdress ? (
                                 <FormInput name="address" label={t("Адрес доставки")} />
                             ) : (
-                                <FormSelect name="address" label={t("Адрес доставки")} options={deliveryAddresses} />
+                                <FormSelect name="address" label={t("Адрес доставки")} options={user ? user.address : []} />
                             )}
 
                             {user ? (

@@ -10,8 +10,8 @@ function FormSelect({ name, label, options, ...otherProps }) {
             <Form.Select name={name} value={values[name]} onChange={(e) => setFieldValue(name, e.target.value)} {...otherProps}>
                 {options && options.length > 0
                     ? options.map((value) => (
-                          <option value={value} key={value}>
-                              {value}
+                          <option value={value.name} key={value.id}>
+                              {value.name}
                           </option>
                       ))
                     : null}
