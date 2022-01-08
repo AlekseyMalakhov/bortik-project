@@ -129,8 +129,14 @@ function CartForm({ cart, priceType, sum }) {
 
     const handleSubmit = (values) => {
         setEmail(values.email);
-        console.log(values);
-        console.log(cart);
+        const addr = [
+            {
+                id: Date.now(),
+                name: values.address,
+            },
+        ];
+        const customer = { ...values };
+        customer.address = JSON.stringify(addr);
 
         const newCart = [];
         for (let i = 0; i < cart.length; i++) {
@@ -146,7 +152,7 @@ function CartForm({ cart, priceType, sum }) {
 
         const data = {
             cart: newCart,
-            customer: values,
+            customer,
             priceType,
             sum: Number(sum.toFixed(2)),
             date: Date.now(),
@@ -156,7 +162,7 @@ function CartForm({ cart, priceType, sum }) {
             data.customer.id = user.id;
         }
 
-        if (newAdress) {
+        if (user && newAdress) {
             const isOld = user.address.find((address) => address.name === values.address);
             if (!isOld) {
                 const newAddr = {

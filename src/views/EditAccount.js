@@ -73,6 +73,7 @@ function EditAccount() {
         let data;
         if (values.changePassword) {
             data = { ...values };
+            data.address = JSON.stringify(values.address);
             delete data.repeatNewPassword;
             delete data.changePassword;
         } else {
@@ -80,7 +81,7 @@ function EditAccount() {
                 name: values.name,
                 phone: values.phone,
                 email: values.email,
-                address: values.address,
+                address: JSON.stringify(values.address),
                 password: values.password,
             };
         }
@@ -92,6 +93,7 @@ function EditAccount() {
                 dispatch(setLoading(false));
                 if (response.status === 200) {
                     const updatedUser = { ...data };
+                    updatedUser.address = values.address;
                     delete updatedUser.password;
                     if (updatedUser.newPassword) {
                         delete updatedUser.newPassword;
