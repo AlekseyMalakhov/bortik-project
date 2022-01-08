@@ -30,9 +30,9 @@ function AccountDataTable({ user }) {
                     </tr>
                     {user
                         ? user.address.map((address, index) => (
-                              <tr key={address}>
+                              <tr key={address.id}>
                                   <td>{t("Адрес доставки") + " " + (index + 1)}</td>
-                                  <td>{address}</td>
+                                  <td>{address.name}</td>
                               </tr>
                           ))
                         : null}
