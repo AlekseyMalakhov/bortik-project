@@ -59,7 +59,13 @@ function Register() {
             setError(t("Пароль и повтор пароля не совпадают!"));
             return;
         }
-        const addressArr = JSON.stringify([values.address]);
+        const adressObj = [
+            {
+                id: Date.now(),
+                name: values.address,
+            },
+        ];
+        const addressArr = JSON.stringify(adressObj);
         const newUser = { ...values };
         newUser.address = addressArr;
         setError("");
@@ -70,7 +76,7 @@ function Register() {
                 dispatch(setLoading(false));
                 if (response.status === 201) {
                     const user = { ...newUser, id: response.data.userID };
-                    user.address = [values.address];
+                    user.address = adressObj;
                     setNewUser(user);
                     setDone(true);
                 } else if (response.status === 409) {
