@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Formik, FieldArray, Field } from "formik";
+import { Formik, FieldArray } from "formik";
 import * as Yup from "yup";
 import FormInput from "../components/FormInput";
 import { useNavigate } from "react-router";
@@ -15,6 +15,7 @@ import FormCheckBoxSwitch from "../components/FormCheckBoxSwitch";
 import { useTranslation } from "react-i18next";
 import FormArrayInput from "../components/FormArrayInput";
 import DeleteButton from "../components/DeleteButton";
+import FormArrayOfAddresses from "../components/FormArrayOfAddresses";
 
 const EditAccountStyled = styled.div({
     margin: "10px 20px",
@@ -146,29 +147,7 @@ function EditAccount() {
                             <FormInput name="phone" label={t("Телефон") + "*"} inputMode="tel" placeholder={"+375xxxxxxxxx"} />
                             <FormInput name="email" label="Email*" inputMode="email" />
 
-                            <FieldArray
-                                name="address"
-                                render={(arrayHelpers) => (
-                                    <div>
-                                        {values.address && values.address.length > 0
-                                            ? values.address.map((address, index) => (
-                                                  <ArrayFieldRow key={index}>
-                                                      <FormArrayInput
-                                                          name={`address.${index}.name`}
-                                                          rootName="address"
-                                                          index={index}
-                                                          label={t("Адрес доставки") + " " + (index + 1)}
-                                                      />
-                                                      <DeleteButton onClick={() => arrayHelpers.remove(index)} />
-                                                  </ArrayFieldRow>
-                                              ))
-                                            : null}
-                                        <button type="button" onClick={() => arrayHelpers.push({ id: Date.now(), name: "" })}>
-                                            {t("Добавить адрес")}
-                                        </button>
-                                    </div>
-                                )}
-                            />
+                            <FormArrayOfAddresses values={values} />
 
                             <FormInput name="password" label={values.changePassword ? t("Текущий пароль*") : t("Пароль") + "*"} type="password" />
                             {error !== "" ? <Error>{error}</Error> : null}
