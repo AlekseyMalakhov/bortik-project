@@ -3,10 +3,11 @@ import styled from "@emotion/styled";
 
 const SidebarExitButtonStyled = styled.div({
     marginLeft: "10px",
+    marginTop: "12px",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: "42px",
+    width: "48px",
     height: "42px",
     cursor: "pointer",
     "&:hover": {

@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 const ArrayFieldRow = styled.div({
     display: "flex",
     width: "100%",
+    alignItems: "center",
 });
 
 function FormArrayOfAddresses({ values }) {

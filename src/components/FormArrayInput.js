@@ -8,6 +8,7 @@ function FormArrayInput({ name, rootName, index, label, ...otherProps }) {
         <Form.Group className="mb-3" controlId={"cart_form_" + [name]} style={{ width: "100%" }}>
             <Form.Label>{label}</Form.Label>
             <Form.Control
+                as="textarea"
                 type="text"
                 name={name}
                 value={values[rootName][index].name}
