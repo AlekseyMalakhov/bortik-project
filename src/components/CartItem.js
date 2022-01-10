@@ -19,6 +19,7 @@ const CartItemStyled = styled(Container)`
 `;
 
 const MyRow = styled(Row)`
+    position: relative;
     justify-content: space-evenly;
     align-items: center;
 `;
@@ -29,6 +30,28 @@ const BottomCol = styled(Col)({
     "@media screen and (max-width: 768px)": {
         marginTop: "20px",
     },
+});
+
+const CheckDesktop = styled.div({
+    width: "20px",
+    padding: "0 0",
+    marginLeft: "20px",
+    "& input.form-check-input:checked": {
+        backgroundColor: "#54cc91",
+        borderColor: "#54cc91",
+    },
+    "@media screen and (max-width: 350px)": {
+        position: "absolute",
+        top: 0,
+        left: 0,
+    },
+});
+
+const ImageDesktop = styled.div({
+    display: "flex",
+    justifyContent: "center",
+    width: "90px",
+    padding: "0 0",
 });
 
 const MyCol = styled(Col)`
@@ -50,16 +73,25 @@ const RetailPrice = styled.div({
 function CartItem({ item, priceType }) {
     const { t, i18n } = useTranslation();
 
+    const handleSelect = (e) => {
+        console.log(e.target.checked);
+    };
+
     return (
         <CartItemStyled>
             <MyRow>
-                <Form.Check type="checkbox" />
+                <CheckDesktop>
+                    <Form.Check type="checkbox" onChange={handleSelect} style={{ width: "20px" }} />
+                </CheckDesktop>
+                {/* <CheckMobile>
+                    <Form.Check type="checkbox" onChange={handleSelect} />
+                </CheckMobile> */}
                 {item.img ? (
-                    <Col xs="auto">
+                    <ImageDesktop>
                         <img src={item.img} alt={""} width="80" height="80"></img>
-                    </Col>
+                    </ImageDesktop>
                 ) : null}
-                <MyCol style={{ fontWeight: "500" }} xs={8} sm={8} md={5}>
+                <MyCol style={{ fontWeight: "500" }} xs={7} sm={8} md={5}>
                     {item.title[i18n.resolvedLanguage]}
                 </MyCol>
                 <BottomCol xs={7} sm={6} md={3}>
