@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import AddRemove from "./AddRemove";
 import { useTranslation } from "react-i18next";
 import { getPrice } from "../utilities/calculate";
+import Form from "react-bootstrap/Form";
 
 const CartItemStyled = styled(Container)`
     position: relative;
@@ -52,6 +53,7 @@ function CartItem({ item, priceType }) {
     return (
         <CartItemStyled>
             <MyRow>
+                <Form.Check type="checkbox" />
                 {item.img ? (
                     <Col xs="auto">
                         <img src={item.img} alt={""} width="80" height="80"></img>
