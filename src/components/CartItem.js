@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -72,20 +72,18 @@ const RetailPrice = styled.div({
 
 function CartItem({ item, priceType }) {
     const { t, i18n } = useTranslation();
+    const [selected, setSelected] = useState(true);
 
     const handleSelect = (e) => {
-        console.log(e.target.checked);
+        setSelected(e.target.checked);
     };
 
     return (
         <CartItemStyled>
-            <MyRow>
+            <MyRow style={!selected ? { opacity: 0.4 } : null}>
                 <CheckDesktop>
-                    <Form.Check type="checkbox" onChange={handleSelect} style={{ width: "20px" }} />
+                    <Form.Check type="checkbox" checked={selected} onChange={handleSelect} style={{ width: "20px" }} />
                 </CheckDesktop>
-                {/* <CheckMobile>
-                    <Form.Check type="checkbox" onChange={handleSelect} />
-                </CheckMobile> */}
                 {item.img ? (
                     <ImageDesktop>
                         <img src={item.img} alt={""} width="80" height="80"></img>
