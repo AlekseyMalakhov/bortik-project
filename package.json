@@ -29,7 +29,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "copy-build-folder": "copyfiles -V build/** ../bortik-project-demo",
-        "copy-server-folder": "copyfiles -V -e \"**/node_modules/**\" -e \"**/components/**\" -f server/** ../bortik-project-demo",
+        "copy-server-folder": "copyfiles -V -e \"**/node_modules/**\" -e \"**/components/**\" -e \"**/db/**\" -f server/** ../bortik-project-demo",
         "copy-components-folder": "copyfiles -V -u 1 server/components/** ../bortik-project-demo",
         "copy-db-folder": "copyfiles -V -u 1 server/db/** ../bortik-project-demo",
         "publish-to-heroku": "cd ../bortik-project-demo && git add -A && git commit -am \"publish to Heroku demo\" && git push origin main",
