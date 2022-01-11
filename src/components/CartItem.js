@@ -7,6 +7,8 @@ import AddRemove from "./AddRemove";
 import { useTranslation } from "react-i18next";
 import { getPrice } from "../utilities/calculate";
 import Form from "react-bootstrap/Form";
+import { useDispatch } from "react-redux";
+import { makeSelected } from "../store/manage";
 
 const CartItemStyled = styled(Container)`
     position: relative;
@@ -72,10 +74,12 @@ const RetailPrice = styled.div({
 
 function CartItem({ item, priceType }) {
     const { t, i18n } = useTranslation();
+    const dispatch = useDispatch();
     const [selected, setSelected] = useState(true);
 
     const handleSelect = (e) => {
         setSelected(e.target.checked);
+        dispatch(makeSelected({ item, selected: e.target.checked }));
     };
 
     return (

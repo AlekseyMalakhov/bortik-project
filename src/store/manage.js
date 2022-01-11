@@ -85,6 +85,16 @@ export const manageSlice = createSlice({
                 localStorage.setItem("cart", JSON.stringify(cart));
             }
         },
+        makeSelected: (state, action) => {
+            const newCart = [...state.cart];
+            const index = newCart.findIndex((item) => item.id === action.payload.item.id);
+            if (index !== -1) {
+                newCart[index].selected = action.payload.selected;
+                state.cart = newCart;
+                localStorage.setItem("cart", JSON.stringify(newCart));
+            }
+            return;
+        },
         cleanCart: (state) => {
             state.cart = [];
             localStorage.setItem("cart", JSON.stringify([]));
@@ -167,5 +177,6 @@ export const {
     setUser,
     setSelectedItems,
     cleanHistory,
+    makeSelected,
 } = manageSlice.actions;
 export default manageSlice.reducer;
