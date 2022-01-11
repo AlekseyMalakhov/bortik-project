@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
 import { setSearchInput, setSearch } from "../store/manage";
 import { useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const SearchStyled = styled.div({
     position: "relative",
@@ -42,22 +43,28 @@ const CloseButton = styled.div({
     },
 });
 
+//"ru", "zh", "en",
+
+//?name=皂液器%20Loktevoy%20130205&lang=zh
+
 function Search({ show }) {
+    const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
     const [focus, setFocus] = useState(false);
     const [value, setValue] = useState("");
 
     let name = searchParams.get("name");
+    let lang = searchParams.get("lang");
 
     useEffect(() => {
-        console.log(name);
-        if (name) {
+        if (name && lang) {
+            i18n.changeLanguage(lang);
             dispatch(setSearch(true));
             setValue(name);
             dispatch(setSearchInput([name]));
         }
-    }, [name]);
+    }, [name, lang]);
 
     const handleInput = (e) => {
         setValue(e.target.value);

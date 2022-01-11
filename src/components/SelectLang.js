@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import Dropdown from "react-bootstrap/Dropdown";
 import SelectLangText from "./SelectLangText";
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const MyDropdown = styled(Dropdown)({
     paddingLeft: "16px",
