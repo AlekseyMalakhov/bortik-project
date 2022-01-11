@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
 import { setSearchInput, setSearch } from "../store/manage";
+import { useSearchParams } from "react-router-dom";
 
 const SearchStyled = styled.div({
     position: "relative",
@@ -43,8 +44,20 @@ const CloseButton = styled.div({
 
 function Search({ show }) {
     const dispatch = useDispatch();
+    const [searchParams, setSearchParams] = useSearchParams();
     const [focus, setFocus] = useState(false);
     const [value, setValue] = useState("");
+
+    let name = searchParams.get("name");
+
+    useEffect(() => {
+        console.log(name);
+        if (name) {
+            dispatch(setSearch(true));
+            setValue(name);
+            dispatch(setSearchInput([name]));
+        }
+    }, [name]);
 
     const handleInput = (e) => {
         setValue(e.target.value);
