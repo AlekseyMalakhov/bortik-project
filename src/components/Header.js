@@ -13,6 +13,7 @@ import SearchButton from "./SearchButton";
 import SelectLang from "./SelectLang";
 import { useTranslation } from "react-i18next";
 import Form from "react-bootstrap/Form";
+import { setShowInStockOnly } from "../store/manage";
 
 const HeaderStyled = styled.div({
     display: "flex",
@@ -44,6 +45,7 @@ function Header() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const search = useSelector((state) => state.manage.search);
+    const showInStockOnly = useSelector((state) => state.manage.showInStockOnly);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
     const user = useSelector((state) => state.manage.user);
 
@@ -52,6 +54,18 @@ function Header() {
         dispatch(cleanHistory());
         localStorage.removeItem("user");
         navigate("/");
+    };
+
+    const handleShowInStock = (e) => {
+        dispatch(setShowInStockOnly(e.target.checked));
+    };
+
+    const toggleCheckBox = () => {
+        if (showInStockOnly) {
+            dispatch(setShowInStockOnly(false));
+        } else {
+            dispatch(setShowInStockOnly(true));
+        }
     };
 
     return (
@@ -81,11 +95,13 @@ function Header() {
                             </React.Fragment>
                         )}
                         <SelectLang />
-                        <Dropdown.Item style={{ whiteSpace: "normal" }}>
+                        <Dropdown.Item style={{ whiteSpace: "normal" }} onClick={toggleCheckBox}>
                             <Check
+                                id="my_check_box"
+                                key={Math.random()}
                                 type="checkbox"
-                                checked={true}
-                                onChange={() => console.log("hi")}
+                                checked={showInStockOnly}
+                                onChange={handleShowInStock}
                                 label={t("Показывать только товары в наличии")}
                             />
                         </Dropdown.Item>

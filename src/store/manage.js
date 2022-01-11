@@ -32,6 +32,7 @@ const initialState = {
     searchInput: [],
     user: null,
     history: [],
+    showInStockOnly: true,
 };
 
 export const manageSlice = createSlice({
@@ -123,6 +124,9 @@ export const manageSlice = createSlice({
         cleanHistory: (state, action) => {
             state.history = [];
         },
+        setShowInStockOnly: (state, action) => {
+            state.showInStockOnly = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -178,5 +182,6 @@ export const {
     setSelectedItems,
     cleanHistory,
     makeSelected,
+    setShowInStockOnly,
 } = manageSlice.actions;
 export default manageSlice.reducer;
