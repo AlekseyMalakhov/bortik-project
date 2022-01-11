@@ -113,7 +113,7 @@ function Main() {
             {selectedItems.length > 0 ? (
                 selectedItems.map((item, index) => (index <= showNumber ? <Card item={item} key={item.id} /> : null))
             ) : (
-                <Error>{t("Нет товаров в данной категории. Измените параметры поиска.")}</Error>
+                <Error>{t("Ничего не найдено. Попробуйте изменить поисковый запрос.")}</Error>
             )}
             {showNumber < selectedItems.length ? (
                 <MyButton variant="primary" size={mobileScreen ? "sm" : ""} onClick={showMore}>
