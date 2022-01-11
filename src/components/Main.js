@@ -40,6 +40,7 @@ function Main() {
     const [showNumber, setShowNumber] = useState(20);
     const items = useSelector((state) => state.manage.items);
     const selectedItems = useSelector((state) => state.manage.selectedItems);
+    const showInStockOnly = useSelector((state) => state.manage.showInStockOnly);
     const sideBarOpened = useSelector((state) => state.manage.sideBarOpened);
     const selectedCategory = useSelector((state) => state.manage.selectedCategory);
     const mobileScreen = useSelector((state) => state.manage.mobileScreen);
@@ -88,8 +89,11 @@ function Main() {
         if (search && searchInput.length > 0) {
             selected = handleSearch(selected);
         }
+        if (showInStockOnly) {
+            selected = selected.filter((item) => item.presence);
+        }
         dispatch(setSelectedItems(selected));
-    }, [items, selectedGroup, selectedCategory1, selectedCategory2, searchInput, search]);
+    }, [items, selectedGroup, selectedCategory1, selectedCategory2, searchInput, search, showInStockOnly]);
 
     const ref = React.createRef();
 
