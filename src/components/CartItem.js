@@ -72,6 +72,14 @@ const RetailPrice = styled.div({
     borderRadius: "3px",
 });
 
+const ByOrder = styled.div({
+    backgroundColor: "#98c9f1",
+    fontSize: "14px",
+    padding: "0 5px",
+    width: "fit-content",
+    fontWeight: "normal",
+});
+
 function CartItem({ item, priceType }) {
     const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
@@ -98,7 +106,10 @@ function CartItem({ item, priceType }) {
                     <AddRemove item={item} inCart={item} type="small" />
                 </BottomCol>
                 <BottomCol xs={5} sm={6} md={2}>
-                    <RetailPrice>{getPrice(item, priceType)} BYN</RetailPrice>
+                    <RetailPrice>
+                        {getPrice(item, priceType)} BYN
+                        {!item.presence ? <ByOrder>{t("Под заказ")}</ByOrder> : null}
+                    </RetailPrice>
                 </BottomCol>
             </MyRow>
         </CartItemStyled>

@@ -43,13 +43,6 @@ const Prices = styled(Col)`
     max-width: 200px;
 `;
 
-// const MyColAddRemove = styled.div(({ sideBarOpened, mobileScreen }) => {
-//     return {
-//         display: sideBarOpened && mobileScreen ? "none" : "flex",
-//         justifyContent: "center",
-//     };
-// });
-
 const RetailPrice = styled.div({
     //backgroundColor: "#69F0AE",
     fontSize: "18px",
@@ -60,6 +53,12 @@ const RetailPrice = styled.div({
 
 const Tip = styled.div({
     fontSize: "12px",
+});
+
+const ByOrder = styled.div({
+    backgroundColor: "#98c9f1",
+    fontSize: "14px",
+    padding: "0 5px",
 });
 
 function Card({ item }) {
@@ -156,6 +155,7 @@ function Card({ item }) {
                             <Tip>{t("Цена без НДС")}</Tip>
                         </div>
                     ) : null}
+                    {!item.presence ? <ByOrder>{t("Под заказ")}</ByOrder> : null}
                 </Prices>
                 {sideBarOpened && mobileScreen ? null : (
                     <Col xs="auto">
