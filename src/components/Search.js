@@ -45,7 +45,7 @@ const CloseButton = styled.div({
 
 //"ru", "zh", "en",
 
-//?name=皂液器%20Loktevoy%20130205&lang=zh
+//https://bortik-project.herokuapp.com/?name=%E7%9A%82%E6%B6%B2%E5%99%A8%20Loktevoy%20130205&lang=zh
 
 function Search({ show }) {
     const { t, i18n } = useTranslation();
