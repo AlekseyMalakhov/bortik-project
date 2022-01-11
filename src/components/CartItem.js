@@ -75,18 +75,16 @@ const RetailPrice = styled.div({
 function CartItem({ item, priceType }) {
     const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
-    const [selected, setSelected] = useState(true);
 
     const handleSelect = (e) => {
-        setSelected(e.target.checked);
         dispatch(makeSelected({ item, selected: e.target.checked }));
     };
 
     return (
         <CartItemStyled>
-            <MyRow style={!selected ? { opacity: 0.4 } : null}>
+            <MyRow style={!item.selected ? { opacity: 0.4 } : null}>
                 <CheckDesktop>
-                    <Form.Check type="checkbox" checked={selected} onChange={handleSelect} style={{ width: "20px" }} />
+                    <Form.Check type="checkbox" checked={item.selected} onChange={handleSelect} style={{ width: "20px" }} />
                 </CheckDesktop>
                 {item.img ? (
                     <ImageDesktop>
