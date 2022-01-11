@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Form from "react-bootstrap/Form";
-import { useDispatch } from "react-redux";
-import { setSearchInput, setSearch } from "../store/manage";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchInput, setSearch, changeSideBarOpened } from "../store/manage";
 import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -50,6 +50,7 @@ const CloseButton = styled.div({
 function Search({ show }) {
     const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
+    const mobileScreen = useSelector((state) => state.manage.mobileScreen);
     const [searchParams, setSearchParams] = useSearchParams();
     const [focus, setFocus] = useState(false);
     const [value, setValue] = useState("");
@@ -63,8 +64,13 @@ function Search({ show }) {
             dispatch(setSearch(true));
             setValue(name);
             dispatch(setSearchInput([name]));
+            if (mobileScreen) {
+                dispatch(changeSideBarOpened(false));
+            } else {
+                dispatch(changeSideBarOpened(true));
+            }
         }
-    }, [name, lang]);
+    }, [name, lang, mobileScreen]);
 
     const handleInput = (e) => {
         setValue(e.target.value);
