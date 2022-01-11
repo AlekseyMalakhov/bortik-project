@@ -12,6 +12,7 @@ import { setUser, cleanHistory } from "../store/manage";
 import SearchButton from "./SearchButton";
 import SelectLang from "./SelectLang";
 import { useTranslation } from "react-i18next";
+import Form from "react-bootstrap/Form";
 
 const HeaderStyled = styled.div({
     display: "flex",
@@ -31,6 +32,10 @@ const BrandName = styled.div({
     color: "white",
     fontSize: "20px",
     cursor: "pointer",
+});
+
+const Check = styled(Form.Check)({
+    width: "100%",
 });
 
 function Header() {
@@ -58,7 +63,7 @@ function Header() {
                 {search ? null : <SearchButton />}
                 <Dropdown align="end">
                     <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
-                    <Dropdown.Menu>
+                    <Dropdown.Menu style={{ width: "230px" }}>
                         {location.pathname !== "/" ? <Dropdown.Item onClick={() => navigate("/")}>{t("На главную")}</Dropdown.Item> : null}
                         <Dropdown.Item onClick={() => navigate("/about")}>{t("О компании")}</Dropdown.Item>
                         <Dropdown.Divider />
@@ -76,6 +81,14 @@ function Header() {
                             </React.Fragment>
                         )}
                         <SelectLang />
+                        <Dropdown.Item style={{ whiteSpace: "normal" }}>
+                            <Check
+                                type="checkbox"
+                                checked={true}
+                                onChange={() => console.log("hi")}
+                                label={t("Показывать только товары в наличии")}
+                            />
+                        </Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             </RightCornerPanel>
