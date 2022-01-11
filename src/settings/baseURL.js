@@ -1,6 +1,6 @@
 const settings = {
-    //dev: "http://localhost:3010/api",
-    dev: "http://192.168.100.242:3010/api",
+    dev: "http://localhost:3010/api",
+    //dev: "http://192.168.100.242:3010/api",
     //dev: "http://192.168.100.7:3010/api",
     demo: "https://bortik-project.herokuapp.com/api",
     prod: "https://bortik-project.herokuapp.com/api",
