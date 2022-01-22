@@ -100,6 +100,22 @@ function createItemsData(workbook) {
                 item.category1 = "not found";
                 item.group = "not found";
             }
+
+            //handle units
+            if (item.unit === "тыс. шт/1000 шт") {
+                const regex = /(\d+)\sшт/;
+                const found = item.title.ru.match(regex);
+                if (found && found[1]) {
+                    //console.log(item.title.ru + " штуки штуки");
+                    //console.log(found[1]);
+                    const newPrice = (item.priceExcVAT / 1000) * found[1];
+                    item.priceExcVAT = Math.ceil((newPrice + Number.EPSILON) * 100) / 100;
+                    item.priceIncVAT = Math.ceil((newPrice * 1.2 + Number.EPSILON) * 100) / 100;
+
+                    //console.log(newPrice);
+                    //console.log(item.priceExcVAT);
+                }
+            }
         }
     }
 
