@@ -1,16 +1,14 @@
-const axios = require("axios");
+import client from "./client";
 
 const loadChat = () => {
-    return axios
-        .get("http://code.tidio.co/7qifmqgpl3o6vnpck6uawogjsbjrhsot.js", {
-            proxy: {
-                host: "localhost",
-                port: 5000,
-            },
-        })
+    return client
+        .post("/getChat")
         .then(function (response) {
             // handle success
-            console.log(response);
+            //eval(response.data);
+            const chat = new Function(response.data);
+            chat();
+            //response.data();
         })
         .catch(function (error) {
             // handle error
