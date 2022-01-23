@@ -3,7 +3,6 @@ const getChat = (req, res) => {
     axios
         .get("http://code.tidio.co/7qifmqgpl3o6vnpck6uawogjsbjrhsot.js")
         .then((response) => {
-            console.log(response);
             res.send(response.data);
         })
         .catch((err) => res.status(500).send(err));
