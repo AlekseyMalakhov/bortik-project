@@ -40,6 +40,13 @@ const getFontWeight = (selectedLang, code) => {
 
 function SelectLang() {
     const { t, i18n } = useTranslation();
+
+    const changeLang = (lang) => {
+        i18n.changeLanguage(lang);
+        console.log(lang);
+        document.tidioChatLang = lang;
+        console.log(document.tidioChatLang);
+    };
     return (
         <MyDropdown align="end" drop="down">
             <Dropdown.Toggle as={SelectLangText} id="select-lang" />
@@ -47,7 +54,7 @@ function SelectLang() {
                 {langs.map((lang) => (
                     <Dropdown.Item
                         key={lang.code}
-                        onClick={() => i18n.changeLanguage(lang.code)}
+                        onClick={() => changeLang(lang.code)}
                         style={{ fontWeight: getFontWeight(i18n.resolvedLanguage, lang.code) }}
                     >
                         {lang.name}
