@@ -44,14 +44,14 @@ function SelectLang() {
     const changeLang = (lang) => {
         i18n.changeLanguage(lang);
         document.tidioChatLang = lang;
-        const chat = document.getElementById("chatCode");
-        if (chat) {
-            chat.remove();
-        }
-        const script = document.createElement("script");
-        script.setAttribute("src", "//code.tidio.co/7qifmqgpl3o6vnpck6uawogjsbjrhsot.js");
-        script.setAttribute("id", "chatCode");
-        document.head.appendChild(script);
+        // const chat = document.getElementById("chatCode");
+        // if (chat) {
+        //     chat.remove();
+        // }
+        // const script = document.createElement("script");
+        // script.setAttribute("src", "//code.tidio.co/7qifmqgpl3o6vnpck6uawogjsbjrhsot.js");
+        // script.setAttribute("id", "chatCode");
+        // document.head.appendChild(script);
     };
     return (
         <MyDropdown align="end" drop="down">
