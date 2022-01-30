@@ -2,17 +2,27 @@ const transporter = require("./nodeMailerClient");
 const createAccountAuto = require("../db/createAccountAuto");
 const createOrder = require("../db/createOrder");
 const createLetterForClient = require("./createLetterForClient");
+const createLetterForManager = require("./createLetterForManager");
 
-async function run(htmlForClient, email, orderID) {
+async function run(htmlForClient, htmlForManager, email, orderID) {
     let info = await transporter.sendMail({
-        from: '"Bortik Project" <cart@bortikproject.com>',
+        from: '"5A.com" <cart@5A.com>',
         to: email,
-        subject: "Bortik Project. Заказ №" + orderID,
-        text: "Заказ в магазине Bortik Project успешно оформлен. Номер заказа 12345",
+        subject: "5A.com. Заказ №" + orderID,
+        text: "Заказ в магазине 5A.com успешно оформлен. Номер заказа " + orderID,
         html: htmlForClient,
     });
-
     console.log(info);
+
+    let info2 = await transporter.sendMail({
+        from: '"5A.com" <cart@5A.com>',
+        //to: "anton@focusqc.com",
+        to: "hexel@tut.by",
+        subject: "Заказ №" + orderID,
+        text: "Заказ №" + orderID,
+        html: htmlForManager,
+    });
+    console.log(info2);
 }
 
 const sendCart = async (req, res) => {
@@ -30,7 +40,8 @@ const sendCart = async (req, res) => {
     }
     const orderID = await createOrder(req, res, userID);
     const htmlForClient = createLetterForClient(data, newUser, orderID);
-    run(htmlForClient, data.customer.email, orderID)
+    const htmlForManager = createLetterForManager(data, newUser, orderID);
+    run(htmlForClient, htmlForManager, data.customer.email, orderID)
         .then(() => {
             res.status(200).send({ orderID });
         })
