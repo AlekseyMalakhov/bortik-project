@@ -8,7 +8,7 @@ const createRows = (cart) => {
             <td style="border: 1px solid black; padding: 5px 5px;">${cart[i].article}</td>
             <td style="border: 1px solid black; padding: 5px 5px;">${cart[i].title}</td>
             <td style="border: 1px solid black; padding: 5px 5px;">${cart[i].number}</td>
-            <td style="border: 1px solid black; padding: 5px 5px;">${cart[i].price}</td>
+            <td style="border: 1px solid black; padding: 5px 5px;">${cart[i].priceForManager}</td>
         </tr>
         `;
         str = str + row;

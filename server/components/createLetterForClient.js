@@ -18,7 +18,7 @@ const createRows = (cart) => {
 
 const createLetterForClient = (data, newUser, orderId) => {
     const part1 = `<p>Благодарим за покупку!</p>
-    <p>Заказ в магазине Bortik Project успешно оформлен. Номер заказа ${orderId}</p>
+    <p>Заказ в магазине 5A.com успешно оформлен. Номер заказа ${orderId}</p>
     <table style="font-family: sans-serif; width: 100%; border-collapse: collapse;">
     <tr>
         <th style="border: 1px solid black; padding: 5px 5px;">Номер</th>
@@ -54,7 +54,7 @@ const createLetterForClient = (data, newUser, orderId) => {
         <br>
         <br>
         <div>С уважением,</div>
-        <div>Служба поддержки Bortik Project</div>`;
+        <div>Служба поддержки 5A.com</div>`;
     const htmlStr = part1 + part2 + part3 + part4 + part5;
     return htmlStr;
 };

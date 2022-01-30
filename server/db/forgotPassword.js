@@ -3,9 +3,9 @@ const transporter = require("../components/nodeMailerClient");
 
 const sendForgottenPassword = async (email, password) => {
     let info = await transporter.sendMail({
-        from: '"Bortik Project" <cart@bortikproject.com>',
+        from: '"5A.com" <cart@bortikproject.com>',
         to: email,
-        subject: "Bortik Project. Восстановление пароля.",
+        subject: "5A.com. Восстановление пароля.",
         text: "Ваш пароль успешно восстановлен",
         html: `
         <div>Пароль успешно восстановлен!</div>
@@ -13,7 +13,7 @@ const sendForgottenPassword = async (email, password) => {
         <br>
         <br>
         <div>С уважением,</div>
-        <div>Служба поддержки Bortik Project</div>
+        <div>Служба поддержки 5A.com</div>
         `,
     });
     console.log(info);

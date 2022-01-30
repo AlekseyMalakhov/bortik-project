@@ -81,6 +81,7 @@ function createItemsData(workbook) {
                     img: data[`F${number}`] ? "https://smartikon.by/uploads/" + data[`F${number}`].v : "",
                     priceExcVAT: price,
                     priceIncVAT: Math.round((price * 1.2 + Number.EPSILON) * 100) / 100,
+                    priceForManager: price,
                     discount: data[`J${number}`] ? data[`J${number}`].v : null,
                     selected: true,
                 };
