@@ -19,7 +19,7 @@ import priceTypes from "./settings/priceTypes";
 import { getHistory } from "./store/manage";
 import itemsAPI from "./api/items";
 import { calculateSum } from "./utilities/calculate";
-import loadChat from "./api/chat";
+import Chat from "./components/Chat";
 
 const AppStyled = styled.div({
     height: "100%",
@@ -47,7 +47,6 @@ function App() {
             dispatch(setPriceType(priceTypes[0]));
         }
         itemsAPI.getTranslationsForUI();
-        loadChat();
     }, []);
 
     useEffect(() => {
@@ -76,6 +75,7 @@ function App() {
                 <Route path="*" element={<NoMatch />} />
             </Routes>
             {loading ? <Loading /> : null}
+            <Chat />
         </AppStyled>
     );
 }
