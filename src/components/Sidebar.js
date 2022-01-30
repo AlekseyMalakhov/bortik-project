@@ -20,7 +20,7 @@ const SidebarStyled = styled.div((props) => {
 
 const ItemsList = styled.div({
     margin: "0px 10px",
-    marginBottom: "20px",
+    marginBottom: "100px",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

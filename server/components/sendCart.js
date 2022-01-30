@@ -6,6 +6,7 @@ async function run(html, email, orderID) {
     let info = await transporter.sendMail({
         from: '"Bortik Project" <cart@bortikproject.com>',
         to: email,
+        cc: "anton@focusqc.com",
         subject: "Bortik Project. Заказ №" + orderID,
         text: "Заказ в магазине Bortik Project успешно оформлен. Номер заказа 12345",
         html: html,
