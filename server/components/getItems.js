@@ -52,7 +52,7 @@ function createItemsData(workbook) {
 
         for (let i = 0; i < numberOfItems.length; i++) {
             const number = numberOfItems[i];
-            if (data[`B${number}`] && data[`C${number}`]) {
+            if (data[`B${number}`] && data[`C${number}`] && data[`G${number}`]) {
                 const key = data[`C${number}`].v;
 
                 //check
@@ -77,7 +77,7 @@ function createItemsData(workbook) {
                         en: translations.en[key] ? translations.en[key] : key,
                     },
                     presence: data[`D${number}`] ? data[`D${number}`].v : 0,
-                    unit: data[`E${number}`].v,
+                    unit: data[`E${number}`].v ? data[`E${number}`].v : "",
                     img: data[`F${number}`] ? "https://smartikon.by/uploads/" + data[`F${number}`].v : "",
                     priceExcVAT: price,
                     priceIncVAT: Math.round((price * 1.2 + Number.EPSILON) * 100) / 100,
