@@ -71,7 +71,7 @@ function Header() {
     return (
         <HeaderStyled>
             {location.pathname === "/" ? <MenuButton /> : <HeaderBackButton />}
-            {mobileScreen && search ? null : <BrandName onClick={() => navigate("/")}>5A.com</BrandName>}
+            {mobileScreen && search ? null : <BrandName onClick={() => navigate("/")}>5A.com test 1</BrandName>}
             <Search show={search && location.pathname === "/"} />
             <RightCornerPanel>
                 {search ? null : <SearchButton />}
