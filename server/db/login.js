@@ -1,4 +1,5 @@
 const pool = require("./pool");
+const bcrypt = require("bcrypt");
 
 const login = async (req, res) => {
     const { email, password } = req.body;
@@ -9,19 +10,25 @@ const login = async (req, res) => {
     try {
         const response1 = await pool.query(query1);
         const user = response1.rows[0];
-        if (!user || user.password !== password) {
+        if (user) {
+            bcrypt.compare(password, user.password, function (err, result) {
+                if (!result) {
+                    return res.status(401).send("Invalid email or password.");
+                }
+                const sendUser = { ...user };
+                if (user.address) {
+                    sendUser.address = JSON.parse(user.address);
+                }
+                delete sendUser.password;
+                // const accessToken = jwt.sign(sendUser, accessTokenSecret, { expiresIn: "1m" });
+                // const refreshToken = jwt.sign(sendUser, refreshTokenSecret, { expiresIn: "100m" });
+                // const tokens = { accessToken, refreshToken };
+                // res.status(200).send(tokens);
+                res.status(200).send(sendUser);
+            });
+        } else {
             return res.status(401).send("Invalid email or password.");
         }
-        const sendUser = { ...user };
-        if (user.address) {
-            sendUser.address = JSON.parse(user.address);
-        }
-        delete sendUser.password;
-        // const accessToken = jwt.sign(sendUser, accessTokenSecret, { expiresIn: "1m" });
-        // const refreshToken = jwt.sign(sendUser, refreshTokenSecret, { expiresIn: "100m" });
-        // const tokens = { accessToken, refreshToken };
-        // res.status(200).send(tokens);
-        res.status(200).send(sendUser);
     } catch (error) {
         res.status(500).send(error.stack);
         console.log(error.stack);
