@@ -1,5 +1,7 @@
 const pool = require("./pool");
 const transporter = require("../components/nodeMailerClient");
+const generator = require("generate-password");
+const bcrypt = require("bcrypt");
 
 const sendForgottenPassword = async (email, password) => {
     let info = await transporter.sendMail({
@@ -21,15 +23,21 @@ const sendForgottenPassword = async (email, password) => {
 
 const forgotPassword = async (req, res) => {
     const { email } = req.body;
+    const randomPassword = generator.generate({
+        length: 10,
+        numbers: true,
+    });
+    const hash = await bcrypt.hash(randomPassword, 10);
     const query1 = {
-        text: "SELECT password FROM users WHERE email = $1",
-        values: [email],
+        text: "UPDATE users SET password = ($1) WHERE email = ($2) RETURNING id",
+        values: [hash, email],
     };
+
     try {
         const response1 = await pool.query(query1);
         const passwordObj = response1.rows[0];
         if (passwordObj) {
-            sendForgottenPassword(email, passwordObj.password)
+            sendForgottenPassword(email, randomPassword)
                 .then(() => {
                     res.status(200).send("Mail sent");
                 })

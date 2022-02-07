@@ -22,7 +22,7 @@ const createAccountAuto = async (req, res) => {
                 ];
                 addressArr = JSON.stringify(addressObj);
             }
-            var randomPassword = generator.generate({
+            const randomPassword = generator.generate({
                 length: 10,
                 numbers: true,
             });
