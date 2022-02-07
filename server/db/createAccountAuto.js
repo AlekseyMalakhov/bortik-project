@@ -1,4 +1,5 @@
 const pool = require("./pool");
+const bcrypt = require("bcrypt");
 
 const createAccountAuto = async (req, res) => {
     const { name, email, phone, address } = req.body.customer;
@@ -20,9 +21,10 @@ const createAccountAuto = async (req, res) => {
                 ];
                 addressArr = JSON.stringify(addressObj);
             }
+            const hash = await bcrypt.hash("12345", 10);
             const query2 = {
                 text: "INSERT INTO users (name, email, password, phone, address) VALUES($1, $2, $3, $4, $5) RETURNING *",
-                values: [name, email, "12345", phone, addressArr],
+                values: [name, email, hash, phone, addressArr],
             };
             const response2 = await pool.query(query2);
             const newUser = response2.rows[0];
