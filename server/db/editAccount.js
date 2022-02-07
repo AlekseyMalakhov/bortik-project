@@ -19,9 +19,10 @@ const editAccount = async (req, res) => {
 
         let query;
         if (newPassword) {
+            const hash = await bcrypt.hash(newPassword, 10);
             query = {
                 text: "UPDATE users SET name = ($1), email = ($2), phone = ($3), address = ($4), password = ($6) WHERE id = ($5) RETURNING id",
-                values: [name, email, phone, address, id, newPassword],
+                values: [name, email, phone, address, id, hash],
             };
         } else {
             query = {
