@@ -21,6 +21,7 @@ import itemsAPI from "./api/items";
 import { calculateSum } from "./utilities/calculate";
 
 const AppStyled = styled.div({
+    background: "#F5F5F6",
     height: "100%",
 });
 

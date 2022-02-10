@@ -9,8 +9,9 @@ import AskRemoveItemFromCart from "./AskRemoveItemFromCart";
 const AddRemoveStyled = styled.div({
     display: "flex",
     justifyContent: "center",
-    margin: "10px 10px",
+    margin: "0px 0px",
     width: "162px",
+    alignItems: "center",
 });
 
 const MyInput = styled(Form.Control)(({ type }) => {
@@ -18,12 +19,16 @@ const MyInput = styled(Form.Control)(({ type }) => {
         return {
             width: "70px",
             margin: "auto 10px",
-            padding: "0.1rem 0.75rem",
+            padding: "0.1rem",
+            textAlign:"center",
+            padding:"6px 1px 6px 1px"
         };
     }
     return {
         width: "70px",
         margin: "auto 10px",
+        textAlign: "center",
+        padding:"6px 1px 6px 1px"
     };
 });
 

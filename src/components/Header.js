@@ -16,6 +16,7 @@ import Form from "react-bootstrap/Form";
 import { setShowInStockOnly } from "../store/manage";
 
 const HeaderStyled = styled.div({
+    borderRadius: "8px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",

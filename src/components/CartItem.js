@@ -9,45 +9,30 @@ import { getPrice } from "../utilities/calculate";
 import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
 import { makeSelected } from "../store/manage";
+import "../App.css";
 
 const CartItemStyled = styled(Container)`
-    position: relative;
-    background-color: white;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 10px 10px;
-    max-width: 1000px;
+    margin: 4px;
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    display: flex;
     border-radius: 8px;
-`;
+    background-color:#f5f5f6;
+    flex-direction: row;
 
-const MyRow = styled(Row)`
-    position: relative;
-    justify-content: space-evenly;
-    align-items: center;
 `;
 
 const BottomCol = styled(Col)({
+    fontSize:"13px",
     display: "flex",
     justifyContent: "center",
-    "@media screen and (max-width: 768px)": {
-        marginTop: "20px",
-    },
+    color: "crimson",
+   
 });
 
-const CheckDesktop = styled.div({
-    width: "20px",
-    padding: "0 0",
-    marginLeft: "20px",
-    "& input.form-check-input:checked": {
-        backgroundColor: "#54cc91",
-        borderColor: "#54cc91",
-    },
-    "@media screen and (max-width: 350px)": {
-        position: "absolute",
-        top: 0,
-        left: 0,
-    },
-});
+
 
 const ImageDesktop = styled.div({
     display: "flex",
@@ -61,15 +46,22 @@ const MyCol = styled(Col)`
     justify-content: center;
     align-items: center;
     font-size: 14px;
-    padding: 10px 10px;
+    padding: 0px 0px;
     text-align: center;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
 `;
 
 const RetailPrice = styled.div({
-    fontSize: "18px",
+    fontSize: "13px",
     fontWeight: "500",
     padding: "2px 5px",
     borderRadius: "3px",
+    justifyContent:"left",
+    marginLeft:"2px",
 });
 
 const ByOrder = styled.div({
@@ -90,28 +82,42 @@ function CartItem({ item, priceType }) {
 
     return (
         <CartItemStyled>
-            <MyRow style={!item.selected ? { opacity: 0.4 } : null}>
-                <CheckDesktop>
+            <div class="container" style={!item.selected ? { opacity: 0.4, display:"flex" } : {display:"flex"}}>
+           
+            <div class="left">
                     <Form.Check type="checkbox" checked={item.selected} onChange={handleSelect} style={{ width: "20px" }} />
-                </CheckDesktop>
-                {item.img ? (
-                    <ImageDesktop>
-                        <img src={item.img} alt={""} width="80" height="80"></img>
-                    </ImageDesktop>
-                ) : null}
-                <MyCol style={{ fontWeight: "500" }} xs={7} sm={8} md={5}>
+            </div>
+                 <div class="centr">
+                    {item.img ? (
+                        <ImageDesktop>
+                            <img src={item.img} alt={""} width="90" height="90"></img>
+                        </ImageDesktop>
+                    ) : null}
+                </div>
+
+                <div class="right">
+                <MyCol style={{ fontWeight: "500", width:"100%", textAlign:"left",color:"#333333"}}>
                     {item.title[i18n.resolvedLanguage]}
                 </MyCol>
-                <BottomCol xs={7} sm={6} md={3}>
-                    <AddRemove item={item} inCart={item} type="small" />
-                </BottomCol>
-                <BottomCol xs={5} sm={6} md={2}>
-                    <RetailPrice>
+                <div class="right_down">
+                
+                <BottomCol style={{display:"table-column"}}>
+                    <RetailPrice >
                         {getPrice(item, priceType)} BYN
                         {!item.presence ? <ByOrder>{t("Под заказ")}</ByOrder> : null}
                     </RetailPrice>
                 </BottomCol>
-            </MyRow>
+
+                <BottomCol  >
+                    <AddRemove  item={item} inCart={item} type="small" />
+                </BottomCol>
+
+                </div>
+                </div>
+            </div>
+
+            
+            
         </CartItemStyled>
     );
 }

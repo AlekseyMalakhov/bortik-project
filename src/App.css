@@ -1,0 +1,49 @@
+
+
+.container {
+  margin: 4px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-right: 12px;
+  /* display: flex; */
+  border-radius: 8px;
+  background-color:white;
+  align-items: flex-end;
+
+}
+
+
+.centr{
+margin-right: 12px;
+}
+
+.left {
+  margin: 6px;
+align-self: center;
+}
+
+
+
+.right {
+ 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: -webkit-fill-available;
+
+}
+
+.right_down{
+  margin-top: 4px;
+  display: flex;
+  justify-content: space-between;
+flex-flow: row wrap;
+}
+
+.coin{
+  order: 999;
+margin-left: auto;
+}
+.price{
+  color: crimson;
+}

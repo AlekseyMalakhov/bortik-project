@@ -5,6 +5,8 @@ import Main from "../components/Main";
 import CartPanel from "../components/CartPanel";
 
 const MyContainer = styled.div({
+    background: "#f5f5f6",
+    
     position: "absolute",
     top: "50px",
     bottom: "0px",
