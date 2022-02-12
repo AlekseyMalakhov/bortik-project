@@ -9,6 +9,7 @@ import { changeSideBarOpened } from "../store/manage";
 import IconCheck from "./IconCheck";
 import ShowPic from "./ShowPic";
 import { useTranslation } from "react-i18next";
+import itemsAPI from "../api/items";
 
 const CardStyled = styled(Container)`
     position: relative;
@@ -139,13 +140,22 @@ function Card({ item }) {
                         )}
                     </Col>
                 ) : null}
-                <MyCol style={{ fontWeight: "500" }} xs={12} sm={12} md={5}>
+                <MyCol style={{ fontWeight: "500",display:"block",paddingBottom: "0px" }} xs={12} sm={12} md={5}>
+
+                    <div >
                     {item.title[i18n.resolvedLanguage]}
+                    </div>
+                    <div style={{color:"#828282",paddingTop: "10px",fontSize: "small"}}>  
+                    {item.article}
+                    </div>
+
                 </MyCol>
                 <Prices sm={12} md={3}>
                     {priceType === "с НДС" ? (
                         <div>
+                            {/* цнеа в карточках на главной странице */}
                             <RetailPrice>{item.priceIncVAT} BYN</RetailPrice>
+                            
                             <Tip>{t("Цена с НДС")}</Tip>
                         </div>
                     ) : null}
@@ -167,6 +177,10 @@ function Card({ item }) {
             <ShowPic item={showImage} fullscreen={true} onHide={() => setShowImage(false)} />
         </CardStyled>
     );
+
+
+    
 }
+
 
 export default Card;

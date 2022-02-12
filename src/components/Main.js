@@ -52,7 +52,7 @@ function Main() {
 
     const handleSearch = (items) => {
         const result = items.filter((item) => {
-            const name = item.title[i18n.resolvedLanguage].toLowerCase();
+            const name = item.title[i18n.resolvedLanguage].toLowerCase()+item.article;
             return searchInput.every((word) => {
                 const regex = new RegExp(word, "gmiu");
                 return regex.test(name);

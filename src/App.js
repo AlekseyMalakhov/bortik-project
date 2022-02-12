@@ -73,6 +73,7 @@ function App() {
                 <Route path="/forgot_password" element={<ForgotPassword />} />
                 <Route path="/edit_account" element={<EditAccount />} />
                 <Route path="*" element={<NoMatch />} />
+                
             </Routes>
             {loading ? <Loading /> : null}
         </AppStyled>
