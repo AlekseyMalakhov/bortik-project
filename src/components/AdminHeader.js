@@ -25,6 +25,8 @@ const BrandName = styled.div({
     color: "white",
     fontSize: "20px",
     cursor: "pointer",
+    width: "100%",
+    textAlign: "center",
 });
 
 function AdminHeader() {

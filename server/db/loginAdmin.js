@@ -3,6 +3,11 @@ const bcrypt = require("bcrypt");
 
 const loginAdmin = async (req, res) => {
     const { email, password } = req.body;
+
+    // bcrypt.hash(password, 10, async function (err, hash) {
+    //     console.log(hash);
+    // });
+
     const query1 = {
         text: "SELECT * FROM admins WHERE email = $1",
         values: [email],
