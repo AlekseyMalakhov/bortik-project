@@ -10,6 +10,7 @@ const loginAdmin = require("./db/loginAdmin");
 const forgotPassword = require("./db/forgotPassword");
 const getHistory = require("./db/getHistory");
 const addAddress = require("./db/addAddress");
+const getAdminOrders = require("./db/getAdminOrders");
 const app = express();
 const port = process.env.PORT || 3010;
 const cors = require("cors");
@@ -35,6 +36,7 @@ app.post("/api/forgotPassword", forgotPassword);
 app.post("/api/getHistory", getHistory);
 app.post("/api/getTranslationsForUI", getTranslationsForUI);
 app.put("/api/addAddress/:id", addAddress);
+app.post("/api/getAdminOrders", getAdminOrders);
 
 // Error handler
 app.use(function (err, req, res, next) {

@@ -9,8 +9,18 @@ const loginAdmin = (data) => {
         .catch((error) => error.response);
 };
 
+const getOrders = () => {
+    return client
+        .post("/getAdminOrders")
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => error.response);
+};
+
 const adminAPI = {
     loginAdmin,
+    getOrders,
 };
 
 export default adminAPI;

@@ -13,8 +13,8 @@ const EmptyCart = styled.div({
     fontWeight: "500",
 });
 
-function AdminOrdersTable({ cart }) {
-    if (cart.length > 0) {
+function AdminOrdersTable({ orders }) {
+    if (orders.length > 0) {
         return (
             <AdminOrdersTableStyled>
                 <Table striped bordered hover>
@@ -26,7 +26,7 @@ function AdminOrdersTable({ cart }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {cart.map((item) => (
+                        {orders.map((item) => (
                             <AdminTableRow item={item} key={item.id} />
                         ))}
                     </tbody>
@@ -34,7 +34,7 @@ function AdminOrdersTable({ cart }) {
             </AdminOrdersTableStyled>
         );
     }
-    return <EmptyCart>Корзина пуста</EmptyCart>;
+    return <EmptyCart>Нет заказов</EmptyCart>;
 }
 
 export default AdminOrdersTable;
