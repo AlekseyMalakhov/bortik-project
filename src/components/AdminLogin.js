@@ -8,8 +8,8 @@ import FormInput from "../components/FormInput";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../store/manage";
-import userAPI from "../api/user";
-import { setUser } from "../store/manage";
+import adminAPI from "../api/admin";
+import { setAdmin } from "../store/manage";
 
 const LoginStyled = styled.div({
     margin: "10px 20px",
@@ -49,13 +49,14 @@ function AdminLogin() {
     const handleSubmit = (values) => {
         setError("");
         dispatch(setLoading(true));
-        userAPI
-            .login(values)
+        adminAPI
+            .loginAdmin(values)
             .then((response) => {
                 dispatch(setLoading(false));
+                console.log(response);
                 if (response.status === 200) {
-                    dispatch(setUser(response.data));
-                    localStorage.setAdmin("admin", JSON.stringify(response.data));
+                    dispatch(setAdmin(response.data));
+                    localStorage.setItem("admin", JSON.stringify(response.data));
                 } else if (response.status === 401) {
                     setError("Неверный логин или пароль");
                 } else {
