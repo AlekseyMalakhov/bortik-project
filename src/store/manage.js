@@ -31,6 +31,7 @@ const initialState = {
     search: false,
     searchInput: [],
     user: null,
+    admin: null,
     history: [],
     showInStockOnly: true,
 };
@@ -121,6 +122,9 @@ export const manageSlice = createSlice({
         setUser: (state, action) => {
             state.user = action.payload;
         },
+        setAdmin: (state, action) => {
+            state.admin = action.payload;
+        },
         cleanHistory: (state, action) => {
             state.history = [];
         },
@@ -183,5 +187,6 @@ export const {
     cleanHistory,
     makeSelected,
     setShowInStockOnly,
+    setAdmin,
 } = manageSlice.actions;
 export default manageSlice.reducer;

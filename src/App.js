@@ -19,7 +19,7 @@ import priceTypes from "./settings/priceTypes";
 import { getHistory } from "./store/manage";
 import itemsAPI from "./api/items";
 import { calculateSum } from "./utilities/calculate";
-import AdminLogin from "./views/AdminLogin";
+import Admin from "./views/Admin";
 
 const AppStyled = styled.div({
     height: "100%",
@@ -73,7 +73,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgot_password" element={<ForgotPassword />} />
                 <Route path="/edit_account" element={<EditAccount />} />
-                <Route path="/admin" element={<AdminLogin />} />
+                <Route path="/admin" element={<Admin />} />
                 <Route path="*" element={<NoMatch />} />
             </Routes>
             {loading ? <Loading /> : null}
