@@ -26,8 +26,8 @@ function AdminOrdersTable({ orders }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {orders.map((item) => (
-                            <AdminTableRow item={item} key={item.id} />
+                        {orders.map((order) => (
+                            <AdminTableRow order={order} key={order.id} />
                         ))}
                     </tbody>
                 </Table>

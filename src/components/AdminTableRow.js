@@ -1,12 +1,21 @@
 import React from "react";
 
-function AdminTableRow({ item, priceType }) {
+function AdminTableRow({ order }) {
     return (
-        <tr>
-            <td>{item.title}</td>
-            <td>{item.number}</td>
-            <td>{item.price}</td>
-        </tr>
+        <React.Fragment>
+            <tr>
+                <td colSpan={3} style={{ fontWeight: "bold" }}>
+                    Заказ №{order.id}
+                </td>
+            </tr>
+            {order.items.map((item) => (
+                <tr>
+                    <td>{item.title}</td>
+                    <td>{item.number}</td>
+                    <td>{item.price}</td>
+                </tr>
+            ))}
+        </React.Fragment>
     );
 }
 
