@@ -9,7 +9,7 @@ function AdminTableRow({ order }) {
                 </td>
             </tr>
             {order.items.map((item) => (
-                <tr>
+                <tr key={item.id}>
                     <td>{item.title}</td>
                     <td>{item.number}</td>
                     <td>{item.price}</td>
