@@ -5,9 +5,9 @@ const bcrypt = require("bcrypt");
 
 const sendForgottenPassword = async (email, password) => {
     let info = await transporter.sendMail({
-        from: '"5A.com" <cart@bortikproject.com>',
+        from: '"5a.by" <cart@bortikproject.com>',
         to: email,
-        subject: "5A.com. Восстановление пароля.",
+        subject: "5a.by. Восстановление пароля.",
         text: "Ваш пароль успешно восстановлен",
         html: `
         <div>Пароль успешно восстановлен!</div>
@@ -15,7 +15,7 @@ const sendForgottenPassword = async (email, password) => {
         <br>
         <br>
         <div>С уважением,</div>
-        <div>Служба поддержки 5A.com</div>
+        <div>Служба поддержки 5a.by</div>
         `,
     });
     console.log(info);

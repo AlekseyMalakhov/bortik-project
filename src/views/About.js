@@ -22,7 +22,7 @@ function About() {
             <Title>{t("О компании")}</Title>
             <div>
                 <p>
-                    <span style={{ fontWeight: "500" }}>5A.com</span> - {t("about1")}
+                    <span style={{ fontWeight: "500" }}>5a.by</span> - {t("about1")}
                 </p>
                 <p>{t("about2")}</p>
             </div>

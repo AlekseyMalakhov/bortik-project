@@ -6,16 +6,16 @@ const createLetterForManager = require("./createLetterForManager");
 
 async function run(htmlForClient, htmlForManager, email, orderID) {
     let info = await transporter.sendMail({
-        from: '"5A.com" <cart@5A.com>',
+        from: '"5a.by" <cart@5a.by>',
         to: email,
-        subject: "5A.com. Заказ №" + orderID,
-        text: "Заказ в магазине 5A.com успешно оформлен. Номер заказа " + orderID,
+        subject: "5a.by. Заказ №" + orderID,
+        text: "Заказ в магазине 5a.by успешно оформлен. Номер заказа " + orderID,
         html: htmlForClient,
     });
     console.log(info);
 
     let info2 = await transporter.sendMail({
-        from: '"5A.com" <cart@5A.com>',
+        from: '"5a.by" <cart@5a.by>',
         to: "anton@focusqc.com",
         //to: "hexel@tut.by",
         subject: "Заказ №" + orderID,

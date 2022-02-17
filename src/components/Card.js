@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import AddRemove from "./AddRemove";
-import Container from "react-bootstrap/Container";
+
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,17 +11,28 @@ import ShowPic from "./ShowPic";
 import { useTranslation } from "react-i18next";
 import itemsAPI from "../api/items";
 
-const CardStyled = styled(Container)`
+const CardStyled = styled.div`
+    width: 100%;
     position: relative;
     background-color: white;
     margin: 10px 10px;
     padding: 10px 10px;
     max-width: 1210px;
+    margin: 4px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-right: 12px;
+    /* display: flex; */
+    border-radius: 8px;
+
+  
+    
 `;
 
 const MyRow = styled(Row)`
     justify-content: space-evenly;
     align-items: center;
+    
 `;
 
 const MyCol = styled(Col)`
