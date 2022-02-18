@@ -8,16 +8,22 @@ import { addItemToCart } from "../store/manage";
 import AddHistoryToCartModal from "./AddHistoryToCartModal";
 import { useTranslation } from "react-i18next";
 
-const HistoryTableBlockStyled = styled.div({
-    marginBottom: "20px",
-});
+const HistoryTableBlockStyled = styled.div`
+    border: solid;
+    padding: inherit;
+    background: #f5f5f6;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border-width: thin;
+    border-color: lightgray;
+    padding-bottom: 7px;
+`;
 
-const Divider = styled.div({
-    display: "flex",
-    justifyContent: "center",
-    borderBottom: "1px solid #e9e9e9",
-    paddingBottom: "20px",
-});
+const Divider = styled.div`
+display: flex;
+
+flex-wrap: wrap;
+`;
 
 const createDate = (dateString) => {
     const date = new Date(dateString);
@@ -73,23 +79,31 @@ function HistoryTableBlock({ order }) {
     return (
         <HistoryTableBlockStyled>
             <div style={{ fontWeight: "500" }}>{t("Заказ №") + " " + order.id}</div>
-            <div>
+            
+            <div style={{paddingLeft: "4px"}}>
                 {t("Дата")}: {createDate(Number(order.date))}
             </div>
-            <div>
+            <div style={{paddingLeft: "8px"}}>
                 {t("Тип цены")}: {t(order.price_type)}
             </div>
-
+            <div style={{paddingLeft: "17px"}}>{order.address}</div>
             {order.items.map((item) => (
+                
                 <HistoryTableRow item={item} key={item.id} />
+                
             ))}
-            <div style={{ fontWeight: "500", paddingTop: "10px", paddingBottom: "20px" }}>{t("Общая сумма") + ": " + order.sum + " BYN"}</div>
-
+            
+            
             <Divider>
-                <Button variant="primary" onClick={repeatOrder}>
+            <div style={{ fontWeight: "500",paddingLeft: "10px", paddingTop: "6px"}}>{t("Общая сумма") + ": " + order.sum + " BYN"}</div>
+                <Button variant="primary" style={{marginTop: "4px",marginLeft: "auto",padding: "revert"}} onClick={repeatOrder}>
                     {t("Повторить заказ")}
                 </Button>
             </Divider>
+            
+            
+
+           
             <AddHistoryToCartModal show={showAdded} onHide={() => setShowAdded(false)} notFound={notFound} />
         </HistoryTableBlockStyled>
     );
