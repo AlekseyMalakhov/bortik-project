@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import Dropdown from "react-bootstrap/Dropdown";
 import SelectLangText from "./SelectLangText";
@@ -41,17 +41,30 @@ const getFontWeight = (selectedLang, code) => {
 function SelectLang() {
     const { t, i18n } = useTranslation();
 
+    const loadChat = () => {
+        const tidioScript = document.createElement("script");
+        tidioScript.src = "//code.tidio.co/7qifmqgpl3o6vnpck6uawogjsbjrhsot.js";
+        document.body.appendChild(tidioScript);
+    };
+
+    useEffect(() => {
+        console.log(i18n.resolvedLanguage);
+        document.tidioChatLang = i18n.resolvedLanguage;
+        loadChat();
+    }, []);
+
+    const deleteChat = () => {
+        const chatEl_1 = document.getElementById("tidio-chat-code");
+        chatEl_1.remove();
+        const chatEl_2 = document.getElementById("tidio-chat");
+        chatEl_2.remove();
+    };
+
     const changeLang = (lang) => {
         i18n.changeLanguage(lang);
         document.tidioChatLang = lang;
-        // const chat = document.getElementById("chatCode");
-        // if (chat) {
-        //     chat.remove();
-        // }
-        // const script = document.createElement("script");
-        // script.setAttribute("src", "//code.tidio.co/7qifmqgpl3o6vnpck6uawogjsbjrhsot.js");
-        // script.setAttribute("id", "chatCode");
-        // document.head.appendChild(script);
+        deleteChat();
+        loadChat();
     };
     return (
         <MyDropdown align="end" drop="down">
