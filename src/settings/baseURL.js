@@ -7,14 +7,14 @@ const settings = {
 };
 
 const getBaseURL = () => {
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-        return settings.dev;
-    } else {
-        return settings.demo;
-    }
+    // if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+    //     return settings.dev;
+    // } else {
+    //     return settings.demo;
+    // }
 
     //for production
-    //return settings.prod;
+    return settings.prod;
 };
 
 const baseURL = getBaseURL();
