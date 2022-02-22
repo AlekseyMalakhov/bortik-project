@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import Dropdown from "react-bootstrap/Dropdown";
 import SelectLangText from "./SelectLangText";
 import { useTranslation } from "react-i18next";
+import chatURL from "../settings/chatURL";
 
 const MyDropdown = styled(Dropdown)({
     paddingLeft: "16px",
@@ -43,12 +44,11 @@ function SelectLang() {
 
     const loadChat = () => {
         const tidioScript = document.createElement("script");
-        tidioScript.src = "//code.tidio.co/7qifmqgpl3o6vnpck6uawogjsbjrhsot.js";
+        tidioScript.src = chatURL;
         document.body.appendChild(tidioScript);
     };
 
     useEffect(() => {
-        console.log(i18n.resolvedLanguage);
         document.tidioChatLang = i18n.resolvedLanguage;
         loadChat();
     }, []);
