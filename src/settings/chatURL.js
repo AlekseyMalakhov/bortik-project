@@ -3,14 +3,14 @@ const chatURLsettings = {
     prod: "//code.tidio.co/tmjqgyzl1yjyhsmrbksq2bywlpfdblyp.js",
 };
 const getChatURL = () => {
-    // if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-    //     return chatURLsettings.dev;
-    // } else {
-    //     return chatURLsettings.dev;
-    // }
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+        return chatURLsettings.dev;
+    } else {
+        return chatURLsettings.dev;
+    }
 
     //for production
-    return chatURLsettings.prod;
+    //return chatURLsettings.prod;
 };
 const chatURL = getChatURL();
 

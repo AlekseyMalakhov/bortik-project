@@ -28,10 +28,22 @@
                                   #button .chat-closed {display: none}`;
                     iframe.contentWindow.document.getElementsByTagName("head")[0].appendChild(style);
                 }
+                function onTidioChatClose() {
+                    const iframe = document.getElementById("tidio-chat-iframe");
+                    iframe.style.visibility = "hidden";
+                }
+                function onTidioChatOpen() {
+                    const iframe = document.getElementById("tidio-chat-iframe");
+                    iframe.style.visibility = "visible";
+                }
                 if (window.tidioChatApi) {
                     window.tidioChatApi.on("ready", onTidioChatApiReady);
+                    window.tidioChatApi.on("close", onTidioChatClose);
+                    window.tidioChatApi.on("open", onTidioChatClose);
                 } else {
                     document.addEventListener("tidioChat-ready", onTidioChatApiReady);
+                    document.addEventListener("tidioChat-close", onTidioChatClose);
+                    document.addEventListener("tidioChat-open", onTidioChatOpen);
                 }
             })();
         </script>
