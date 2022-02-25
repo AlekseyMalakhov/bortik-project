@@ -14,11 +14,15 @@ const createOrder = async (req, res, userID) => {
         item.push(cart[i].sum);
         item.push(userID);
         item.push(date);
+        item.push(cart[i].priceForManager);
         arrData.push(item);
     }
 
     try {
-        const sql = format("INSERT INTO sold_items (article, title, number, price, sum, customer_id, date) VALUES %L RETURNING id", arrData);
+        const sql = format(
+            "INSERT INTO sold_items (article, title, number, price, sum, customer_id, date, price_for_manager) VALUES %L RETURNING id",
+            arrData
+        );
         const response = await pool.query(sql);
         if (response.rows.length > 0) {
             const arrOfItemsId = response.rows.map((item) => item.id);

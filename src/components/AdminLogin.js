@@ -78,8 +78,8 @@ function AdminLogin() {
             <Title>{"Панель администратора"}</Title>
             <Formik
                 initialValues={{
-                    email: process.env.NODE_ENV === "development" ? "www1@www.ww" : "",
-                    password: process.env.NODE_ENV === "development" ? "12345" : "",
+                    email: process.env.NODE_ENV === "development" ? "admin@demo.com" : "",
+                    password: process.env.NODE_ENV === "development" ? "admin" : "",
                 }}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}

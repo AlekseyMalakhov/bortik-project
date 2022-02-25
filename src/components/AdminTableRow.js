@@ -10,9 +10,12 @@ function AdminTableRow({ order }) {
             </tr>
             {order.items.map((item) => (
                 <tr key={item.id}>
+                    <td></td>
+                    <td></td>
+                    <td>{item.article}</td>
                     <td>{item.title}</td>
                     <td>{item.number}</td>
-                    <td>{item.price}</td>
+                    <td>{item.price_for_manager}</td>
                 </tr>
             ))}
         </React.Fragment>

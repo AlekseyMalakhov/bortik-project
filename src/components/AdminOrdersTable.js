@@ -20,8 +20,11 @@ function AdminOrdersTable({ orders }) {
                 <Table striped bordered hover>
                     <thead>
                         <tr>
-                            <th>Наименование</th>
-                            <th>Кол.</th>
+                            <th>Штрихкод</th>
+                            <th>Код</th>
+                            <th>Артикул</th>
+                            <th>Номенклатура</th>
+                            <th>Количество</th>
                             <th>Цена</th>
                         </tr>
                     </thead>
