@@ -17,7 +17,7 @@ function AdminOrdersTable({ orders }) {
     if (orders.length > 0) {
         return (
             <AdminOrdersTableStyled>
-                <Table striped bordered hover>
+                <Table bordered>
                     <thead>
                         <tr>
                             <th>Штрихкод</th>
@@ -26,6 +26,7 @@ function AdminOrdersTable({ orders }) {
                             <th>Номенклатура</th>
                             <th>Количество</th>
                             <th>Цена</th>
+                            <th>Действия</th>
                         </tr>
                     </thead>
                     <tbody>
