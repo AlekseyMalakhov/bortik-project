@@ -5,9 +5,20 @@ import AdminEditCartItemModal from "./AdminEditCartItemModal";
 
 function AdminTableRow({ order }) {
     const [showEdit, setShowEdit] = useState(false);
+    const [itemToEdit, setItemToEdit] = useState(null);
 
     const handleSave = () => {
         console.log("saved");
+    };
+
+    const edit = (item) => {
+        setItemToEdit(item);
+        setShowEdit(true);
+    };
+
+    const cancel = () => {
+        setShowEdit(false);
+        setItemToEdit(null);
     };
 
     return (
@@ -38,14 +49,14 @@ function AdminTableRow({ order }) {
                         <Dropdown align="start" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                             <Dropdown.Toggle as={ThreeDotsButtonAdmin} />
                             <Dropdown.Menu style={{ width: "160px" }}>
-                                <Dropdown.Item onClick={() => setShowEdit(true)}>Редактировать</Dropdown.Item>
+                                <Dropdown.Item onClick={() => edit(item)}>Редактировать</Dropdown.Item>
                                 <Dropdown.Item>Удалить</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </td>
                 </tr>
             ))}
-            <AdminEditCartItemModal show={showEdit} onHide={() => setShowEdit(false)} onSave={handleSave} order={order} />
+            <AdminEditCartItemModal show={showEdit} onHide={cancel} onSave={handleSave} order={order} item={itemToEdit} />
         </React.Fragment>
     );
 }
