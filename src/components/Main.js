@@ -6,11 +6,58 @@ import { useSelector, useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import { setSelectedItems } from "../store/manage";
 import { useTranslation } from "react-i18next";
+import { changeAntonAnton } from "../store/manage";
 
-const MainStyled = styled.div(({ sideBarOpened, mobileScreen }) => {
+
+
+
+
+
+
+
+
+
+
+
+const MainStyled = styled.div(({ sideBarOpened, mobileScreen,antonAnton, }) => {
+   
+        
+   
+    console.log(window.screen.width)
+    
+   
+    
+    
+
+    if (antonAnton) {
+        const qwqw =window.screen.width
+          return {
+           
+            display:(qwqw<760)?"-webkit-box":"",
+
+        // display: "flex",
+        // flexDirection: "row",
+       // display: mobileScreen ? "" : "-webkit-box",
+        //display:(window.screen.screen<768)? "-webkit-box":"flex",
+        width: "100%",
+        textAlign: "-webkit-center",  
+        marginBottom: mobileScreen ? "40px" : "80px",
+        overflow: "auto",
+        backgroundColor: colors.lightGreyBackground,
+        padding: "10px 10px",
+        minHeight: "auto",
+        height: "-webkit-fill-available"
+        //  height: "fit-content",
+    };
+    }
+    else
+    
     return {
+      
+        
         display: "flex",
         width: "100%",
+        
         marginBottom: mobileScreen ? "40px" : "80px",
         overflow: "auto",
         overflowX: "hidden",
@@ -35,9 +82,13 @@ const MyButton = styled(Button)`
 `;
 
 function Main() {
+
+
+    
     const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
     const [showNumber, setShowNumber] = useState(20);
+    const antonAnton = useSelector((state) => state.manage.antonAnton);
     const items = useSelector((state) => state.manage.items);
     const selectedItems = useSelector((state) => state.manage.selectedItems);
     const showInStockOnly = useSelector((state) => state.manage.showInStockOnly);
@@ -49,6 +100,18 @@ function Main() {
     const selectedGroup = useSelector((state) => state.manage.selectedGroup);
     const selectedCategory1 = useSelector((state) => state.manage.selectedCategory1);
     const selectedCategory2 = useSelector((state) => state.manage.selectedCategory2);
+    
+
+
+   
+    const antoncheg = () => {
+        if (antonAnton) {
+            dispatch(changeAntonAnton(false));
+        } else {
+            dispatch(changeAntonAnton(true));
+            
+        }
+    };
 
     const handleSearch = (items) => {
         const result = items.filter((item) => {
@@ -63,6 +126,10 @@ function Main() {
     };
 
     useEffect(() => {
+
+
+
+
         let selected = [];
         if (!selectedGroup && !selectedCategory1 && !selectedCategory2) {
             selected = items;
@@ -92,6 +159,9 @@ function Main() {
         if (showInStockOnly) {
             selected = selected.filter((item) => item.presence);
         }
+
+      
+
         dispatch(setSelectedItems(selected));
     }, [items, selectedGroup, selectedCategory1, selectedCategory2, searchInput, search, showInStockOnly]);
 
@@ -104,12 +174,16 @@ function Main() {
         }
     }, [selectedItems, selectedCategory]);
 
+
+
     const showMore = () => {
         setShowNumber(showNumber + 20);
     };
 
     return (
-        <MainStyled sideBarOpened={sideBarOpened} mobileScreen={mobileScreen} ref={ref}>
+     
+        <MainStyled  sideBarOpened={sideBarOpened} mobileScreen={mobileScreen}  antonAnton = {antonAnton} ref={ref}>
+          
             {selectedItems.length > 0 ? (
                 selectedItems.map((item, index) => (index <= showNumber ? <Card item={item} key={item.id} /> : null))
             ) : (

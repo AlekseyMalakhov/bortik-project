@@ -9,7 +9,7 @@ import { getPrice } from "../utilities/calculate";
 import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
 import { makeSelected } from "../store/manage";
-
+import ShowPic from "./ShowPic";
 
 
 
@@ -140,6 +140,9 @@ const ArticleCss = styled.div`
 
 `;
 function CartItem({ item, priceType }) {
+
+    const [showImage, setShowImage] = useState(false);
+
     const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
 
@@ -157,7 +160,7 @@ function CartItem({ item, priceType }) {
                     <Centr>
                         {item.img ? (
                             <ImageDesktop>
-                                <img src={item.img} alt={""} width="90" height="90"></img>
+                                <img src={item.img} alt={""} width="90" height="90" onClick={() => setShowImage(item)}></img  >
                             </ImageDesktop>
                         ) : null}
                     </Centr>
@@ -187,7 +190,7 @@ function CartItem({ item, priceType }) {
             </Acontainer>
 
             
-            
+            <ShowPic item={showImage} fullscreen={true} onHide={() => setShowImage(false)} />
         </CartItemStyled>
     );
 }
