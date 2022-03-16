@@ -18,9 +18,19 @@ const getOrders = () => {
         .catch((error) => error.response);
 };
 
+const editSoldItem = (data, itemId) => {
+    return client
+        .put("/editSoldItem/" + itemId, data)
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => error.response);
+};
+
 const adminAPI = {
     loginAdmin,
     getOrders,
+    editSoldItem,
 };
 
 export default adminAPI;

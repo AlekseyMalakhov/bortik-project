@@ -8,10 +8,6 @@ function AdminTableRow({ order }) {
     const [showEdit, setShowEdit] = useState(false);
     const [itemToEdit, setItemToEdit] = useState(null);
 
-    const handleSave = () => {
-        console.log("saved");
-    };
-
     const edit = (item) => {
         setItemToEdit(item);
         setShowEdit(true);
@@ -58,7 +54,7 @@ function AdminTableRow({ order }) {
                     </td>
                 </tr>
             ))}
-            <AdminEditCartItemModal show={showEdit} onHide={cancel} onSave={handleSave} order={order} item={itemToEdit} />
+            <AdminEditCartItemModal show={showEdit} onHide={cancel} order={order} item={itemToEdit} />
         </React.Fragment>
     );
 }

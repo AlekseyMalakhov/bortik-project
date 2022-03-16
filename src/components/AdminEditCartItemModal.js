@@ -6,6 +6,9 @@ import Button from "react-bootstrap/Button";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import FormInput from "../components/FormInput";
+import adminAPI from "../api/admin";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../store/manage";
 
 const Row1 = styled.div({
     width: "100%",
@@ -21,7 +24,9 @@ const ButtonGroup = styled.div({
     marginBottom: "30px",
 });
 
-function AdminEditCartItemModal({ show, onHide, onSave, order, item, ...otherProps }) {
+function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
+    const dispatch = useDispatch();
+
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("Укажите название товара"),
         article: Yup.string().required("Укажите артикул"),
@@ -32,7 +37,16 @@ function AdminEditCartItemModal({ show, onHide, onSave, order, item, ...otherPro
     });
 
     const handleSubmit = (values) => {
-        console.log(values);
+        adminAPI
+            .editSoldItem(values, item.id)
+            .then((response) => {
+                dispatch(setLoading(false));
+                console.log(response.data);
+            })
+            .catch((err) => {
+                dispatch(setLoading(false));
+                console.log(err);
+            });
     };
 
     return (
