@@ -20,7 +20,7 @@ import { setUser } from "../store/manage";
 const MyContainer = styled.div({
     paddingRight: "10px",
     paddingLeft: "10px",
-    width: "100%",
+    // width: "100%",
     display: "flex",
     justifyContent: "center",
     maxWidth: "1000px",

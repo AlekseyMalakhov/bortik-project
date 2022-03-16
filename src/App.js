@@ -22,6 +22,7 @@ import { calculateSum } from "./utilities/calculate";
 import Admin from "./views/Admin";
 
 const AppStyled = styled.div({
+    background: "#F5F5F6",
     height: "100%",
 });
 
@@ -75,6 +76,7 @@ function App() {
                 <Route path="/edit_account" element={<EditAccount />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="*" element={<NoMatch />} />
+                
             </Routes>
             {loading ? <Loading /> : null}
         </AppStyled>

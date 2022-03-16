@@ -13,7 +13,7 @@ const AccountStyled = styled.div({
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: colors.lightGreyBackground,
-    height: "100vh",
+    
 });
 
 const Title = styled.div({

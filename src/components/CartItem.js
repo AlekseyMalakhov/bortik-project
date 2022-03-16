@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import Container from "react-bootstrap/Container";
+
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import AddRemove from "./AddRemove";
@@ -9,51 +9,93 @@ import { getPrice } from "../utilities/calculate";
 import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
 import { makeSelected } from "../store/manage";
+import ShowPic from "./ShowPic";
 
-const CartItemStyled = styled(Container)`
-    position: relative;
-    background-color: white;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 10px 10px;
-    max-width: 1000px;
+
+
+
+
+
+const CartItemStyled = styled.div`
+    margin: 4px;
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    display: flex;
     border-radius: 8px;
+    background-color:#f5f5f6;
+    flex-direction: row;
+
 `;
 
-const MyRow = styled(Row)`
-    position: relative;
-    justify-content: space-evenly;
-    align-items: center;
-`;
+
+const Acontainer =styled.div `
+    width:100%;
+    margin: 4px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-right: 12px;
+    border-radius: 8px;
+    background-color:white;
+    align-items: flex-end;
+  
+  `;
+  
 
 const BottomCol = styled(Col)({
+    fontSize:"13px",
     display: "flex",
-    justifyContent: "center",
-    "@media screen and (max-width: 768px)": {
-        marginTop: "20px",
-    },
+    justifyContent: "flex-end",
+    color: "crimson",
+   
 });
 
-const CheckDesktop = styled.div({
-    width: "20px",
-    padding: "0 0",
-    marginLeft: "20px",
-    "& input.form-check-input:checked": {
-        backgroundColor: "#54cc91",
-        borderColor: "#54cc91",
-    },
-    "@media screen and (max-width: 350px)": {
-        position: "absolute",
-        top: 0,
-        left: 0,
-    },
-});
+
+
+const Centr= styled.div`
+    margin: auto;
+    margin-right: 12px;
+    `
+    
+const Left=styled.div`
+      margin: 6px;
+    align-self: center;
+    `
+
+const Right = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: -webkit-fill-available;
+`;
+
+const RightDown = styled.div`
+margin-top: 4px;
+display: flex;
+justify-content: space-between;
+flex-flow: row wrap;
+align-items: baseline;
+
+`;
+
+
+// const Coin = styled.div`{
+//     order: 999;
+//   margin-left: auto;
+//   `;
+
+// const Price = styled.div`
+//     color: crimson;
+//   `;
 
 const ImageDesktop = styled.div({
     display: "flex",
     justifyContent: "center",
     width: "90px",
     padding: "0 0",
+
+    
 });
 
 const MyCol = styled(Col)`
@@ -61,15 +103,24 @@ const MyCol = styled(Col)`
     justify-content: center;
     align-items: center;
     font-size: 14px;
-    padding: 10px 10px;
+    padding: 0px 0px;
     text-align: center;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    
+
 `;
 
 const RetailPrice = styled.div({
-    fontSize: "18px",
+    fontSize: "13px",
     fontWeight: "500",
     padding: "2px 5px",
     borderRadius: "3px",
+    justifyContent:"left",
+    marginLeft:"2px",
+    background:"white",
 });
 
 const ByOrder = styled.div({
@@ -80,7 +131,18 @@ const ByOrder = styled.div({
     fontWeight: "normal",
 });
 
+const ArticleCss = styled.div`
+    padding-left: 8px;
+    color: rgb(130, 130, 130);
+    font-weight: 500;
+    font-size: small;
+    
+
+`;
 function CartItem({ item, priceType }) {
+
+    const [showImage, setShowImage] = useState(false);
+
     const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
 
@@ -90,28 +152,45 @@ function CartItem({ item, priceType }) {
 
     return (
         <CartItemStyled>
-            <MyRow style={!item.selected ? { opacity: 0.4 } : null}>
-                <CheckDesktop>
-                    <Form.Check type="checkbox" checked={item.selected} onChange={handleSelect} style={{ width: "20px" }} />
-                </CheckDesktop>
-                {item.img ? (
-                    <ImageDesktop>
-                        <img src={item.img} alt={""} width="80" height="80"></img>
-                    </ImageDesktop>
-                ) : null}
-                <MyCol style={{ fontWeight: "500" }} xs={7} sm={8} md={5}>
-                    {item.title[i18n.resolvedLanguage]}
+            <Acontainer style={!item.selected ? { opacity: 0.4, display:"flex" } : {display:"flex"}}>
+           
+                <Left>
+                        <Form.Check type="checkbox" checked={item.selected} onChange={handleSelect} style={{ width: "20px" }} />
+                </Left>
+                    <Centr>
+                        {item.img ? (
+                            <ImageDesktop>
+                                <img src={item.img} alt={""} width="90" height="90" onClick={() => setShowImage(item)}></img  >
+                            </ImageDesktop>
+                        ) : null}
+                    </Centr>
+
+                <Right>
+                <MyCol style={{ fontWeight: "500", width:"100%", textAlign:"left",color:"#333333"}}>
+                   <div>{item.title[i18n.resolvedLanguage]}</div> 
                 </MyCol>
-                <BottomCol xs={7} sm={6} md={3}>
-                    <AddRemove item={item} inCart={item} type="small" />
-                </BottomCol>
-                <BottomCol xs={5} sm={6} md={2}>
-                    <RetailPrice>
-                        {getPrice(item, priceType)} BYN
-                        {!item.presence ? <ByOrder>{t("Под заказ")}</ByOrder> : null}
-                    </RetailPrice>
-                </BottomCol>
-            </MyRow>
+                <ArticleCss>{item.article}</ArticleCss> 
+                    <RightDown>
+                    
+                    <BottomCol style={{display:"table-column"}}>
+                        <RetailPrice >
+                            
+                            {getPrice(item, priceType)} BYN
+                            {!item.presence ? <ByOrder>{t("Под заказ")}</ByOrder> : null}
+                            
+                        </RetailPrice>
+                    </BottomCol>
+
+                    <BottomCol  >
+                        <AddRemove  item={item} inCart={item} type="small" />
+                    </BottomCol>
+
+                    </RightDown>
+                </Right>
+            </Acontainer>
+
+            
+            <ShowPic item={showImage} fullscreen={true} onHide={() => setShowImage(false)} />
         </CartItemStyled>
     );
 }

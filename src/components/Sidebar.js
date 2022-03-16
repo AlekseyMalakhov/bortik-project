@@ -9,6 +9,7 @@ import { changeSideBarOpened } from "../store/manage";
 const SidebarStyled = styled.div((props) => {
     return {
         backgroundColor: colors.greyBackground,
+        borderRadius:"8px",
         width: "170px",
         minWidth: "170px",
         marginLeft: props.sideBarOpened ? "0px" : "-170px",

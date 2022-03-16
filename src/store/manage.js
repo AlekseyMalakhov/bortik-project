@@ -13,6 +13,8 @@ export const getHistory = createAsyncThunk("manage/getHistory", async (userID) =
     return response;
 });
 
+
+// инитиализация состояния
 const initialState = {
     sideBarOpened: true,
     sideBarShowType: "groups",
@@ -34,12 +36,16 @@ const initialState = {
     admin: null,
     history: [],
     showInStockOnly: true,
+    antonAnton: false,
 };
 
 export const manageSlice = createSlice({
     name: "manage",
     initialState,
     reducers: {
+        changeAntonAnton: (state, action) => {
+            state.antonAnton = action.payload;
+        },
         changeSideBarOpened: (state, action) => {
             state.sideBarOpened = action.payload;
         },
@@ -167,6 +173,7 @@ export const manageSlice = createSlice({
 });
 
 export const {
+    changeAntonAnton,
     changeSideBarOpened,
     changeSideBarShowType,
     setScreenWidth,

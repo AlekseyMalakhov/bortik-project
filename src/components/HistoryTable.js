@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import HistoryTableBlock from "./HistoryTableBlock";
 
 const HistoryTableStyled = styled.div({
-    width: "100%",
+     width: "100%",
     maxWidth: "1000px",
     paddingLeft: "10px",
     paddingRight: "10px",

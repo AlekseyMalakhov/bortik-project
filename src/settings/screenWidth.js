@@ -19,9 +19,11 @@ const handleScreenSize = () => {
         const width = getScreenWidth();
         if (width < 650) {
             store.dispatch(setMobileScreen(true));
+            
         } else {
             store.dispatch(setMobileScreen(false));
         }
+       
     };
     adjustSidebar();
 

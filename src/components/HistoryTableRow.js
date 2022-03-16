@@ -6,6 +6,10 @@ import Col from "react-bootstrap/Col";
 import AddRemove from "./AddRemove";
 import { useTranslation } from "react-i18next";
 
+
+
+
+
 const HistoryTableRowStyled = styled(Container)`
     position: relative;
     background-color: white;
@@ -37,12 +41,16 @@ const MyCol = styled(Col)`
     padding: 10px 10px;
     text-align: center;
 `;
-
+const DivPrs =styled.div`
+padding-top: 3px;
+    margin-bottom: auto;
+    display: flex;
+    max-width: 570px;
+    align-content: flex-start;
+    align-items: baseline;
+`;
 const RetailPrice = styled.div({
-    fontSize: "18px",
-    fontWeight: "500",
-    padding: "2px 5px",
-    borderRadius: "3px",
+ 
 });
 
 function HistoryTableRow({ item }) {
@@ -52,21 +60,31 @@ function HistoryTableRow({ item }) {
         <HistoryTableRowStyled>
             <MyRow>
                 {item.img ? (
-                    <Col xs="auto">
+                    <Col xs="auto" style={{margin: "auto"}}>
                         <img src={item.img} alt={""} width="80" height="80"></img>
                     </Col>
                 ) : null}
-                <MyCol style={{ fontWeight: "500" }} xs={8} sm={8} md={5}>
+                <MyCol style={{ fontWeight: "500",alignSelf: "flex-start",textAlign: "left",display:"block" }} >
                     {item.title[i18n.resolvedLanguage]}
+                    <div style={{color:"#828282",paddingTop: "10px",fontSize: "small"}}> {item.article} </div>
+                        
+                    
                 </MyCol>
+                <DivPrs>
+                <BottomCol >
+                    <RetailPrice>{item.price} BYN</RetailPrice>  
+                        
+                    
+                </BottomCol>
 
-                <BottomCol style={{ fontWeight: "500", fontSize: "14px" }} xs={7} sm={6} md={3}>
+                <BottomCol style={{ fontWeight: "500", fontSize: "14px" }} >
                     {t("Количество")}: {item.number}
                 </BottomCol>
 
-                <BottomCol xs={5} sm={6} md={2}>
-                    <RetailPrice>{item.price} BYN</RetailPrice>
-                </BottomCol>
+                <BottomCol >
+                    {item.price*item.number} BYN
+                    </BottomCol>
+                    </DivPrs>
             </MyRow>
         </HistoryTableRowStyled>
     );

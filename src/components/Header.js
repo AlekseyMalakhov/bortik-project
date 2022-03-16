@@ -16,6 +16,7 @@ import Form from "react-bootstrap/Form";
 import { setShowInStockOnly } from "../store/manage";
 
 const HeaderStyled = styled.div({
+    borderRadius: "8px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -71,7 +72,7 @@ function Header() {
     return (
         <HeaderStyled>
             {location.pathname === "/" ? <MenuButton /> : <HeaderBackButton />}
-            {mobileScreen && search ? null : <BrandName onClick={() => navigate("/")}>5A.com</BrandName>}
+            {mobileScreen && search ? null : <BrandName onClick={() => navigate("/")}>5a.by</BrandName>}
             <Search show={search && location.pathname === "/"} />
             <RightCornerPanel>
                 {search ? null : <SearchButton />}

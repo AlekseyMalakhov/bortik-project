@@ -9,21 +9,48 @@ import AskRemoveItemFromCart from "./AskRemoveItemFromCart";
 const AddRemoveStyled = styled.div({
     display: "flex",
     justifyContent: "center",
-    margin: "10px 10px",
-    width: "162px",
+    margin: "0px 0px",
+    // width: "162px",
+    alignItems: "center",
+    borderStyle: "solid",
+    borderRadius: "8px",
+    borderColor: "#e0e4e8",
+    borderWidth: "thin",
 });
 
 const MyInput = styled(Form.Control)(({ type }) => {
     if (type === "small") {
         return {
+            height:"100%",
+            borderBottom: "none",
+            borderTop: "none",
+            borderRadius:"0",
             width: "70px",
-            margin: "auto 10px",
-            padding: "0.1rem 0.75rem",
+            // margin: "auto 10px",
+            padding: "0.1rem",
+            textAlign:"center",
+            padding:"1px 1px 1px 1px",
+            "&:focus": {
+                outline: "none !important",
+                boxShadow: "none !important",
+                
+            },
         };
     }
     return {
+        height:"100%",
+        borderRadius:"0",
+        borderBottom: "none",
+        borderTop: "none",
         width: "70px",
-        margin: "auto 10px",
+        // margin: "auto 10px",
+        textAlign: "center",
+        // padding:"1px 1px 1px 1px",
+        "&:focus": {
+            outline: "none !important",
+            boxShadow: "none !important",
+           
+        },
     };
 });
 
