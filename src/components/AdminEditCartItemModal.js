@@ -42,6 +42,7 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
             .then((response) => {
                 dispatch(setLoading(false));
                 console.log(response.data);
+                onHide();
             })
             .catch((err) => {
                 dispatch(setLoading(false));

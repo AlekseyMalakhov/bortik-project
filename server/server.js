@@ -11,6 +11,7 @@ const forgotPassword = require("./db/forgotPassword");
 const getHistory = require("./db/getHistory");
 const addAddress = require("./db/addAddress");
 const getAdminOrders = require("./db/getAdminOrders");
+const editSoldItem = require("./db/editSoldItem");
 const app = express();
 const port = process.env.PORT || 3010;
 const cors = require("cors");
@@ -37,6 +38,7 @@ app.post("/api/getHistory", getHistory);
 app.post("/api/getTranslationsForUI", getTranslationsForUI);
 app.put("/api/addAddress/:id", addAddress);
 app.post("/api/getAdminOrders", getAdminOrders);
+app.put("/api/editSoldItem/:id", editSoldItem);
 
 // Error handler
 app.use(function (err, req, res, next) {
