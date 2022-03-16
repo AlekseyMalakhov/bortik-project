@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import handleScreenSize from "./settings/screenWidth";
 import { getItems, setUser, setPriceType, setCartSum } from "./store/manage";
 import { useDispatch, useSelector } from "react-redux";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./views/Home";
 import Cart from "./views/Cart";
 import NoMatch from "./views/NoMatch";
@@ -19,6 +19,7 @@ import priceTypes from "./settings/priceTypes";
 import { getHistory } from "./store/manage";
 import itemsAPI from "./api/items";
 import { calculateSum } from "./utilities/calculate";
+import Admin from "./views/Admin";
 
 const AppStyled = styled.div({
     background: "#F5F5F6",
@@ -30,6 +31,7 @@ function App() {
     const loading = useSelector((state) => state.manage.loading);
     const cart = useSelector((state) => state.manage.cart);
     const priceType = useSelector((state) => state.manage.priceType);
+    const location = useLocation();
 
     useEffect(() => {
         handleScreenSize();
@@ -61,7 +63,7 @@ function App() {
 
     return (
         <AppStyled>
-            <Header />
+            {location.pathname !== "/admin" ? <Header /> : null}
 
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -72,6 +74,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgot_password" element={<ForgotPassword />} />
                 <Route path="/edit_account" element={<EditAccount />} />
+                <Route path="/admin" element={<Admin />} />
                 <Route path="*" element={<NoMatch />} />
                 
             </Routes>

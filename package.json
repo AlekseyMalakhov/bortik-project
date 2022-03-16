@@ -32,14 +32,16 @@
         "copy-server-folder": "copyfiles -V -e \"**/node_modules/**\" -e \"**/components/**\" -e \"**/db/**\" -f server/** ../bortik-project-demo",
         "copy-components-folder": "copyfiles -V -u 1 server/components/** ../bortik-project-demo",
         "copy-db-folder": "copyfiles -V -u 1 server/db/** ../bortik-project-demo",
+        "pull-latest-from-git": "cd ../bortik-project-demo && git pull origin main && git push origin main && cd ../bortik-project-dev",
         "publish-to-heroku": "cd ../bortik-project-demo && git add -A && git commit -am \"publish to Heroku demo\" && git push origin main",
-        "deploy": "react-scripts build && npm run copy-build-folder && npm run copy-server-folder && npm run copy-components-folder && npm run copy-db-folder && npm run publish-to-heroku",
+        "deploy": "npm run pull-latest-from-git && react-scripts build && npm run copy-build-folder && npm run copy-server-folder && npm run copy-components-folder && npm run copy-db-folder && npm run publish-to-heroku",
         "copy-build-folder-prod": "copyfiles -V build/** ../bortik-project-prod",
         "copy-server-folder-prod": "copyfiles -V -e \"**/node_modules/**\" -e \"**/components/**\" -e \"**/db/**\" -f server/** ../bortik-project-prod",
         "copy-components-folder-prod": "copyfiles -V -u 1 server/components/** ../bortik-project-prod",
         "copy-db-folder-prod": "copyfiles -V -u 1 server/db/** ../bortik-project-prod",
+        "pull-latest-from-git-prod": "cd ../bortik-project-prod && git pull heroku main && git push heroku main && cd ../bortik-project-dev",
         "publish-to-heroku-prod": "cd ../bortik-project-prod && git add . && git commit -am \"publish to Heroku prod\" && git push heroku main",
-        "deploy-prod": "react-scripts build && npm run copy-build-folder-prod && npm run copy-server-folder-prod && npm run copy-components-folder-prod && npm run copy-db-folder-prod && npm run publish-to-heroku-prod"
+        "deploy-prod": "npm run pull-latest-from-git-prod && react-scripts build && npm run copy-build-folder-prod && npm run copy-server-folder-prod && npm run copy-components-folder-prod && npm run copy-db-folder-prod && npm run publish-to-heroku-prod"
     },
     "eslintConfig": {
         "extends": "react-app"

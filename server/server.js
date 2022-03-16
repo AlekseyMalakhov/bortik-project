@@ -6,9 +6,11 @@ const sendCart = require("./components/sendCart");
 const createAccount = require("./db/createAccount");
 const editAccount = require("./db/editAccount");
 const login = require("./db/login");
+const loginAdmin = require("./db/loginAdmin");
 const forgotPassword = require("./db/forgotPassword");
 const getHistory = require("./db/getHistory");
 const addAddress = require("./db/addAddress");
+const getAdminOrders = require("./db/getAdminOrders");
 const app = express();
 const port = process.env.PORT || 3010;
 const cors = require("cors");
@@ -29,10 +31,12 @@ app.post("/api/sendCart", sendCart);
 app.post("/api/createAccount", createAccount);
 app.put("/api/editAccount/:id", editAccount);
 app.post("/api/login", login);
+app.post("/api/loginAdmin", loginAdmin);
 app.post("/api/forgotPassword", forgotPassword);
 app.post("/api/getHistory", getHistory);
 app.post("/api/getTranslationsForUI", getTranslationsForUI);
 app.put("/api/addAddress/:id", addAddress);
+app.post("/api/getAdminOrders", getAdminOrders);
 
 // Error handler
 app.use(function (err, req, res, next) {

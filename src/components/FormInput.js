@@ -2,10 +2,10 @@ import React from "react";
 import { useFormikContext } from "formik";
 import Form from "react-bootstrap/Form";
 
-function FormInput({ name, label, ...otherProps }) {
+function FormInput({ name, label, formGroupStyle, ...otherProps }) {
     const { setFieldTouched, setFieldValue, errors, touched, values } = useFormikContext();
     return (
-        <Form.Group className="mb-3" controlId={"cart_form_" + [name]}>
+        <Form.Group className="mb-3" controlId={"cart_form_" + [name]} style={formGroupStyle}>
             <Form.Label>{label}</Form.Label>
             <Form.Control
                 type="text"
