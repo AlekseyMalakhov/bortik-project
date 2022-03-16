@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import itemsAPI from "../api/items";
 import userAPI from "../api/user";
+import adminAPI from "../api/admin";
 import { calculateSum } from "../utilities/calculate";
 
 export const getItems = createAsyncThunk("manage/getItems", async () => {
@@ -13,6 +14,10 @@ export const getHistory = createAsyncThunk("manage/getHistory", async (userID) =
     return response;
 });
 
+export const getAdminOrders = createAsyncThunk("manage/getAdminOrders", async () => {
+    const response = await adminAPI.getOrders();
+    return response;
+});
 
 // инитиализация состояния
 const initialState = {
@@ -37,6 +42,7 @@ const initialState = {
     history: [],
     showInStockOnly: true,
     antonAnton: false,
+    adminOrders: [],
 };
 
 export const manageSlice = createSlice({
@@ -167,6 +173,18 @@ export const manageSlice = createSlice({
                 state.loading = false;
                 if (action.payload) {
                     state.history = action.payload;
+                }
+            });
+        builder
+            .addCase(getAdminOrders.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(getAdminOrders.fulfilled, (state, action) => {
+                state.loading = false;
+                if (action.payload) {
+                    const arr = [...action.payload];
+                    const result = arr.sort((a, b) => (a.id < b.id ? 1 : b.id < a.id ? -1 : 0));
+                    state.adminOrders = result;
                 }
             });
     },

@@ -8,7 +8,7 @@ import * as Yup from "yup";
 import FormInput from "../components/FormInput";
 import adminAPI from "../api/admin";
 import { useDispatch } from "react-redux";
-import { setLoading } from "../store/manage";
+import { setLoading, getAdminOrders } from "../store/manage";
 
 const Row1 = styled.div({
     width: "100%",
@@ -31,9 +31,9 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
         title: Yup.string().required("Укажите название товара"),
         article: Yup.string().required("Укажите артикул"),
         number: Yup.number().required("Укажите число товаров"),
-        sum: Yup.string().required("Укажите число товаров"),
-        price: Yup.string().required("Укажите цену для клиента"),
-        price_for_manager: Yup.string().nullable().required("Укажите цену для менеджера"),
+        sum: Yup.string().required("Укажите суммарную стоимость"),
+        price: Yup.number().required("Укажите цену за единицу товара для клиента"),
+        price_for_manager: Yup.number().nullable().required("Укажите цену за единицу товара для менеджера"),
     });
 
     const handleSubmit = (values) => {
@@ -41,7 +41,7 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
             .editSoldItem(values, item.id)
             .then((response) => {
                 dispatch(setLoading(false));
-                console.log(response.data);
+                dispatch(getAdminOrders());
                 onHide();
             })
             .catch((err) => {
@@ -75,14 +75,18 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
                                     <FormInput name="number" label="Количество" formGroupStyle={{ width: "100%", paddingLeft: "20px" }} />
                                 </Row1>
                                 <Row1>
-                                    <FormInput name="price" label="Цена для клиента" formGroupStyle={{ width: "100%", paddingRight: "20px" }} />
+                                    <FormInput
+                                        name="price"
+                                        label="Цена за единицу товара для клиента"
+                                        formGroupStyle={{ width: "100%", paddingRight: "20px" }}
+                                    />
                                     <FormInput
                                         name="price_for_manager"
-                                        label="Цена для менеджера"
+                                        label="Цена за единицу товара для менеджера"
                                         formGroupStyle={{ width: "100%", paddingLeft: "20px" }}
                                     />
                                 </Row1>
-                                <FormInput name="sum" label="Сумма" />
+                                <FormInput name="sum" label="Общая сумма" />
 
                                 <ButtonGroup>
                                     <Button variant="outline-primary" onClick={onHide}>
