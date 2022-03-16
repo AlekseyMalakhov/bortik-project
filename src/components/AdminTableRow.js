@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import ThreeDotsButtonAdmin from "./ThreeDotsButtonAdmin";
 import AdminEditCartItemModal from "./AdminEditCartItemModal";
+import { createDate } from "../utilities/calculate";
 
 function AdminTableRow({ order }) {
     const [showEdit, setShowEdit] = useState(false);
@@ -25,7 +26,8 @@ function AdminTableRow({ order }) {
         <React.Fragment>
             <tr style={{ backgroundColor: "#f5f5f5" }}>
                 <td colSpan={6} style={{ fontWeight: "bold" }}>
-                    Заказ №{order.id}
+                    Заказ №{order.id} <br />
+                    <span style={{ fontWeight: "normal" }}>{createDate(Number(order.date))}</span>
                 </td>
                 <td style={{ verticalAlign: "middle" }}>
                     <Dropdown align="start" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>

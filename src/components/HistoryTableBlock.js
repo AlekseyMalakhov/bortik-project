@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addItemToCart } from "../store/manage";
 import AddHistoryToCartModal from "./AddHistoryToCartModal";
 import { useTranslation } from "react-i18next";
+import { createDate } from "../utilities/calculate";
 
 const HistoryTableBlockStyled = styled.div`
     border: solid;
@@ -20,21 +21,10 @@ const HistoryTableBlockStyled = styled.div`
 `;
 
 const Divider = styled.div`
-display: flex;
+    display: flex;
 
-flex-wrap: wrap;
+    flex-wrap: wrap;
 `;
-
-const createDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-    const month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-    const year = date.getFullYear();
-    const h = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-    const m = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-    const result = `${day}.${month}.${year} - ${h}:${m}`;
-    return result;
-};
 
 function HistoryTableBlock({ order }) {
     const { t } = useTranslation();
@@ -79,31 +69,25 @@ function HistoryTableBlock({ order }) {
     return (
         <HistoryTableBlockStyled>
             <div style={{ fontWeight: "500" }}>{t("Заказ №") + " " + order.id}</div>
-            
-            <div style={{paddingLeft: "4px"}}>
+
+            <div style={{ paddingLeft: "4px" }}>
                 {t("Дата")}: {createDate(Number(order.date))}
             </div>
-            <div style={{paddingLeft: "8px"}}>
+            <div style={{ paddingLeft: "8px" }}>
                 {t("Тип цены")}: {t(order.price_type)}
             </div>
-            <div style={{paddingLeft: "17px"}}>{order.address}</div>
+            <div style={{ paddingLeft: "17px" }}>{order.address}</div>
             {order.items.map((item) => (
-                
                 <HistoryTableRow item={item} key={item.id} />
-                
             ))}
-            
-            
+
             <Divider>
-            <div style={{ fontWeight: "500",paddingLeft: "10px", paddingTop: "6px"}}>{t("Общая сумма") + ": " + order.sum + " BYN"}</div>
-                <Button variant="primary" style={{marginTop: "4px",marginLeft: "auto",padding: "revert"}} onClick={repeatOrder}>
+                <div style={{ fontWeight: "500", paddingLeft: "10px", paddingTop: "6px" }}>{t("Общая сумма") + ": " + order.sum + " BYN"}</div>
+                <Button variant="primary" style={{ marginTop: "4px", marginLeft: "auto", padding: "revert" }} onClick={repeatOrder}>
                     {t("Повторить заказ")}
                 </Button>
             </Divider>
-            
-            
 
-           
             <AddHistoryToCartModal show={showAdded} onHide={() => setShowAdded(false)} notFound={notFound} />
         </HistoryTableBlockStyled>
     );

@@ -5,7 +5,9 @@ import AdminPanel from "../components/AdminPanel";
 import { useSelector, useDispatch } from "react-redux";
 import { setAdmin } from "../store/manage";
 
-const AdminStyled = styled.div({});
+const AdminStyled = styled.div({
+    backgroundColor: "white",
+});
 
 function Admin() {
     const dispatch = useDispatch();
