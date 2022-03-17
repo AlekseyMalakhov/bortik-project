@@ -13,6 +13,7 @@ const addAddress = require("./db/addAddress");
 const getAdminOrders = require("./db/getAdminOrders");
 const editSoldItem = require("./db/editSoldItem");
 const deleteSoldItem = require("./db/deleteSoldItem");
+const deleteOrder = require("./db/deleteOrder");
 const app = express();
 const port = process.env.PORT || 3010;
 const cors = require("cors");
@@ -41,6 +42,7 @@ app.put("/api/addAddress/:id", addAddress);
 app.post("/api/getAdminOrders", getAdminOrders);
 app.put("/api/editSoldItem/:id", editSoldItem);
 app.delete("/api/deleteSoldItem/:order_id/:id", deleteSoldItem);
+app.delete("/api/deleteOrder/:id", deleteOrder);
 
 // Error handler
 app.use(function (err, req, res, next) {

@@ -29,6 +29,7 @@ function AdminTableRow({ order }) {
     const cancel = () => {
         setShowEdit(false);
         setShowItemDelete(false);
+        setShowOrderDelete(false);
         setItemToEdit(null);
     };
 
