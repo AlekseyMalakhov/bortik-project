@@ -9,7 +9,7 @@ function AdminDeleteSoldItemModal({ show, onHide, order, item, ...otherProps }) 
     const dispatch = useDispatch();
     const handleDelete = () => {
         adminAPI
-            .deleteSoldItem(item.id)
+            .deleteSoldItem(order.id, item.id)
             .then((response) => {
                 dispatch(setLoading(false));
                 dispatch(getAdminOrders());

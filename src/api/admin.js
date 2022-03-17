@@ -27,9 +27,9 @@ const editSoldItem = (data, itemId) => {
         .catch((error) => error.response);
 };
 
-const deleteSoldItem = (itemId) => {
+const deleteSoldItem = (orderId, itemId) => {
     return client
-        .delete("/deleteSoldItem/" + itemId)
+        .delete("/deleteSoldItem/" + orderId + "/" + itemId)
         .then((response) => {
             return response;
         })
