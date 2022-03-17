@@ -3,11 +3,13 @@ import Dropdown from "react-bootstrap/Dropdown";
 import ThreeDotsButtonAdmin from "./ThreeDotsButtonAdmin";
 import AdminEditCartItemModal from "./AdminEditCartItemModal";
 import AdminDeleteSoldItemModal from "./AdminDeleteSoldItemModal";
+import AdminDeleteOrderModal from "./AdminDeleteOrderModal";
 import { createDate } from "../utilities/calculate";
 
 function AdminTableRow({ order }) {
     const [showEdit, setShowEdit] = useState(false);
     const [showItemDelete, setShowItemDelete] = useState(false);
+    const [showOrderDelete, setShowOrderDelete] = useState(false);
     const [itemToEdit, setItemToEdit] = useState(null);
 
     const edit = (item) => {
@@ -20,7 +22,9 @@ function AdminTableRow({ order }) {
         setShowItemDelete(true);
     };
 
-    const deleteOrder = () => {};
+    const deleteOrder = () => {
+        setShowOrderDelete(true);
+    };
 
     const cancel = () => {
         setShowEdit(false);
@@ -40,7 +44,8 @@ function AdminTableRow({ order }) {
                         <Dropdown.Toggle as={ThreeDotsButtonAdmin} />
                         <Dropdown.Menu style={{ width: "160px" }}>
                             <Dropdown.Item>Редактировать</Dropdown.Item>
-                            <Dropdown.Item onClick={() => deleteOrder(order)}>Удалить</Dropdown.Item>
+                            <Dropdown.Item>Добавить товар</Dropdown.Item>
+                            <Dropdown.Item onClick={() => deleteOrder(order)}>Удалить заказ</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </td>
@@ -59,7 +64,7 @@ function AdminTableRow({ order }) {
                                 <Dropdown.Toggle as={ThreeDotsButtonAdmin} />
                                 <Dropdown.Menu style={{ width: "160px" }}>
                                     <Dropdown.Item onClick={() => edit(item)}>Редактировать</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => deleteItem(item)}>Удалить</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => deleteItem(item)}>Удалить товар</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </td>
@@ -74,6 +79,7 @@ function AdminTableRow({ order }) {
             )}
             <AdminEditCartItemModal show={showEdit} onHide={cancel} order={order} item={itemToEdit} />
             <AdminDeleteSoldItemModal show={showItemDelete} onHide={cancel} order={order} item={itemToEdit} />
+            <AdminDeleteOrderModal show={showOrderDelete} onHide={cancel} order={order} />
         </React.Fragment>
     );
 }
