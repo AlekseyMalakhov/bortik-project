@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import ThreeDotsButtonAdmin from "./ThreeDotsButtonAdmin";
 import AdminEditCartItemModal from "./AdminEditCartItemModal";
+import AdminDeleteSoldItemModal from "./AdminDeleteSoldItemModal";
 import { createDate } from "../utilities/calculate";
 
 function AdminTableRow({ order }) {
     const [showEdit, setShowEdit] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
     const [itemToEdit, setItemToEdit] = useState(null);
 
     const edit = (item) => {
@@ -13,8 +15,14 @@ function AdminTableRow({ order }) {
         setShowEdit(true);
     };
 
+    const deleteItem = (item) => {
+        setItemToEdit(item);
+        setShowDelete(true);
+    };
+
     const cancel = () => {
         setShowEdit(false);
+        setShowDelete(false);
         setItemToEdit(null);
     };
 
@@ -48,13 +56,14 @@ function AdminTableRow({ order }) {
                             <Dropdown.Toggle as={ThreeDotsButtonAdmin} />
                             <Dropdown.Menu style={{ width: "160px" }}>
                                 <Dropdown.Item onClick={() => edit(item)}>Редактировать</Dropdown.Item>
-                                <Dropdown.Item>Удалить</Dropdown.Item>
+                                <Dropdown.Item onClick={() => deleteItem(item)}>Удалить</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </td>
                 </tr>
             ))}
             <AdminEditCartItemModal show={showEdit} onHide={cancel} order={order} item={itemToEdit} />
+            <AdminDeleteSoldItemModal show={showDelete} onHide={cancel} order={order} item={itemToEdit} />
         </React.Fragment>
     );
 }
