@@ -27,10 +27,20 @@ const editSoldItem = (data, itemId) => {
         .catch((error) => error.response);
 };
 
+const deleteSoldItem = (itemId) => {
+    return client
+        .delete("/deleteSoldItem/" + itemId)
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => error.response);
+};
+
 const adminAPI = {
     loginAdmin,
     getOrders,
     editSoldItem,
+    deleteSoldItem,
 };
 
 export default adminAPI;

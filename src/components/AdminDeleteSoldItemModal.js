@@ -1,10 +1,24 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import adminAPI from "../api/admin";
+import { setLoading, getAdminOrders } from "../store/manage";
+import { useDispatch } from "react-redux";
 
 function AdminDeleteSoldItemModal({ show, onHide, order, item, ...otherProps }) {
+    const dispatch = useDispatch();
     const handleDelete = () => {
-        console.log("delete");
+        adminAPI
+            .deleteSoldItem(item.id)
+            .then((response) => {
+                dispatch(setLoading(false));
+                dispatch(getAdminOrders());
+                onHide();
+            })
+            .catch((err) => {
+                dispatch(setLoading(false));
+                console.log(err);
+            });
     };
 
     return (
