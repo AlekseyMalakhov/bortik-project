@@ -7,7 +7,7 @@ import { createDate } from "../utilities/calculate";
 
 function AdminTableRow({ order }) {
     const [showEdit, setShowEdit] = useState(false);
-    const [showDelete, setShowDelete] = useState(false);
+    const [showItemDelete, setShowItemDelete] = useState(false);
     const [itemToEdit, setItemToEdit] = useState(null);
 
     const edit = (item) => {
@@ -17,12 +17,14 @@ function AdminTableRow({ order }) {
 
     const deleteItem = (item) => {
         setItemToEdit(item);
-        setShowDelete(true);
+        setShowItemDelete(true);
     };
+
+    const deleteOrder = () => {};
 
     const cancel = () => {
         setShowEdit(false);
-        setShowDelete(false);
+        setShowItemDelete(false);
         setItemToEdit(null);
     };
 
@@ -38,32 +40,40 @@ function AdminTableRow({ order }) {
                         <Dropdown.Toggle as={ThreeDotsButtonAdmin} />
                         <Dropdown.Menu style={{ width: "160px" }}>
                             <Dropdown.Item>Редактировать</Dropdown.Item>
-                            <Dropdown.Item>Удалить</Dropdown.Item>
+                            <Dropdown.Item onClick={() => deleteOrder(order)}>Удалить</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </td>
             </tr>
-            {order.items.map((item) => (
-                <tr key={item.id}>
-                    <td></td>
-                    <td></td>
-                    <td>{item.article}</td>
-                    <td>{item.title}</td>
-                    <td>{item.number}</td>
-                    <td>{item.price_for_manager}</td>
-                    <td style={{ verticalAlign: "middle" }}>
-                        <Dropdown align="start" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                            <Dropdown.Toggle as={ThreeDotsButtonAdmin} />
-                            <Dropdown.Menu style={{ width: "160px" }}>
-                                <Dropdown.Item onClick={() => edit(item)}>Редактировать</Dropdown.Item>
-                                <Dropdown.Item onClick={() => deleteItem(item)}>Удалить</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
+            {order.items.length > 0 ? (
+                order.items.map((item) => (
+                    <tr key={item.id}>
+                        <td></td>
+                        <td></td>
+                        <td>{item.article}</td>
+                        <td>{item.title}</td>
+                        <td>{item.number}</td>
+                        <td>{item.price_for_manager}</td>
+                        <td style={{ verticalAlign: "middle" }}>
+                            <Dropdown align="start" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <Dropdown.Toggle as={ThreeDotsButtonAdmin} />
+                                <Dropdown.Menu style={{ width: "160px" }}>
+                                    <Dropdown.Item onClick={() => edit(item)}>Редактировать</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => deleteItem(item)}>Удалить</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </td>
+                    </tr>
+                ))
+            ) : (
+                <tr>
+                    <td colSpan={7} style={{ textAlign: "center" }}>
+                        В заказе отсутствуют купленные товары!
                     </td>
                 </tr>
-            ))}
+            )}
             <AdminEditCartItemModal show={showEdit} onHide={cancel} order={order} item={itemToEdit} />
-            <AdminDeleteSoldItemModal show={showDelete} onHide={cancel} order={order} item={itemToEdit} />
+            <AdminDeleteSoldItemModal show={showItemDelete} onHide={cancel} order={order} item={itemToEdit} />
         </React.Fragment>
     );
 }
