@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import "./lang.css";
+import "./additional.css";
 import SelectLangIcon from "./SelectLangIcon";
 import { useTranslation } from "react-i18next";
 

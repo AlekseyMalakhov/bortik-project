@@ -43,6 +43,7 @@ const initialState = {
     showInStockOnly: true,
     antonAnton: false,
     adminOrders: [],
+    adminDoneModal: "",
 };
 
 export const manageSlice = createSlice({
@@ -143,6 +144,9 @@ export const manageSlice = createSlice({
         setShowInStockOnly: (state, action) => {
             state.showInStockOnly = action.payload;
         },
+        setAdminDoneModal: (state, action) => {
+            state.adminDoneModal = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -213,5 +217,6 @@ export const {
     makeSelected,
     setShowInStockOnly,
     setAdmin,
+    setAdminDoneModal,
 } = manageSlice.actions;
 export default manageSlice.reducer;

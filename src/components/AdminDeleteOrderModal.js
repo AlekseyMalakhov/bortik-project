@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import adminAPI from "../api/admin";
 import { setLoading, getAdminOrders } from "../store/manage";
 import { useDispatch } from "react-redux";
+import { showAdminDoneModal } from "../utilities/helpers";
 
 function AdminDeleteOrderModal({ show, onHide, order, ...otherProps }) {
     const dispatch = useDispatch();
@@ -13,6 +14,11 @@ function AdminDeleteOrderModal({ show, onHide, order, ...otherProps }) {
             .then((response) => {
                 dispatch(setLoading(false));
                 dispatch(getAdminOrders());
+                if (response.status === 200) {
+                    showAdminDoneModal("Заказ №" + order.id + " успешно удален!");
+                } else {
+                    showAdminDoneModal("Неизвестная ошибка! Обратитесь к администратору или попробуйте позже.");
+                }
                 onHide();
             })
             .catch((err) => {
