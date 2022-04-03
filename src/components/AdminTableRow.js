@@ -5,12 +5,14 @@ import AdminEditCartItemModal from "./AdminEditCartItemModal";
 import AdminDeleteSoldItemModal from "./AdminDeleteSoldItemModal";
 import AdminDeleteOrderModal from "./AdminDeleteOrderModal";
 import { createDate } from "../utilities/calculate";
+import AdminEditOrderModal from "./AdminEditOrderModal";
 
 function AdminTableRow({ order }) {
     const [showEdit, setShowEdit] = useState(false);
     const [showItemDelete, setShowItemDelete] = useState(false);
     const [showOrderDelete, setShowOrderDelete] = useState(false);
     const [itemToEdit, setItemToEdit] = useState(null);
+    const [showOrderEdit, setShowOrderEdit] = useState(false);
 
     const edit = (item) => {
         setItemToEdit(item);
@@ -26,11 +28,16 @@ function AdminTableRow({ order }) {
         setShowOrderDelete(true);
     };
 
+    const editOrder = () => {
+        setShowOrderEdit(true);
+    };
+
     const cancel = () => {
         setShowEdit(false);
         setShowItemDelete(false);
         setShowOrderDelete(false);
         setItemToEdit(null);
+        setShowOrderEdit(false);
     };
 
     return (
@@ -62,16 +69,25 @@ function AdminTableRow({ order }) {
                     <Dropdown align="start" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                         <Dropdown.Toggle as={ThreeDotsButtonAdmin} />
                         <Dropdown.Menu style={{ width: "160px" }}>
-                            <Dropdown.Item>Редактировать</Dropdown.Item>
+                            <Dropdown.Item onClick={() => editOrder()}>Редактировать</Dropdown.Item>
                             <Dropdown.Item>Добавить товар</Dropdown.Item>
-                            <Dropdown.Item onClick={() => deleteOrder(order)}>Удалить заказ</Dropdown.Item>
+                            <Dropdown.Item onClick={() => deleteOrder()}>Удалить заказ</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </td>
             </tr>
             {order.items.length > 0 ? (
-                order.items.map((item) => (
-                    <tr key={item.id}>
+                order.items.map((item, index) => (
+                    <tr
+                        key={item.id}
+                        style={
+                            index === order.items.length - 1
+                                ? {
+                                      borderBottomWidth: "3px",
+                                  }
+                                : null
+                        }
+                    >
                         <td></td>
                         <td></td>
                         <td>{item.article}</td>
@@ -99,6 +115,7 @@ function AdminTableRow({ order }) {
             <AdminEditCartItemModal show={showEdit} onHide={cancel} order={order} item={itemToEdit} />
             <AdminDeleteSoldItemModal show={showItemDelete} onHide={cancel} order={order} item={itemToEdit} />
             <AdminDeleteOrderModal show={showOrderDelete} onHide={cancel} order={order} />
+            <AdminEditOrderModal show={showOrderEdit} onHide={cancel} order={order} />
         </React.Fragment>
     );
 }
