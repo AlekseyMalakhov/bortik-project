@@ -1,6 +1,6 @@
 const pool = require("./pool");
 
-const getHistory = async (req, res) => {
+const getAdminOrders = async (req, res) => {
     const query1 = {
         text: "SELECT * FROM orders",
     };
@@ -20,8 +20,17 @@ const getHistory = async (req, res) => {
                     item.img = "https://smartikon.by/uploads/" + item.article + ".webp";
                     return item;
                 });
+
+                const query3 = {
+                    text: "SELECT name, email, phone FROM users WHERE id = $1",
+                    values: [order.customer_id],
+                };
+                const response3 = await pool.query(query3);
+                const user = response3.rows[0];
+
                 const newOrder = { ...order };
                 newOrder.items = itemsWithImages;
+                newOrder.customer = user;
                 result.push(newOrder);
             })
         ).then(() => {
@@ -33,4 +42,4 @@ const getHistory = async (req, res) => {
     }
 };
 
-module.exports = getHistory;
+module.exports = getAdminOrders;
