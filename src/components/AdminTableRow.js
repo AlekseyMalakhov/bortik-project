@@ -36,9 +36,27 @@ function AdminTableRow({ order }) {
     return (
         <React.Fragment>
             <tr style={{ backgroundColor: "#f5f5f5" }}>
-                <td colSpan={6} style={{ fontWeight: "bold" }}>
-                    Заказ №{order.id} <br />
-                    <span style={{ fontWeight: "normal" }}>{createDate(Number(order.date))}</span>
+                <td colSpan={6} style={{ fontWeight: "bold", paddingTop: "20px", paddingBottom: "20px" }}>
+                    <div style={{ display: "flex" }}>
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                            Заказ №{order.id}
+                            <span style={{ fontWeight: "normal" }}>{createDate(Number(order.date))}</span>
+                        </div>
+                        {order.customer ? (
+                            <div style={{ display: "flex" }}>
+                                <div style={{ display: "flex", flexDirection: "column", fontWeight: "normal", marginLeft: "100px" }}>
+                                    <span style={{ fontWeight: "bold" }}>Покупатель: {order.customer.name}</span>
+                                    <span>email: {order.customer.email}</span>
+                                </div>
+                                <div style={{ display: "flex", flexDirection: "column", fontWeight: "normal", marginLeft: "100px" }}>
+                                    <span style={{ fontWeight: "bold" }}>Телефон: {order.customer.phone}</span>
+                                    <span>Адрес доставки: {order.address}</span>
+                                </div>
+                            </div>
+                        ) : (
+                            <div style={{ display: "flex", fontWeight: "bold", marginLeft: "100px" }}>Информация о покупателе отсутствует</div>
+                        )}
+                    </div>
                 </td>
                 <td style={{ verticalAlign: "middle" }}>
                     <Dropdown align="start" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
