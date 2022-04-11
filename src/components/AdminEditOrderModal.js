@@ -60,6 +60,7 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
                     initialValues={{
                         address: order.address,
                         comment: order.comment,
+                        sum: order.sum,
                     }}
                     //validationSchema={validationSchema}
                     onSubmit={handleSubmit}
@@ -71,18 +72,27 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
                             <p>email: {order.customer.email}</p>
                             <p>Дата заказа: {createDate(Number(order.date))}</p>
                             <Row1>
-                                <FormInput name="comment" label="Комментарий" />
+                                <FormInput name="comment" label="Комментарий" formGroupStyle={{ width: "100%" }} as="textarea" />
                             </Row1>
                             <Row1>
-                                <FormInput name="address" label="Адрес" />
+                                <FormInput name="address" label="Адрес" formGroupStyle={{ width: "100%" }} />
                             </Row1>
-                            <DropdownButton id="dropdown123" drop="down" variant="outline-secondary" title={priceType} size="sm">
-                                {priceTypes.map((type) => (
-                                    <Dropdown.Item eventKey={type} key={type} onClick={() => handlePriceType(type)}>
-                                        {type}
-                                    </Dropdown.Item>
-                                ))}
-                            </DropdownButton>
+                            <Row1>
+                                <FormInput name="sum" label="Общая сумма" />
+                                <DropdownButton
+                                    id="dropdown123"
+                                    drop="down"
+                                    variant="outline-secondary"
+                                    title={priceType}
+                                    style={{ marginTop: "15px" }}
+                                >
+                                    {priceTypes.map((type) => (
+                                        <Dropdown.Item eventKey={type} key={type} onClick={() => handlePriceType(type)}>
+                                            {type}
+                                        </Dropdown.Item>
+                                    ))}
+                                </DropdownButton>
+                            </Row1>
 
                             <ButtonGroup>
                                 <Button variant="outline-primary" onClick={onHide}>
