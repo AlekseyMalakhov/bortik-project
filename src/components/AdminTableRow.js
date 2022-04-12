@@ -59,6 +59,10 @@ function AdminTableRow({ order }) {
                                     <span style={{ fontWeight: "bold" }}>Телефон: {order.customer.phone}</span>
                                     <span>Адрес доставки: {order.address}</span>
                                 </div>
+                                <div style={{ display: "flex", flexDirection: "column", fontWeight: "normal", marginLeft: "100px" }}>
+                                    <span style={{ fontWeight: "bold" }}>Oбщая сумма: {order.sum}</span>
+                                    <span>Тип цены: {order.price_type}</span>
+                                </div>
                             </div>
                         ) : (
                             <div style={{ display: "flex", fontWeight: "bold", marginLeft: "100px" }}>Информация о покупателе отсутствует</div>

@@ -7,7 +7,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import FormInput from "../components/FormInput";
 import adminAPI from "../api/admin";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLoading, getAdminOrders } from "../store/manage";
 
 const Row1 = styled.div({
@@ -26,6 +26,7 @@ const ButtonGroup = styled.div({
 
 function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
     const dispatch = useDispatch();
+    const loading = useSelector((state) => state.manage.loading);
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("Укажите название товара"),
@@ -37,6 +38,7 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
     });
 
     const handleSubmit = (values) => {
+        dispatch(setLoading(true));
         adminAPI
             .editSoldItem(values, item.id)
             .then((response) => {
@@ -89,10 +91,10 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
                                 <FormInput name="sum" label="Общая сумма" />
 
                                 <ButtonGroup>
-                                    <Button variant="outline-primary" onClick={onHide}>
+                                    <Button variant="outline-primary" onClick={onHide} disabled={loading}>
                                         Отмена
                                     </Button>
-                                    <Button variant="primary" type="submit">
+                                    <Button variant="primary" type="submit" disabled={loading}>
                                         Сохранить
                                     </Button>
                                 </ButtonGroup>
