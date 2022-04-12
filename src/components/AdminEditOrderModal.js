@@ -33,17 +33,17 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
     const [priceType, setPriceType] = useState(order.price_type);
     //const dispatch = useDispatch();
 
-    // const validationSchema = Yup.object().shape({
-    //     title: Yup.string().required("Укажите название товара"),
-    //     article: Yup.string().required("Укажите артикул"),
-    //     number: Yup.number().required("Укажите число товаров"),
-    //     sum: Yup.string().required("Укажите суммарную стоимость"),
-    //     price: Yup.number().required("Укажите цену за единицу товара для клиента"),
-    //     price_for_manager: Yup.number().nullable().required("Укажите цену за единицу товара для менеджера"),
-    // });
+    const validationSchema = Yup.object().shape({
+        sum: Yup.number().required("Укажите общую сумму заказа"),
+    });
 
     const handleSubmit = (values) => {
-        console.log(values);
+        const newOrder = { ...order };
+        newOrder.address = values.address;
+        newOrder.comment = values.comment;
+        newOrder.sum = values.sum;
+
+        console.log(newOrder);
         onHide();
     };
 
@@ -62,7 +62,7 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
                         comment: order.comment,
                         sum: order.sum,
                     }}
-                    //validationSchema={validationSchema}
+                    validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                 >
                     {({ handleSubmit, values }) => (

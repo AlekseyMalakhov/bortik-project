@@ -45,12 +45,22 @@ const deleteOrder = (orderId) => {
         .catch((error) => error.response);
 };
 
+const editOrder = (data, orderId) => {
+    return client
+        .put("/editOrder/" + orderId, data)
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => error.response);
+};
+
 const adminAPI = {
     loginAdmin,
     getOrders,
     editSoldItem,
     deleteSoldItem,
     deleteOrder,
+    editOrder,
 };
 
 export default adminAPI;
