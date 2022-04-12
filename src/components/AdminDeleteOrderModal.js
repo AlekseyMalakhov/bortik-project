@@ -3,12 +3,14 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import adminAPI from "../api/admin";
 import { setLoading, getAdminOrders } from "../store/manage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showAdminDoneModal } from "../utilities/helpers";
 
 function AdminDeleteOrderModal({ show, onHide, order, ...otherProps }) {
     const dispatch = useDispatch();
+    const loading = useSelector((state) => state.manage.loading);
     const handleDelete = () => {
+        dispatch(setLoading(true));
         adminAPI
             .deleteOrder(order.id)
             .then((response) => {
@@ -37,10 +39,10 @@ function AdminDeleteOrderModal({ show, onHide, order, ...otherProps }) {
                 ) : null}
             </Modal.Body>
             <Modal.Footer style={{ display: "flex", justifyContent: "space-evenly" }}>
-                <Button onClick={onHide} variant="outline-primary">
+                <Button onClick={onHide} variant="outline-primary" disabled={loading}>
                     Отмена
                 </Button>
-                <Button onClick={handleDelete} style={{ width: "81px" }}>
+                <Button onClick={handleDelete} style={{ width: "81px" }} disabled={loading}>
                     Да
                 </Button>
             </Modal.Footer>

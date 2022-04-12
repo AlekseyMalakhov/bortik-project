@@ -8,12 +8,13 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import FormInput from "./FormInput";
 import adminAPI from "../api/admin";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLoading, getAdminOrders } from "../store/manage";
 import { createDate } from "../utilities/calculate";
 import priceTypes from "../settings/priceTypes";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
+import { showAdminDoneModal } from "../utilities/helpers";
 
 const Row1 = styled.div({
     width: "100%",
@@ -31,20 +32,33 @@ const ButtonGroup = styled.div({
 
 function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
     const [priceType, setPriceType] = useState(order.price_type);
-    //const dispatch = useDispatch();
+    const dispatch = useDispatch();
+    const loading = useSelector((state) => state.manage.loading);
 
     const validationSchema = Yup.object().shape({
         sum: Yup.number().required("Укажите общую сумму заказа"),
     });
 
     const handleSubmit = (values) => {
-        const newOrder = { ...order };
-        newOrder.address = values.address;
-        newOrder.comment = values.comment;
-        newOrder.sum = values.sum;
-
-        console.log(newOrder);
-        onHide();
+        const data = { ...values };
+        data.priceType = priceType;
+        dispatch(setLoading(true));
+        adminAPI
+            .editOrder(data, order.id)
+            .then((response) => {
+                dispatch(setLoading(false));
+                dispatch(getAdminOrders());
+                if (response.status === 200) {
+                    showAdminDoneModal("Заказ №" + order.id + " успешно отредактирован!");
+                } else {
+                    showAdminDoneModal("Неизвестная ошибка! Обратитесь к администратору или попробуйте позже.");
+                }
+                onHide();
+            })
+            .catch((err) => {
+                dispatch(setLoading(false));
+                console.log(err);
+            });
     };
 
     const handlePriceType = (type) => {
@@ -95,10 +109,10 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
                             </Row1>
 
                             <ButtonGroup>
-                                <Button variant="outline-primary" onClick={onHide}>
+                                <Button variant="outline-primary" onClick={onHide} disabled={loading}>
                                     Отмена
                                 </Button>
-                                <Button variant="primary" type="submit">
+                                <Button variant="primary" type="submit" disabled={loading}>
                                     Сохранить
                                 </Button>
                             </ButtonGroup>
