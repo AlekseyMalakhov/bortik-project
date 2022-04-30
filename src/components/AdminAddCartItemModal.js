@@ -34,6 +34,7 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
     const [priceType, setPriceType] = useState(order.price_type);
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.manage.loading);
+    const items = useSelector((state) => state.manage.items);
 
     const validationSchema = Yup.object().shape({
         sum: Yup.number().required("Укажите общую сумму заказа"),
