@@ -6,9 +6,11 @@ import AdminDeleteSoldItemModal from "./AdminDeleteSoldItemModal";
 import AdminDeleteOrderModal from "./AdminDeleteOrderModal";
 import { createDate } from "../utilities/calculate";
 import AdminEditOrderModal from "./AdminEditOrderModal";
+import AdminAddCartItemModal from "./AdminAddCartItemModal";
 
 function AdminTableRow({ order }) {
     const [showEdit, setShowEdit] = useState(false);
+    const [showItemAdd, setShowItemAdd] = useState(false);
     const [showItemDelete, setShowItemDelete] = useState(false);
     const [showOrderDelete, setShowOrderDelete] = useState(false);
     const [itemToEdit, setItemToEdit] = useState(null);
@@ -32,12 +34,17 @@ function AdminTableRow({ order }) {
         setShowOrderEdit(true);
     };
 
+    const addItem = () => {
+        setShowItemAdd(true);
+    };
+
     const cancel = () => {
         setShowEdit(false);
         setShowItemDelete(false);
         setShowOrderDelete(false);
         setItemToEdit(null);
         setShowOrderEdit(false);
+        setShowItemAdd(false);
     };
 
     return (
@@ -74,7 +81,7 @@ function AdminTableRow({ order }) {
                         <Dropdown.Toggle as={ThreeDotsButtonAdmin} />
                         <Dropdown.Menu style={{ width: "160px" }}>
                             <Dropdown.Item onClick={() => editOrder()}>Редактировать</Dropdown.Item>
-                            <Dropdown.Item>Добавить товар</Dropdown.Item>
+                            <Dropdown.Item onClick={() => addItem()}>Добавить товар</Dropdown.Item>
                             <Dropdown.Item onClick={() => deleteOrder()}>Удалить заказ</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
@@ -117,6 +124,7 @@ function AdminTableRow({ order }) {
                 </tr>
             )}
             <AdminEditCartItemModal show={showEdit} onHide={cancel} order={order} item={itemToEdit} />
+            <AdminAddCartItemModal show={showItemAdd} onHide={cancel} order={order} />
             <AdminDeleteSoldItemModal show={showItemDelete} onHide={cancel} order={order} item={itemToEdit} />
             <AdminDeleteOrderModal show={showOrderDelete} onHide={cancel} order={order} />
             <AdminEditOrderModal show={showOrderEdit} onHide={cancel} order={order} />
