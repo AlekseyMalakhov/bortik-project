@@ -49,11 +49,22 @@ const ListContainer = styled.div({
     position: "relative",
 });
 
+const ShowSelected = styled.div({
+    width: "100%",
+    display: "flex",
+    marginTop: "15px",
+});
+
 function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
     const [selectedItem, setSelectedItem] = useState(null);
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.manage.loading);
     const items = useSelector((state) => state.manage.items);
+
+    const cancel = () => {
+        setSelectedItem(null);
+        onHide();
+    };
 
     const handleSubmit = () => {
         //         article: "SMART.18028"
@@ -77,7 +88,7 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
                 } else {
                     showAdminDoneModal("Неизвестная ошибка! Обратитесь к администратору или попробуйте позже.");
                 }
-                onHide();
+                cancel();
             })
             .catch((err) => {
                 dispatch(setLoading(false));
@@ -94,7 +105,7 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
     );
 
     return (
-        <Modal show={show} {...otherProps} centered onHide={onHide} size="lg" backdrop="static" keyboard={false}>
+        <Modal show={show} {...otherProps} centered onHide={cancel} size="lg" backdrop="static" keyboard={false}>
             <Modal.Body style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
                 <p style={{ fontWeight: 700 }}>Заказ №{order.id}. Добавить товар.</p>
                 <ListContainer>
@@ -106,8 +117,9 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
                         )}
                     </AutoSizer>
                 </ListContainer>
+                <ShowSelected>Добавить товар: {selectedItem ? selectedItem.title.ru : "нет"}</ShowSelected>
                 <ButtonGroup>
-                    <Button variant="outline-primary" onClick={onHide} disabled={loading}>
+                    <Button variant="outline-primary" onClick={cancel} disabled={loading}>
                         Отмена
                     </Button>
                     <Button variant="primary" type="submit" disabled={loading} onClick={handleSubmit}>
