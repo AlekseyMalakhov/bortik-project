@@ -78,6 +78,7 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
             customer_id: order.customer_id,
             date: order.date,
             order_id: order.id,
+            price: order.price_type === "с НДС" ? selectedItem.priceIncVAT : selectedItem.priceExcVAT,
         };
         dispatch(setLoading(true));
         adminAPI

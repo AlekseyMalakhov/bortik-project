@@ -2,11 +2,11 @@ const pool = require("./pool");
 
 const addItemToOrder = async (req, res) => {
     const id = req.params.id;
-    const { item, customer_id, date, order_id } = req.body;
+    const { item, customer_id, date, order_id, price } = req.body;
     try {
         const query1 = {
             text: "INSERT INTO sold_items (article, title, number, price, sum, customer_id, date, price_for_manager) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id",
-            values: [item.article, item.title.ru, 1, item.priceExcVAT, item.priceExcVAT, customer_id, date, item.priceForManager],
+            values: [item.article, item.title.ru, 1, price, price, customer_id, date, item.priceForManager],
         };
         const response1 = await pool.query(query1);
         const newItemId = response1.rows[0].id;
@@ -17,7 +17,7 @@ const addItemToOrder = async (req, res) => {
             };
             const response2 = await pool.query(query2);
             const newItems = response2.rows[0].items;
-            const newSum = Number(response2.rows[0].sum) + item.priceExcVAT;
+            const newSum = Number(response2.rows[0].sum) + price;
             newItems.push(newItemId);
             console.log(newItems);
 
