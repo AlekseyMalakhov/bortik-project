@@ -54,6 +54,15 @@ const editOrder = (data, orderId) => {
         .catch((error) => error.response);
 };
 
+const addItemToOrder = (data, orderId) => {
+    return client
+        .put("/addItemToOrder/" + orderId, data)
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => error.response);
+};
+
 const adminAPI = {
     loginAdmin,
     getOrders,
@@ -61,6 +70,7 @@ const adminAPI = {
     deleteSoldItem,
     deleteOrder,
     editOrder,
+    addItemToOrder,
 };
 
 export default adminAPI;

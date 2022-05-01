@@ -62,9 +62,13 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
         // priceForManager: 0.99
         // sum: 1.19
         // title: "Рукав для запекания Komfi 30 см х 3 м"
+        const data = {
+            item: selectedItem,
+            customer_id: order.customer_id,
+        };
         dispatch(setLoading(true));
         adminAPI
-            .editOrder(order.id)
+            .addItemToOrder(data, order.id)
             .then((response) => {
                 dispatch(setLoading(false));
                 dispatch(getAdminOrders());
