@@ -15,8 +15,17 @@ import priceTypes from "../settings/priceTypes";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
 import { showAdminDoneModal } from "../utilities/helpers";
+import { FixedSizeList as List } from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
 
 const Row1 = styled.div({
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+});
+
+const ListRow = styled.div({
     width: "100%",
     display: "flex",
     justifyContent: "space-evenly",
@@ -66,6 +75,8 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
         setPriceType(type);
     };
 
+    const Row = ({ index, style }) => <ListRow style={style}>Row {index}</ListRow>;
+
     return (
         <Modal show={show} {...otherProps} centered onHide={onHide} size="lg" backdrop="static" keyboard={false}>
             <Modal.Body style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
@@ -81,8 +92,15 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
                 >
                     {({ handleSubmit, values }) => (
                         <Form noValidate onSubmit={handleSubmit} style={{ width: "100%", paddingLeft: "10px", paddingRight: "10px" }}>
-                            <FormInput name="comment" label="Комментарий" formGroupStyle={{ width: "100%" }} as="textarea" />
-                            <FormInput name="address" label="Адрес" formGroupStyle={{ width: "100%" }} />
+                            {/* <FormInput name="comment" label="Комментарий" formGroupStyle={{ width: "100%" }} as="textarea" />
+                            <FormInput name="address" label="Адрес" formGroupStyle={{ width: "100%" }} /> */}
+                            <AutoSizer>
+                                {({ height, width }) => (
+                                    <List style={{ border: "1px solid black" }} height={200} itemCount={items.length} itemSize={35} width={width}>
+                                        {Row}
+                                    </List>
+                                )}
+                            </AutoSizer>
                             <ButtonGroup>
                                 <Button variant="outline-primary" onClick={onHide} disabled={loading}>
                                     Отмена
