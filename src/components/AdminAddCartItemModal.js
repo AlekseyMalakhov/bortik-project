@@ -67,7 +67,7 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
     };
 
     const handleSubmit = () => {
-        //         article: "SMART.18028"
+        // article: "SMART.18028"
         // number: 1
         // price: 1.19
         // priceForManager: 0.99
@@ -76,6 +76,8 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
         const data = {
             item: selectedItem,
             customer_id: order.customer_id,
+            date: order.date,
+            order_id: order.id,
         };
         dispatch(setLoading(true));
         adminAPI
