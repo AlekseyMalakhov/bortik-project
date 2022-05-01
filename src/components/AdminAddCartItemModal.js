@@ -124,8 +124,8 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
                     <Button variant="outline-primary" onClick={cancel} disabled={loading}>
                         Отмена
                     </Button>
-                    <Button variant="primary" type="submit" disabled={loading} onClick={handleSubmit}>
-                        Сохранить
+                    <Button variant="primary" type="submit" disabled={loading || !selectedItem} onClick={handleSubmit}>
+                        Добавить
                     </Button>
                 </ButtonGroup>
             </Modal.Body>

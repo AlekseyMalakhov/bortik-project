@@ -2,7 +2,6 @@ const pool = require("./pool");
 
 const addItemToOrder = async (req, res) => {
     const id = req.params.id;
-    console.log(req.body);
     const { item, customer_id, date, order_id } = req.body;
     try {
         const query1 = {
@@ -13,17 +12,18 @@ const addItemToOrder = async (req, res) => {
         const newItemId = response1.rows[0].id;
         if (newItemId) {
             const query2 = {
-                text: "SELECT items FROM orders WHERE id = $1",
+                text: "SELECT items, sum FROM orders WHERE id = $1",
                 values: [order_id],
             };
             const response2 = await pool.query(query2);
             const newItems = response2.rows[0].items;
+            const newSum = Number(response2.rows[0].sum) + item.priceExcVAT;
             newItems.push(newItemId);
             console.log(newItems);
 
             const query3 = {
-                text: "UPDATE orders SET items = ($1) WHERE id = ($2)",
-                values: [newItems, order_id],
+                text: "UPDATE orders SET items = ($1), sum = ($2) WHERE id = ($3)",
+                values: [newItems, newSum, order_id],
             };
             const response3 = await pool.query(query3);
             console.log(response3);
