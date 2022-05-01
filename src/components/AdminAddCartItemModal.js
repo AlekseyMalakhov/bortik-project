@@ -28,7 +28,6 @@ const Row1 = styled.div({
 const ListRow = styled.div({
     width: "100%",
     display: "flex",
-    justifyContent: "space-evenly",
     alignItems: "center",
 });
 
@@ -37,6 +36,13 @@ const ButtonGroup = styled.div({
     justifyContent: "space-evenly",
     marginTop: "30px",
     marginBottom: "30px",
+    width: "100%",
+});
+
+const ListContainer = styled.div({
+    width: "100%",
+    height: "200px",
+    position: "relative",
 });
 
 function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
@@ -75,43 +81,34 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
         setPriceType(type);
     };
 
-    const Row = ({ index, style }) => <ListRow style={style}>Row {index}</ListRow>;
+    const Row = ({ index, style }) => (
+        <ListRow style={style}>
+            <div style={{ width: "70%", paddingLeft: "15px", paddingRight: "20px" }}>{items[index].title.ru}</div>
+            <div style={{ width: "30%" }}>{items[index].article}</div>
+        </ListRow>
+    );
 
     return (
         <Modal show={show} {...otherProps} centered onHide={onHide} size="lg" backdrop="static" keyboard={false}>
             <Modal.Body style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
                 <p style={{ fontWeight: 700 }}>Заказ №{order.id}. Добавить товар.</p>
-
-                <Formik
-                    initialValues={{
-                        address: order.address,
-                        comment: order.comment,
-                    }}
-                    validationSchema={validationSchema}
-                    onSubmit={handleSubmit}
-                >
-                    {({ handleSubmit, values }) => (
-                        <Form noValidate onSubmit={handleSubmit} style={{ width: "100%", paddingLeft: "10px", paddingRight: "10px" }}>
-                            {/* <FormInput name="comment" label="Комментарий" formGroupStyle={{ width: "100%" }} as="textarea" />
-                            <FormInput name="address" label="Адрес" formGroupStyle={{ width: "100%" }} /> */}
-                            <AutoSizer>
-                                {({ height, width }) => (
-                                    <List style={{ border: "1px solid black" }} height={200} itemCount={items.length} itemSize={35} width={width}>
-                                        {Row}
-                                    </List>
-                                )}
-                            </AutoSizer>
-                            <ButtonGroup>
-                                <Button variant="outline-primary" onClick={onHide} disabled={loading}>
-                                    Отмена
-                                </Button>
-                                <Button variant="primary" type="submit" disabled={loading}>
-                                    Сохранить
-                                </Button>
-                            </ButtonGroup>
-                        </Form>
-                    )}
-                </Formik>
+                <ListContainer>
+                    <AutoSizer>
+                        {({ height, width }) => (
+                            <List style={{ border: "1px solid black" }} height={200} itemCount={items.length} itemSize={35} width={width}>
+                                {Row}
+                            </List>
+                        )}
+                    </AutoSizer>
+                </ListContainer>
+                <ButtonGroup>
+                    <Button variant="outline-primary" onClick={onHide} disabled={loading}>
+                        Отмена
+                    </Button>
+                    <Button variant="primary" type="submit" disabled={loading}>
+                        Сохранить
+                    </Button>
+                </ButtonGroup>
             </Modal.Body>
         </Modal>
     );
