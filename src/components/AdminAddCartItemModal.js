@@ -29,6 +29,10 @@ const ListRow = styled.div({
     width: "100%",
     display: "flex",
     alignItems: "center",
+    cursor: "pointer",
+    "&:hover": {
+        backgroundColor: "#efeeee",
+    },
 });
 
 const ButtonGroup = styled.div({
@@ -46,21 +50,21 @@ const ListContainer = styled.div({
 });
 
 function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
-    const [priceType, setPriceType] = useState(order.price_type);
+    const [selectedItem, setSelectedItem] = useState(null);
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.manage.loading);
     const items = useSelector((state) => state.manage.items);
 
-    const validationSchema = Yup.object().shape({
-        sum: Yup.number().required("Укажите общую сумму заказа"),
-    });
-
-    const handleSubmit = (values) => {
-        const data = { ...values };
-        data.priceType = priceType;
+    const handleSubmit = () => {
+        //         article: "SMART.18028"
+        // number: 1
+        // price: 1.19
+        // priceForManager: 0.99
+        // sum: 1.19
+        // title: "Рукав для запекания Komfi 30 см х 3 м"
         dispatch(setLoading(true));
         adminAPI
-            .editOrder(data, order.id)
+            .editOrder(order.id)
             .then((response) => {
                 dispatch(setLoading(false));
                 dispatch(getAdminOrders());
@@ -73,16 +77,13 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
             })
             .catch((err) => {
                 dispatch(setLoading(false));
+                showAdminDoneModal("Неизвестная ошибка! Обратитесь к администратору или попробуйте позже.");
                 console.log(err);
             });
     };
 
-    const handlePriceType = (type) => {
-        setPriceType(type);
-    };
-
     const Row = ({ index, style }) => (
-        <ListRow style={style}>
+        <ListRow style={style} onClick={() => setSelectedItem(items[index])}>
             <div style={{ width: "70%", paddingLeft: "15px", paddingRight: "20px" }}>{items[index].title.ru}</div>
             <div style={{ width: "30%" }}>{items[index].article}</div>
         </ListRow>
@@ -105,7 +106,7 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
                     <Button variant="outline-primary" onClick={onHide} disabled={loading}>
                         Отмена
                     </Button>
-                    <Button variant="primary" type="submit" disabled={loading}>
+                    <Button variant="primary" type="submit" disabled={loading} onClick={handleSubmit}>
                         Сохранить
                     </Button>
                 </ButtonGroup>
