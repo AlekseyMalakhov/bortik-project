@@ -114,7 +114,7 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
                 <ListContainer>
                     <AutoSizer>
                         {({ height, width }) => (
-                            <List style={{ border: "1px solid black" }} height={200} itemCount={items.length} itemSize={35} width={width}>
+                            <List style={{ border: "1px solid grey" }} height={200} itemCount={items.length} itemSize={40} width={width}>
                                 {Row}
                             </List>
                         )}
