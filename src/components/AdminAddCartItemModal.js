@@ -24,7 +24,7 @@ const Row1 = styled.div({
     display: "flex",
     justifyContent: "space-evenly",
     alignItems: "center",
-    marginBottom: "20px",
+    marginBottom: "8px",
 });
 
 const ListRow = styled.div({
@@ -55,6 +55,12 @@ const ShowSelected = styled.div({
     width: "100%",
     display: "flex",
     marginTop: "15px",
+});
+
+const FoundedNumber = styled.div({
+    width: "100%",
+    display: "flex",
+    marginBottom: "15px",
 });
 
 function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
@@ -148,6 +154,7 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
                 <Row1>
                     <Form.Control type="text" value={search} onChange={(e) => searchItems(e.target.value)} placeholder="Поиск товара" />
                 </Row1>
+                <FoundedNumber>Найдено товаров: {filteredItems?.length}</FoundedNumber>
                 <ListContainer>
                     <AutoSizer>
                         {({ height, width }) => (
