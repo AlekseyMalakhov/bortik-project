@@ -17,6 +17,7 @@ import { useState } from "react";
 import { showAdminDoneModal } from "../utilities/helpers";
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
+import { useEffect } from "react";
 
 const Row1 = styled.div({
     width: "100%",
@@ -59,6 +60,8 @@ const ShowSelected = styled.div({
 function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
     const [selectedItem, setSelectedItem] = useState(null);
     const [search, setSearch] = useState("");
+    const [searchInput, setSearchInput] = useState([]);
+    const [filteredItems, setFilteredItems] = useState([]);
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.manage.loading);
     const items = useSelector((state) => state.manage.items);
@@ -103,23 +106,52 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
     };
 
     const Row = ({ index, style }) => (
-        <ListRow style={style} onClick={() => setSelectedItem(items[index])}>
-            <div style={{ width: "70%", paddingLeft: "15px", paddingRight: "20px" }}>{items[index].title.ru}</div>
-            <div style={{ width: "30%" }}>{items[index].article}</div>
+        <ListRow style={style} onClick={() => setSelectedItem(filteredItems[index])}>
+            <div style={{ width: "70%", paddingLeft: "15px", paddingRight: "20px" }}>{filteredItems[index].title.ru}</div>
+            <div style={{ width: "30%" }}>{filteredItems[index].article}</div>
         </ListRow>
     );
+
+    const handleSearch = (items) => {
+        const result = items.filter((item) => {
+            const name = item.title.ru.toLowerCase() + item.article;
+            return searchInput.every((word) => {
+                const regex = new RegExp(word, "gmiu");
+                return regex.test(name);
+            });
+        });
+
+        return result;
+    };
+
+    const searchItems = (val) => {
+        const arr = val.split(" ");
+        setSearch(val);
+        setSearchInput(arr);
+    };
+
+    useEffect(() => {
+        if (search && searchInput.length > 0) {
+            const filtered = handleSearch(items);
+            setFilteredItems(filtered);
+        } else {
+            if (items?.length > 0) {
+                setFilteredItems(items);
+            }
+        }
+    }, [search, searchInput]);
 
     return (
         <Modal show={show} {...otherProps} centered onHide={cancel} size="lg" backdrop="static" keyboard={false}>
             <Modal.Body style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
                 <p style={{ fontWeight: 700 }}>Заказ №{order.id}. Добавить товар.</p>
                 <Row1>
-                    <Form.Control type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Поиск товара" />
+                    <Form.Control type="text" value={search} onChange={(e) => searchItems(e.target.value)} placeholder="Поиск товара" />
                 </Row1>
                 <ListContainer>
                     <AutoSizer>
                         {({ height, width }) => (
-                            <List style={{ border: "1px solid grey" }} height={200} itemCount={items.length} itemSize={40} width={width}>
+                            <List style={{ border: "1px solid grey" }} height={200} itemCount={filteredItems.length} itemSize={40} width={width}>
                                 {Row}
                             </List>
                         )}
