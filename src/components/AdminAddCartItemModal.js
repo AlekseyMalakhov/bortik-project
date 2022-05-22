@@ -23,6 +23,7 @@ const Row1 = styled.div({
     display: "flex",
     justifyContent: "space-evenly",
     alignItems: "center",
+    marginBottom: "20px",
 });
 
 const ListRow = styled.div({
@@ -57,6 +58,7 @@ const ShowSelected = styled.div({
 
 function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
     const [selectedItem, setSelectedItem] = useState(null);
+    const [search, setSearch] = useState("");
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.manage.loading);
     const items = useSelector((state) => state.manage.items);
@@ -111,6 +113,9 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
         <Modal show={show} {...otherProps} centered onHide={cancel} size="lg" backdrop="static" keyboard={false}>
             <Modal.Body style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
                 <p style={{ fontWeight: 700 }}>Заказ №{order.id}. Добавить товар.</p>
+                <Row1>
+                    <Form.Control type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Поиск товара" />
+                </Row1>
                 <ListContainer>
                     <AutoSizer>
                         {({ height, width }) => (
