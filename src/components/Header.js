@@ -95,7 +95,8 @@ function Header() {
                                 <Dropdown.Item onClick={() => navigate("/register")}>{t("Регистрация")}</Dropdown.Item>
                             </React.Fragment>
                         )}
-                        <Dropdown.Item onClick={() => window.tidioChatApi.open()}>{t("Чат")}</Dropdown.Item>
+                        {/* <Dropdown.Item onClick={() => window.tidioChatApi.open()}>{t("Чат")}</Dropdown.Item> */}
+                        <Dropdown.Item>{t("Чат")}</Dropdown.Item>
                         <SelectLang />
                         <Dropdown.Item style={{ whiteSpace: "normal" }} onClick={toggleCheckBox}>
                             <Check
