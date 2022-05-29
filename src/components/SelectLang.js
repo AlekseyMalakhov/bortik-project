@@ -50,7 +50,7 @@ function SelectLang() {
 
     useEffect(() => {
         document.tidioChatLang = i18n.resolvedLanguage;
-        loadChat();
+        //loadChat();
     }, []);
 
     const deleteChat = () => {
@@ -63,8 +63,8 @@ function SelectLang() {
     const changeLang = (lang) => {
         i18n.changeLanguage(lang);
         document.tidioChatLang = lang;
-        deleteChat();
-        loadChat();
+        //deleteChat();
+        //loadChat();
     };
     return (
         <MyDropdown align="end" drop="down">

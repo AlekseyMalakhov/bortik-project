@@ -16,8 +16,8 @@ async function run(htmlForClient, htmlForManager, email, orderID) {
 
     let info2 = await transporter.sendMail({
         from: '"5a.by" <cart@5a.by>',
-        to: "anton@focusqc.com",
-        //to: "hexel@tut.by",
+        //to: "anton@focusqc.com",
+        to: "hexel@tut.by",
         subject: "Заказ №" + orderID,
         text: "Заказ №" + orderID,
         html: htmlForManager,
