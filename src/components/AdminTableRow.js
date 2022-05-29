@@ -38,6 +38,16 @@ function AdminTableRow({ order }) {
         setShowItemAdd(true);
     };
 
+    const getStatus = () => {
+        if (order.status === "in progress") {
+            return "В работе";
+        }
+        if (order.status === "finished") {
+            return "Выдан";
+        }
+        return null;
+    };
+
     const cancel = () => {
         setShowEdit(false);
         setShowItemDelete(false);
@@ -69,6 +79,9 @@ function AdminTableRow({ order }) {
                                 <div style={{ display: "flex", flexDirection: "column", fontWeight: "normal", marginLeft: "100px" }}>
                                     <span style={{ fontWeight: "bold" }}>Oбщая сумма: {order.sum}</span>
                                     <span>Тип цены: {order.price_type}</span>
+                                </div>
+                                <div style={{ display: "flex", flexDirection: "column", fontWeight: "normal", marginLeft: "100px" }}>
+                                    <span style={{ fontWeight: "bold" }}>Статус: {getStatus()}</span>
                                 </div>
                             </div>
                         ) : (
