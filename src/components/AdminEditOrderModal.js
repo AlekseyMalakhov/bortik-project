@@ -15,6 +15,7 @@ import priceTypes from "../settings/priceTypes";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useState } from "react";
 import { showAdminDoneModal } from "../utilities/helpers";
+import { useEffect } from "react";
 
 const Row1 = styled.div({
     width: "100%",
@@ -30,8 +31,18 @@ const ButtonGroup = styled.div({
     marginBottom: "30px",
 });
 
+const StatusDiv = styled.div({
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: "1rem",
+    "& .btn": {
+        width: "140px",
+    },
+});
+
 function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
     const [priceType, setPriceType] = useState(order.price_type);
+    const [status, setStatus] = useState();
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.manage.loading);
 
@@ -42,6 +53,7 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
     const handleSubmit = (values) => {
         const data = { ...values };
         data.priceType = priceType;
+        data.status = status.value;
         dispatch(setLoading(true));
         adminAPI
             .editOrder(data, order.id)
@@ -64,6 +76,28 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
     const handlePriceType = (type) => {
         setPriceType(type);
     };
+
+    const handleStatus = (st) => {
+        setStatus(st);
+    };
+
+    const statusTypes = [
+        {
+            value: "in progress",
+            title: "В работе",
+        },
+        {
+            value: "finished",
+            title: "Выдан",
+        },
+    ];
+
+    useEffect(() => {
+        if (order) {
+            const currentStatus = statusTypes.find((st) => st.value === order.status);
+            setStatus(currentStatus);
+        }
+    }, []);
 
     return (
         <Modal show={show} {...otherProps} centered onHide={onHide} size="lg" backdrop="static" keyboard={false}>
@@ -93,19 +127,23 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
                             </Row1>
                             <Row1>
                                 <FormInput name="sum" label="Общая сумма" />
-                                <DropdownButton
-                                    id="dropdown123"
-                                    drop="down"
-                                    variant="outline-secondary"
-                                    title={priceType}
-                                    style={{ marginTop: "15px" }}
-                                >
+                                <DropdownButton drop="down" variant="outline-secondary" title={priceType} style={{ marginTop: "15px" }}>
                                     {priceTypes.map((type) => (
                                         <Dropdown.Item eventKey={type} key={type} onClick={() => handlePriceType(type)}>
                                             {type}
                                         </Dropdown.Item>
                                     ))}
                                 </DropdownButton>
+                                <StatusDiv>
+                                    <p style={{ marginBottom: "0.5rem" }}>Статус</p>
+                                    <DropdownButton drop="down" variant="outline-secondary" title={status.title} align="start">
+                                        {statusTypes.map((st) => (
+                                            <Dropdown.Item eventKey={st.value} key={st.value} onClick={() => handleStatus(st)}>
+                                                {st.title}
+                                            </Dropdown.Item>
+                                        ))}
+                                    </DropdownButton>
+                                </StatusDiv>
                             </Row1>
 
                             <ButtonGroup>
