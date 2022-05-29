@@ -69,6 +69,9 @@ function HistoryTableBlock({ order }) {
     return (
         <HistoryTableBlockStyled>
             <div style={{ fontWeight: "500" }}>{t("Заказ №") + " " + order.id}</div>
+            <div style={{ paddingLeft: "4px" }}>
+                {t("Статус")}: {order.status}
+            </div>
 
             <div style={{ paddingLeft: "4px" }}>
                 {t("Дата")}: {createDate(Number(order.date))}
