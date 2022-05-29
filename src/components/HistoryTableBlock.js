@@ -66,11 +66,21 @@ function HistoryTableBlock({ order }) {
         console.log(notFound);
     };
 
+    const getStatus = () => {
+        if (order.status === "in progress") {
+            return t("Мы уже обрабатываем Ваш заказ!");
+        }
+        if (order.status === "finished") {
+            return t("Получен");
+        }
+        return null;
+    };
+
     return (
         <HistoryTableBlockStyled>
             <div style={{ fontWeight: "500" }}>{t("Заказ №") + " " + order.id}</div>
             <div style={{ paddingLeft: "4px" }}>
-                {t("Статус")}: {order.status}
+                {t("Статус")}: {getStatus()}
             </div>
 
             <div style={{ paddingLeft: "4px" }}>

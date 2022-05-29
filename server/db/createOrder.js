@@ -28,8 +28,8 @@ const createOrder = async (req, res, userID) => {
             const arrOfItemsId = response.rows.map((item) => item.id);
 
             const query2 = {
-                text: "INSERT INTO orders (customer_id, date, price_type, items, sum, address, comment) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING id",
-                values: [userID, date, priceType, arrOfItemsId, sum, customer.address, customer.comment],
+                text: "INSERT INTO orders (customer_id, date, price_type, items, sum, address, comment, status) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id",
+                values: [userID, date, priceType, arrOfItemsId, sum, customer.address, customer.comment, "in progress"],
             };
 
             const response2 = await pool.query(query2);
