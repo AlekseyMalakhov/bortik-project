@@ -21,6 +21,7 @@ import itemsAPI from "./api/items";
 import { calculateSum } from "./utilities/calculate";
 import Admin from "./views/Admin";
 import AdminOrdersTable from "./components/AdminOrdersTable";
+import AdminBarCodesTable from "./components/AdminBarCodesTable";
 import { Navigate } from "react-router-dom";
 
 const AppStyled = styled.div({
@@ -81,7 +82,7 @@ function App() {
 
                 <Route path="/admin" element={<Admin />}>
                     <Route path="" element={<AdminOrdersTable orders={orders} />} />
-                    <Route path="barcode_edit" element={<div>Hi all</div>} />
+                    <Route path="barcode_edit" element={<AdminBarCodesTable orders={orders} />} />
                 </Route>
                 <Route path="*" element={<NoMatch />} />
             </Routes>

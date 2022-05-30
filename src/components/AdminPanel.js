@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import AdminHeader from "./AdminHeader";
-import AdminOrdersTable from "./AdminOrdersTable";
 import { useDispatch, useSelector } from "react-redux";
 import { getAdminOrders } from "../store/manage";
 import AdminDoneModal from "./AdminDoneModal";
@@ -22,7 +21,6 @@ function AdminPanel() {
     return (
         <AdminPanelStyled>
             <AdminHeader />
-            {/* <AdminOrdersTable orders={orders} /> */}
             <Outlet />
             <AdminDoneModal />
         </AdminPanelStyled>
