@@ -65,17 +65,18 @@ function App() {
 
     return (
         <AppStyled>
-            {location.pathname !== "/admin" ? <Header /> : null}
-
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/account" element={<Account />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/forgot_password" element={<ForgotPassword />} />
-                <Route path="/edit_account" element={<EditAccount />} />
+                <Route path="/shop" element={<Header />}>
+                    <Route path="home" element={<Home />} />
+                    <Route path="cart" element={<Cart />} />
+                    <Route path="about" element={<About />} />
+                    <Route path="login" element={<Login />} />
+                    <Route path="account" element={<Account />} />
+                    <Route path="register" element={<Register />} />
+                    <Route path="forgot_password" element={<ForgotPassword />} />
+                    <Route path="edit_account" element={<EditAccount />} />
+                </Route>
+
                 <Route path="/admin" element={<Admin />}>
                     <Route path="table" element={<AdminOrdersTable orders={orders} />} />
                     <Route path="barcode_edit" element={<div>Hi all</div>} />
