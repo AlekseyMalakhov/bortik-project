@@ -6,6 +6,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import ThreeDotsButton from "./ThreeDotsButton";
 import { useSelector, useDispatch } from "react-redux";
 import { setAdmin } from "../store/manage";
+import { Link } from "react-router-dom";
 
 const HeaderStyled = styled.div({
     display: "flex",
@@ -29,6 +30,17 @@ const BrandName = styled.div({
     textAlign: "center",
 });
 
+const LinkDiv = styled.div({
+    color: "white",
+    fontSize: "16px",
+    cursor: "pointer",
+    width: "130px",
+    marginRight: "30px",
+    "&:hover": {
+        color: "#dbe9ff",
+    },
+});
+
 function AdminHeader() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -44,6 +56,9 @@ function AdminHeader() {
         <HeaderStyled>
             <BrandName>Панель администратора 5A.com</BrandName>
             <RightCornerPanel>
+                <Link to="/admin/barcode_edit">
+                    <LinkDiv>База штрихкодов</LinkDiv>
+                </Link>
                 <Dropdown align="end">
                     <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
                     <Dropdown.Menu style={{ width: "230px" }}>
