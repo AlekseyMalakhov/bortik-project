@@ -5,6 +5,7 @@ import AdminOrdersTable from "./AdminOrdersTable";
 import { useDispatch, useSelector } from "react-redux";
 import { getAdminOrders } from "../store/manage";
 import AdminDoneModal from "./AdminDoneModal";
+import { Outlet } from "react-router-dom";
 
 const AdminPanelStyled = styled.div({});
 
@@ -21,7 +22,8 @@ function AdminPanel() {
     return (
         <AdminPanelStyled>
             <AdminHeader />
-            <AdminOrdersTable orders={orders} />
+            {/* <AdminOrdersTable orders={orders} /> */}
+            <Outlet />
             <AdminDoneModal />
         </AdminPanelStyled>
     );

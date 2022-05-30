@@ -20,6 +20,7 @@ import { getHistory } from "./store/manage";
 import itemsAPI from "./api/items";
 import { calculateSum } from "./utilities/calculate";
 import Admin from "./views/Admin";
+import AdminOrdersTable from "./components/AdminOrdersTable";
 
 const AppStyled = styled.div({
     background: "#F5F5F6",
@@ -32,6 +33,7 @@ function App() {
     const cart = useSelector((state) => state.manage.cart);
     const priceType = useSelector((state) => state.manage.priceType);
     const location = useLocation();
+    const orders = useSelector((state) => state.manage.adminOrders);
 
     useEffect(() => {
         handleScreenSize();
@@ -74,9 +76,11 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgot_password" element={<ForgotPassword />} />
                 <Route path="/edit_account" element={<EditAccount />} />
-                <Route path="/admin" element={<Admin />} />
+                <Route path="/admin" element={<Admin />}>
+                    <Route path="table" element={<AdminOrdersTable orders={orders} />} />
+                    <Route path="barcode_edit" element={<div>Hi all</div>} />
+                </Route>
                 <Route path="*" element={<NoMatch />} />
-                
             </Routes>
             {loading ? <Loading /> : null}
         </AppStyled>
