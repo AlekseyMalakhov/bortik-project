@@ -21,7 +21,7 @@ const EmptyCart = styled.div({
 const ButtonContainer = styled.div({
     position: "fixed",
     top: "80px",
-    right: "100px",
+    right: "50px",
 });
 
 function AdminBarCodesTable({ barcodes }) {
