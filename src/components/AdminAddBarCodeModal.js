@@ -9,6 +9,7 @@ import FormInput from "../components/FormInput";
 import adminAPI from "../api/admin";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading, getAdminOrders } from "../store/manage";
+import { showAdminDoneModal } from "../utilities/helpers";
 
 const Row1 = styled.div({
     width: "100%",
@@ -30,22 +31,28 @@ function AdminAddBarCodeModal({ show, onHide, ...otherProps }) {
 
     const validationSchema = Yup.object().shape({
         article: Yup.string().required("Укажите артикул"),
-        barcode: Yup.number().required("Укажите число товаров"),
+        barcode: Yup.string().required("Укажите штрихкод"),
     });
 
     const handleSubmit = (values) => {
-        // dispatch(setLoading(true));
-        // adminAPI
-        //     .editSoldItem(values, item.id)
-        //     .then((response) => {
-        //         dispatch(setLoading(false));
-        //         dispatch(getAdminOrders());
-        //         onHide();
-        //     })
-        //     .catch((err) => {
-        //         dispatch(setLoading(false));
-        //         console.log(err);
-        //     });
+        dispatch(setLoading(true));
+        adminAPI
+            .addBarcode(values)
+            .then((response) => {
+                dispatch(setLoading(false));
+                //dispatch(getAdminOrders());
+                if (response.status === 200) {
+                    showAdminDoneModal("Штрихкод добавлен");
+                    onHide();
+                } else {
+                    showAdminDoneModal("Неизвестная ошибка! Обратитесь к администратору или попробуйте позже.");
+                }
+            })
+            .catch((err) => {
+                dispatch(setLoading(false));
+                showAdminDoneModal("Неизвестная ошибка! Обратитесь к администратору или попробуйте позже.");
+                console.log(err);
+            });
     };
 
     return (
@@ -55,7 +62,7 @@ function AdminAddBarCodeModal({ show, onHide, ...otherProps }) {
                 <Formik
                     initialValues={{
                         article: "",
-                        barcode: 0,
+                        barcode: "",
                     }}
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}

@@ -63,6 +63,15 @@ const addItemToOrder = (data, orderId) => {
         .catch((error) => error.response);
 };
 
+const addBarcode = (data) => {
+    return client
+        .post("/addBarcode", data)
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => error.response);
+};
+
 const adminAPI = {
     loginAdmin,
     getOrders,
@@ -71,6 +80,7 @@ const adminAPI = {
     deleteOrder,
     editOrder,
     addItemToOrder,
+    addBarcode,
 };
 
 export default adminAPI;
