@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Table from "react-bootstrap/Table";
 import AdminBarCodesTableRow from "./AdminBarCodesTableRow";
 import Button from "react-bootstrap/Button";
+import AdminAddBarCodeModal from "./AdminAddBarCodeModal";
 
 const AdminOrdersTableStyled = styled.div({
     width: "100%",
@@ -24,6 +25,12 @@ const ButtonContainer = styled.div({
 });
 
 function AdminBarCodesTable({ orders }) {
+    const [showAdd, setShowAdd] = useState(false);
+
+    const cancel = () => {
+        setShowAdd(false);
+    };
+
     if (orders.length > 0) {
         return (
             <AdminOrdersTableStyled>
@@ -44,8 +51,11 @@ function AdminBarCodesTable({ orders }) {
                     </Table>
                 </TableContainer>
                 <ButtonContainer>
-                    <Button variant="success">Добавить штрихкод</Button>
+                    <Button variant="success" onClick={() => setShowAdd(true)}>
+                        Добавить штрихкод
+                    </Button>
                 </ButtonContainer>
+                <AdminAddBarCodeModal show={showAdd} onHide={cancel} />
             </AdminOrdersTableStyled>
         );
     }
