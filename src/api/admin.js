@@ -13,7 +13,7 @@ const getOrders = () => {
     return client
         .post("/getAdminOrders")
         .then((response) => {
-            return response.data;
+            return response;
         })
         .catch((error) => error.response);
 };

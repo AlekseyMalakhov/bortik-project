@@ -6,9 +6,7 @@ import { calculateSum } from "../utilities/calculate";
 
 export const getItems = createAsyncThunk("manage/getItems", async () => {
     const response = await itemsAPI.getItems();
-    if (response.status === 200) {
-        return response;
-    }
+    return response;
 });
 
 export const getHistory = createAsyncThunk("manage/getHistory", async (userID) => {
@@ -190,7 +188,7 @@ export const manageSlice = createSlice({
             .addCase(getHistory.fulfilled, (state, action) => {
                 state.loading = false;
                 if (action.payload) {
-                    state.history = action.payload;
+                    state.history = action.payload.data;
                 }
             });
         builder
@@ -200,7 +198,7 @@ export const manageSlice = createSlice({
             .addCase(getAdminOrders.fulfilled, (state, action) => {
                 state.loading = false;
                 if (action.payload) {
-                    const arr = [...action.payload];
+                    const arr = [...action.payload.data];
                     const result = arr.sort((a, b) => (a.id < b.id ? 1 : b.id < a.id ? -1 : 0));
                     state.adminOrders = result;
                 }
@@ -212,7 +210,7 @@ export const manageSlice = createSlice({
             .addCase(getBarcodes.fulfilled, (state, action) => {
                 state.loading = false;
                 if (action.payload) {
-                    const arr = [...action.payload];
+                    const arr = [...action.payload.data];
                     const result = arr.sort((a, b) => (a.article < b.article ? 1 : b.article < a.article ? -1 : 0));
                     state.barcodes = result;
                 }
