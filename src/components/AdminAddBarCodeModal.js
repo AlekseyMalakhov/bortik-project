@@ -8,7 +8,7 @@ import * as Yup from "yup";
 import FormInput from "../components/FormInput";
 import adminAPI from "../api/admin";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading, getAdminOrders } from "../store/manage";
+import { setLoading, getBarcodes } from "../store/manage";
 import { showAdminDoneModal } from "../utilities/helpers";
 
 const Row1 = styled.div({
@@ -40,13 +40,13 @@ function AdminAddBarCodeModal({ show, onHide, ...otherProps }) {
             .addBarcode(values)
             .then((response) => {
                 dispatch(setLoading(false));
-                //dispatch(getAdminOrders());
+                dispatch(getBarcodes());
                 if (response.status === 200) {
                     showAdminDoneModal("Штрихкод добавлен");
-                    onHide();
                 } else {
                     showAdminDoneModal("Неизвестная ошибка! Обратитесь к администратору или попробуйте позже.");
                 }
+                onHide();
             })
             .catch((err) => {
                 dispatch(setLoading(false));

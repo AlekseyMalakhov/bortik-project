@@ -76,7 +76,7 @@ const getBarcodes = () => {
     return client
         .post("/getBarcodes")
         .then((response) => {
-            return response.data;
+            return response;
         })
         .catch((error) => error.response);
 };

@@ -211,6 +211,7 @@ export const manageSlice = createSlice({
                 state.loading = false;
                 if (action.payload) {
                     const arr = [...action.payload.data];
+                    console.log(arr);
                     const result = arr.sort((a, b) => (a.article < b.article ? 1 : b.article < a.article ? -1 : 0));
                     state.barcodes = result;
                 }
