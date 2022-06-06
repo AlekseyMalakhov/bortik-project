@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import Table from "react-bootstrap/Table";
 import AdminBarCodesTableRow from "./AdminBarCodesTableRow";
+import Button from "react-bootstrap/Button";
 
 const AdminOrdersTableStyled = styled.div({
     width: "100%",
@@ -11,11 +12,15 @@ const AdminOrdersTableStyled = styled.div({
 const TableContainer = styled.div({
     width: "50%",
 });
-
 const EmptyCart = styled.div({
     textAlign: "center",
     fontSize: "20px",
     fontWeight: "500",
+});
+const ButtonContainer = styled.div({
+    position: "fixed",
+    top: "80px",
+    right: "100px",
 });
 
 function AdminBarCodesTable({ orders }) {
@@ -38,6 +43,9 @@ function AdminBarCodesTable({ orders }) {
                         </tbody>
                     </Table>
                 </TableContainer>
+                <ButtonContainer>
+                    <Button variant="success">Добавить штрихкод</Button>
+                </ButtonContainer>
             </AdminOrdersTableStyled>
         );
     }
