@@ -16,6 +16,8 @@ const deleteSoldItem = require("./db/deleteSoldItem");
 const deleteOrder = require("./db/deleteOrder");
 const editOrder = require("./db/editOrder");
 const addItemToOrder = require("./db/addItemToOrder");
+const addBarcode = require("./db/addBarcode");
+
 const app = express();
 const port = process.env.PORT || 3010;
 const cors = require("cors");
@@ -47,6 +49,7 @@ app.delete("/api/deleteSoldItem/:order_id/:id", deleteSoldItem);
 app.delete("/api/deleteOrder/:id", deleteOrder);
 app.put("/api/editOrder/:id", editOrder);
 app.put("/api/addItemToOrder/:id", addItemToOrder);
+app.post("/api/addBarcode", addBarcode);
 
 // Error handler
 app.use(function (err, req, res, next) {
