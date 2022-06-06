@@ -62,6 +62,15 @@ function AdminBarCodesTableRow({ order }) {
             <tr style={{ backgroundColor: "#f5f5f5" }}>
                 <td>{order.id}</td>
                 <td>{order.date}</td>
+                <td style={{ verticalAlign: "middle" }}>
+                    <Dropdown align="start" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <Dropdown.Toggle as={ThreeDotsButtonAdmin} />
+                        <Dropdown.Menu style={{ width: "160px" }}>
+                            <Dropdown.Item onClick={() => edit(order)}>Редактировать</Dropdown.Item>
+                            <Dropdown.Item onClick={() => deleteItem(order)}>Удалить штрихкод</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </td>
             </tr>
             <AdminEditCartItemModal show={showEdit} onHide={cancel} order={order} item={itemToEdit} />
             <AdminAddCartItemModal show={showItemAdd} onHide={cancel} order={order} />
