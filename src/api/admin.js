@@ -72,6 +72,15 @@ const addBarcode = (data) => {
         .catch((error) => error.response);
 };
 
+const getBarcodes = () => {
+    return client
+        .post("/getBarcodes")
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => error.response);
+};
+
 const adminAPI = {
     loginAdmin,
     getOrders,
@@ -81,6 +90,7 @@ const adminAPI = {
     editOrder,
     addItemToOrder,
     addBarcode,
+    getBarcodes,
 };
 
 export default adminAPI;

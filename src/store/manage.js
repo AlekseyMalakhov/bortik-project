@@ -6,17 +6,30 @@ import { calculateSum } from "../utilities/calculate";
 
 export const getItems = createAsyncThunk("manage/getItems", async () => {
     const response = await itemsAPI.getItems();
-    return response;
+    if (response.status === 200) {
+        return response;
+    }
 });
 
 export const getHistory = createAsyncThunk("manage/getHistory", async (userID) => {
     const response = await userAPI.getHistory({ userID });
-    return response;
+    if (response.status === 200) {
+        return response;
+    }
 });
 
 export const getAdminOrders = createAsyncThunk("manage/getAdminOrders", async () => {
     const response = await adminAPI.getOrders();
-    return response;
+    if (response.status === 200) {
+        return response;
+    }
+});
+
+export const getBarcodes = createAsyncThunk("manage/getBarcodes", async () => {
+    const response = await adminAPI.getBarcodes();
+    if (response.status === 200) {
+        return response;
+    }
 });
 
 // инитиализация состояния
@@ -44,6 +57,7 @@ const initialState = {
     antonAnton: false,
     adminOrders: [],
     adminDoneModal: "",
+    barcodes: [],
 };
 
 export const manageSlice = createSlice({
@@ -189,6 +203,18 @@ export const manageSlice = createSlice({
                     const arr = [...action.payload];
                     const result = arr.sort((a, b) => (a.id < b.id ? 1 : b.id < a.id ? -1 : 0));
                     state.adminOrders = result;
+                }
+            });
+        builder
+            .addCase(getBarcodes.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(getBarcodes.fulfilled, (state, action) => {
+                state.loading = false;
+                if (action.payload) {
+                    const arr = [...action.payload];
+                    const result = arr.sort((a, b) => (a.article < b.article ? 1 : b.article < a.article ? -1 : 0));
+                    state.barcodes = result;
                 }
             });
     },

@@ -8,7 +8,7 @@ import { createDate } from "../utilities/calculate";
 import AdminEditOrderModal from "./AdminEditOrderModal";
 import AdminAddCartItemModal from "./AdminAddCartItemModal";
 
-function AdminBarCodesTableRow({ order }) {
+function AdminBarCodesTableRow({ barcode }) {
     const [showEdit, setShowEdit] = useState(false);
     const [showItemAdd, setShowItemAdd] = useState(false);
     const [showItemDelete, setShowItemDelete] = useState(false);
@@ -39,12 +39,12 @@ function AdminBarCodesTableRow({ order }) {
     };
 
     const getStatus = () => {
-        if (order.status === "in progress") {
-            return "В работе";
-        }
-        if (order.status === "finished") {
-            return "Выдан";
-        }
+        // if (order.status === "in progress") {
+        //     return "В работе";
+        // }
+        // if (order.status === "finished") {
+        //     return "Выдан";
+        // }
         return null;
     };
 
@@ -60,23 +60,23 @@ function AdminBarCodesTableRow({ order }) {
     return (
         <React.Fragment>
             <tr style={{ backgroundColor: "#f5f5f5" }}>
-                <td>{order.id}</td>
-                <td>{order.date}</td>
+                <td>{barcode.article}</td>
+                <td>{barcode.barcode}</td>
                 <td style={{ verticalAlign: "middle" }}>
                     <Dropdown align="start" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                         <Dropdown.Toggle as={ThreeDotsButtonAdmin} />
                         <Dropdown.Menu style={{ width: "160px" }}>
-                            <Dropdown.Item onClick={() => edit(order)}>Редактировать</Dropdown.Item>
-                            <Dropdown.Item onClick={() => deleteItem(order)}>Удалить штрихкод</Dropdown.Item>
+                            <Dropdown.Item onClick={() => edit(barcode)}>Редактировать</Dropdown.Item>
+                            <Dropdown.Item onClick={() => deleteItem(barcode)}>Удалить штрихкод</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </td>
             </tr>
-            <AdminEditCartItemModal show={showEdit} onHide={cancel} order={order} item={itemToEdit} />
+            {/* <AdminEditCartItemModal show={showEdit} onHide={cancel} order={order} item={itemToEdit} />
             <AdminAddCartItemModal show={showItemAdd} onHide={cancel} order={order} />
             <AdminDeleteSoldItemModal show={showItemDelete} onHide={cancel} order={order} item={itemToEdit} />
             <AdminDeleteOrderModal show={showOrderDelete} onHide={cancel} order={order} />
-            <AdminEditOrderModal show={showOrderEdit} onHide={cancel} order={order} />
+            <AdminEditOrderModal show={showOrderEdit} onHide={cancel} order={order} /> */}
         </React.Fragment>
     );
 }

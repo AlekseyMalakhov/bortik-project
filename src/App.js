@@ -36,6 +36,7 @@ function App() {
     const priceType = useSelector((state) => state.manage.priceType);
     const location = useLocation();
     const orders = useSelector((state) => state.manage.adminOrders);
+    const barcodes = useSelector((state) => state.manage.barcodes);
 
     useEffect(() => {
         handleScreenSize();
@@ -82,7 +83,7 @@ function App() {
 
                 <Route path="/admin" element={<Admin />}>
                     <Route path="" element={<AdminOrdersTable orders={orders} />} />
-                    <Route path="barcode_edit" element={<AdminBarCodesTable orders={orders} />} />
+                    <Route path="barcode_edit" element={<AdminBarCodesTable barcodes={barcodes} />} />
                 </Route>
                 <Route path="*" element={<NoMatch />} />
             </Routes>

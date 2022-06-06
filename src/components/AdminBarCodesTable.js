@@ -24,14 +24,14 @@ const ButtonContainer = styled.div({
     right: "100px",
 });
 
-function AdminBarCodesTable({ orders }) {
+function AdminBarCodesTable({ barcodes }) {
     const [showAdd, setShowAdd] = useState(false);
 
     const cancel = () => {
         setShowAdd(false);
     };
 
-    if (orders.length > 0) {
+    if (barcodes.length > 0) {
         return (
             <AdminOrdersTableStyled>
                 <TableContainer>
@@ -44,8 +44,8 @@ function AdminBarCodesTable({ orders }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {orders.map((order) => (
-                                <AdminBarCodesTableRow order={order} key={order.id} />
+                            {barcodes.map((barcode) => (
+                                <AdminBarCodesTableRow barcode={barcode} key={barcode.id} />
                             ))}
                         </tbody>
                     </Table>
