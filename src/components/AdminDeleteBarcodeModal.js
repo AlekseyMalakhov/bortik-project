@@ -1,0 +1,53 @@
+import React from "react";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import adminAPI from "../api/admin";
+import { setLoading, getAdminOrders } from "../store/manage";
+import { useDispatch, useSelector } from "react-redux";
+import { showAdminDoneModal } from "../utilities/helpers";
+
+function AdminDeleteBarcodeModal({ show, onHide, barcode, ...otherProps }) {
+    const dispatch = useDispatch();
+    const loading = useSelector((state) => state.manage.loading);
+    const handleDelete = () => {
+        //dispatch(setLoading(true));
+        // adminAPI
+        //     .deleteOrder(order.id)
+        //     .then((response) => {
+        //         dispatch(setLoading(false));
+        //         dispatch(getAdminOrders());
+        //         if (response.status === 200) {
+        //             showAdminDoneModal("Заказ №" + order.id + " успешно удален!");
+        //         } else {
+        //             showAdminDoneModal("Неизвестная ошибка! Обратитесь к администратору или попробуйте позже.");
+        //         }
+        //         onHide();
+        //     })
+        //     .catch((err) => {
+        //         dispatch(setLoading(false));
+        //         console.log(err);
+        //     });
+    };
+
+    return (
+        <Modal show={show} {...otherProps} size="sm" centered onHide={onHide}>
+            <Modal.Body style={{ display: "flex", justifyContent: "center" }}>
+                {barcode ? (
+                    <p>
+                        Удалить штрихкод для товара <span style={{ fontWeight: "bold" }}>№{barcode.article}?</span>
+                    </p>
+                ) : null}
+            </Modal.Body>
+            <Modal.Footer style={{ display: "flex", justifyContent: "space-evenly" }}>
+                <Button onClick={onHide} variant="outline-primary" disabled={loading}>
+                    Отмена
+                </Button>
+                <Button onClick={handleDelete} style={{ width: "81px" }} disabled={loading}>
+                    Да
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    );
+}
+
+export default AdminDeleteBarcodeModal;

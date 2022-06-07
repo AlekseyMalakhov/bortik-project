@@ -13,7 +13,10 @@ const getOrders = () => {
     return client
         .post("/getAdminOrders")
         .then((response) => {
-            return response;
+            if (response.status === 200) {
+                return response.data;
+            }
+            return null;
         })
         .catch((error) => error.response);
 };
@@ -76,7 +79,10 @@ const getBarcodes = () => {
     return client
         .post("/getBarcodes")
         .then((response) => {
-            return response;
+            if (response.status === 200) {
+                return response.data;
+            }
+            return null;
         })
         .catch((error) => error.response);
 };

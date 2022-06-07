@@ -11,23 +11,17 @@ export const getItems = createAsyncThunk("manage/getItems", async () => {
 
 export const getHistory = createAsyncThunk("manage/getHistory", async (userID) => {
     const response = await userAPI.getHistory({ userID });
-    if (response.status === 200) {
-        return response;
-    }
+    return response;
 });
 
 export const getAdminOrders = createAsyncThunk("manage/getAdminOrders", async () => {
     const response = await adminAPI.getOrders();
-    if (response.status === 200) {
-        return response;
-    }
+    return response;
 });
 
 export const getBarcodes = createAsyncThunk("manage/getBarcodes", async () => {
     const response = await adminAPI.getBarcodes();
-    if (response.status === 200) {
-        return response;
-    }
+    return response;
 });
 
 // инитиализация состояния
@@ -188,7 +182,7 @@ export const manageSlice = createSlice({
             .addCase(getHistory.fulfilled, (state, action) => {
                 state.loading = false;
                 if (action.payload) {
-                    state.history = action.payload.data;
+                    state.history = action.payload;
                 }
             });
         builder
@@ -198,7 +192,7 @@ export const manageSlice = createSlice({
             .addCase(getAdminOrders.fulfilled, (state, action) => {
                 state.loading = false;
                 if (action.payload) {
-                    const arr = [...action.payload.data];
+                    const arr = [...action.payload];
                     const result = arr.sort((a, b) => (a.id < b.id ? 1 : b.id < a.id ? -1 : 0));
                     state.adminOrders = result;
                 }
@@ -210,8 +204,7 @@ export const manageSlice = createSlice({
             .addCase(getBarcodes.fulfilled, (state, action) => {
                 state.loading = false;
                 if (action.payload) {
-                    const arr = [...action.payload.data];
-                    console.log(arr);
+                    const arr = [...action.payload];
                     const result = arr.sort((a, b) => (a.article < b.article ? 1 : b.article < a.article ? -1 : 0));
                     state.barcodes = result;
                 }
