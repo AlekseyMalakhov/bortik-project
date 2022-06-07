@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import colors from "../settings/colors";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import Dropdown from "react-bootstrap/Dropdown";
 import ThreeDotsButton from "./ThreeDotsButton";
 import { useSelector, useDispatch } from "react-redux";
@@ -44,6 +44,7 @@ const LinkDiv = styled.div({
 function AdminHeader() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
     const admin = useSelector((state) => state.manage.admin);
 
     const logout = () => {
@@ -56,9 +57,15 @@ function AdminHeader() {
         <HeaderStyled>
             <BrandName>Панель администратора 5A.com</BrandName>
             <RightCornerPanel>
-                <Link to="/admin/barcode_edit">
-                    <LinkDiv>База штрихкодов</LinkDiv>
-                </Link>
+                {location.pathname === "/admin" ? (
+                    <Link to="/admin/barcode_edit">
+                        <LinkDiv>База штрихкодов</LinkDiv>
+                    </Link>
+                ) : (
+                    <Link to="/admin">
+                        <LinkDiv>Список заказов</LinkDiv>
+                    </Link>
+                )}
                 <Dropdown align="end">
                     <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
                     <Dropdown.Menu style={{ width: "230px" }}>
