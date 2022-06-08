@@ -19,6 +19,7 @@ const addItemToOrder = require("./db/addItemToOrder");
 const addBarcode = require("./db/addBarcode");
 const getBarcodes = require("./db/getBarcodes");
 const deleteBarcode = require("./db/deleteBarcode");
+const editBarcode = require("./db/editBarcode");
 
 const app = express();
 const port = process.env.PORT || 3010;
@@ -54,6 +55,7 @@ app.put("/api/addItemToOrder/:id", addItemToOrder);
 app.post("/api/addBarcode", addBarcode);
 app.post("/api/getBarcodes", getBarcodes);
 app.delete("/api/deleteBarcode/:id", deleteBarcode);
+app.put("/api/editBarcode/:id", editBarcode);
 
 // Error handler
 app.use(function (err, req, res, next) {
