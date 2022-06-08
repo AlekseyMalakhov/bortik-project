@@ -96,6 +96,15 @@ const deleteBarcode = (barcodeId) => {
         .catch((error) => error.response);
 };
 
+const editBarcode = (data, barcodeId) => {
+    return client
+        .put("/editBarcode/" + barcodeId, data)
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => error.response);
+};
+
 const adminAPI = {
     loginAdmin,
     getOrders,
@@ -107,6 +116,7 @@ const adminAPI = {
     addBarcode,
     getBarcodes,
     deleteBarcode,
+    editBarcode,
 };
 
 export default adminAPI;

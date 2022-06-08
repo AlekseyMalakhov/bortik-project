@@ -59,7 +59,17 @@ function AdminBarCodesTable({ barcodes }) {
             </AdminOrdersTableStyled>
         );
     }
-    return <EmptyCart>Нет штрихкодов</EmptyCart>;
+    return (
+        <React.Fragment>
+            <ButtonContainer>
+                <Button variant="success" onClick={() => setShowAdd(true)}>
+                    Добавить штрихкод
+                </Button>
+            </ButtonContainer>
+            <AdminAddBarCodeModal show={showAdd} onHide={cancel} />
+            <EmptyCart>Нет штрихкодов</EmptyCart>;
+        </React.Fragment>
+    );
 }
 
 export default AdminBarCodesTable;

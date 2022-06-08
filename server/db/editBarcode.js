@@ -5,7 +5,7 @@ const editBarcode = async (req, res) => {
     const { article, barcode } = req.body;
     try {
         const query = {
-            text: "UPDATE barcodes SET article = ($1), barcode = ($2), WHERE id = ($3) RETURNING id",
+            text: "UPDATE barcodes SET article = ($1), barcode = ($2) WHERE id = ($3) RETURNING id",
             values: [article, barcode, id],
         };
         const response = await pool.query(query);
