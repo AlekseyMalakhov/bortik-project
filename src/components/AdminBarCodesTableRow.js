@@ -23,7 +23,7 @@ function AdminBarCodesTableRow({ barcode }) {
 
     return (
         <React.Fragment>
-            <tr style={{ backgroundColor: "#f5f5f5" }}>
+            <tr>
                 <td>{barcode.article}</td>
                 <td>{barcode.barcode}</td>
                 <td style={{ verticalAlign: "middle" }}>
