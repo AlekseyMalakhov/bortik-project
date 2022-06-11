@@ -32,6 +32,7 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.manage.loading);
     const [sum, setSum] = useState();
+    const [priceForClient, setPriceForClient] = useState();
 
     const FormikOnChange = ({ onChange }) => {
         const { values } = useFormikContext();
@@ -46,13 +47,15 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
         if (item?.sum) {
             setSum(item.sum);
         }
+        if (item?.price) {
+            setPriceForClient(item.price);
+        }
     }, [item]);
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("Укажите название товара"),
         article: Yup.string().required("Укажите артикул"),
         number: Yup.number().required("Укажите число товаров"),
-        price: Yup.number().required("Укажите цену за единицу товара для клиента"),
         price_for_manager: Yup.number().nullable().required("Укажите цену за единицу товара для менеджера"),
     });
 
@@ -72,8 +75,15 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
     };
 
     const handleChange = (e) => {
-        console.log(e);
-        const s = e.price * e.number;
+        let prForClient;
+        if (order.price_type === "с НДС") {
+            prForClient = Math.round((e.price_for_manager * 1.2 + Number.EPSILON) * 100) / 100;
+        }
+        if (order.price_type === "без НДС") {
+            prForClient = e.price_for_manager;
+        }
+        setPriceForClient(prForClient);
+        const s = prForClient * e.number;
         setSum(Number(s.toFixed(2)));
     };
 
@@ -87,7 +97,6 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
                             title: item.title,
                             article: item.article,
                             number: item.number,
-                            price: item.price,
                             price_for_manager: item.price_for_manager ? item.price_for_manager : "",
                         }}
                         validationSchema={validationSchema}
@@ -98,20 +107,16 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
                                 <FormInput name="title" label="Наименование" />
                                 <Row1>
                                     <FormInput name="article" label="Артикул" formGroupStyle={{ width: "100%", paddingRight: "20px" }} />
-                                    <FormInput name="number" label="Количество" formGroupStyle={{ width: "100%", paddingLeft: "20px" }} />
                                 </Row1>
                                 <Row1>
                                     <FormInput
-                                        name="price"
-                                        label="Цена за единицу товара для клиента"
-                                        formGroupStyle={{ width: "100%", paddingRight: "20px" }}
-                                    />
-                                    <FormInput
                                         name="price_for_manager"
                                         label="Цена за единицу товара для менеджера"
-                                        formGroupStyle={{ width: "100%", paddingLeft: "20px" }}
+                                        formGroupStyle={{ width: "100%" }}
                                     />
+                                    <FormInput name="number" label="Количество" formGroupStyle={{ width: "100%", paddingLeft: "20px" }} />
                                 </Row1>
+                                <TotalSum>Цена за единицу товара для клиента: {priceForClient}</TotalSum>
                                 <TotalSum>Общая сумма: {sum}</TotalSum>
                                 <FormikOnChange onChange={handleChange} />
 
