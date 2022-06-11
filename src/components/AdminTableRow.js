@@ -112,7 +112,7 @@ function AdminTableRow({ order }) {
                                 : null
                         }
                     >
-                        <td></td>
+                        <td>{item.barcode}</td>
                         <td></td>
                         <td>{item.article}</td>
                         <td>{item.title}</td>
