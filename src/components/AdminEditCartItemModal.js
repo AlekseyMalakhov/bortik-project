@@ -61,8 +61,11 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
 
     const handleSubmit = (values) => {
         dispatch(setLoading(true));
+        const data = { ...values };
+        data.sum = sum.toString();
+        data.price = priceForClient.toString();
         adminAPI
-            .editSoldItem(values, item.id)
+            .editSoldItem(data, item.id)
             .then((response) => {
                 dispatch(setLoading(false));
                 dispatch(getAdminOrders());
