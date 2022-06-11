@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import styled from "@emotion/styled";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Formik } from "formik";
+import { Formik, useFormikContext } from "formik";
 import * as Yup from "yup";
 import FormInput from "../components/FormInput";
 import adminAPI from "../api/admin";
@@ -33,6 +33,15 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
     const loading = useSelector((state) => state.manage.loading);
     const [sum, setSum] = useState();
 
+    const FormikOnChange = ({ onChange }) => {
+        const { values } = useFormikContext();
+
+        useEffect(() => {
+            onChange(values);
+        }, [values, onChange]);
+        return null;
+    };
+
     useEffect(() => {
         if (item?.sum) {
             setSum(item.sum);
@@ -60,6 +69,12 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
                 dispatch(setLoading(false));
                 console.log(err);
             });
+    };
+
+    const handleChange = (e) => {
+        console.log(e);
+        const s = e.price * e.number;
+        setSum(Number(s.toFixed(2)));
     };
 
     return (
@@ -98,6 +113,7 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
                                     />
                                 </Row1>
                                 <TotalSum>Общая сумма: {sum}</TotalSum>
+                                <FormikOnChange onChange={handleChange} />
 
                                 <ButtonGroup>
                                     <Button variant="outline-primary" onClick={onHide} disabled={loading}>
