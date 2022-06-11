@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import styled from "@emotion/styled";
 import Form from "react-bootstrap/Form";
@@ -24,15 +24,25 @@ const ButtonGroup = styled.div({
     marginBottom: "30px",
 });
 
+const TotalSum = styled.div({
+    display: "flex",
+});
+
 function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.manage.loading);
+    const [sum, setSum] = useState();
+
+    useEffect(() => {
+        if (item?.sum) {
+            setSum(item.sum);
+        }
+    }, [item]);
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("Укажите название товара"),
         article: Yup.string().required("Укажите артикул"),
         number: Yup.number().required("Укажите число товаров"),
-        sum: Yup.string().required("Укажите суммарную стоимость"),
         price: Yup.number().required("Укажите цену за единицу товара для клиента"),
         price_for_manager: Yup.number().nullable().required("Укажите цену за единицу товара для менеджера"),
     });
@@ -62,7 +72,6 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
                             title: item.title,
                             article: item.article,
                             number: item.number,
-                            sum: item.sum,
                             price: item.price,
                             price_for_manager: item.price_for_manager ? item.price_for_manager : "",
                         }}
@@ -88,7 +97,7 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
                                         formGroupStyle={{ width: "100%", paddingLeft: "20px" }}
                                     />
                                 </Row1>
-                                <FormInput name="sum" label="Общая сумма" />
+                                <TotalSum>Общая сумма: {sum}</TotalSum>
 
                                 <ButtonGroup>
                                     <Button variant="outline-primary" onClick={onHide} disabled={loading}>

@@ -28,21 +28,6 @@ const getAdminOrders = async (req, res) => {
                 const response4 = await pool.query(query4);
                 const barcodes = response4.rows;
 
-                // const check = [
-                //     {
-                //         id: 16,
-                //         article: "SMART.06021",
-                //         barcode: "43436t53435",
-                //     },
-                //     {
-                //         id: 17,
-                //         article: "SMART.18028",
-                //         barcode: "w4ttgdfhdfgd",
-                //     },
-                // ];
-
-                //end
-
                 const itemsWithBarcodes = itemsWithImages.map((item) => {
                     const barcodeObj = barcodes.find((bcObj) => bcObj.article === item.article);
                     if (barcodeObj) {
