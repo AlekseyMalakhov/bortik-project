@@ -1,8 +1,9 @@
 const pool = require("./pool");
+const recalculateSumOfOrder = require("./recalculateSumOfOrder");
 
 const editSoldItem = async (req, res) => {
     const id = req.params.id;
-    const { article, title, number, price, price_for_manager, sum } = req.body;
+    const { article, title, number, price, price_for_manager, sum, orderID } = req.body;
     try {
         const query = {
             text: `UPDATE sold_items SET 
@@ -17,6 +18,10 @@ const editSoldItem = async (req, res) => {
             values: [article, title, number, price, price_for_manager, sum, id],
         };
         const response = await pool.query(query);
+
+        //update order sum
+        await recalculateSumOfOrder(orderID);
+        //end
         res.status(200).send(`Sold item with id = ${response.rows[0].id} updated`);
     } catch (error) {
         res.status(500).send(error.stack);

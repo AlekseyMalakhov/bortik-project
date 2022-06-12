@@ -64,6 +64,7 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
         const data = { ...values };
         data.sum = sum.toString();
         data.price = priceForClient.toString();
+        data.orderID = order.id;
         adminAPI
             .editSoldItem(data, item.id)
             .then((response) => {
