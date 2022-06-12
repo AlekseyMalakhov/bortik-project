@@ -8,7 +8,7 @@ const recalculateSumOfOrder = async (orderID) => {
     const response1 = await pool.query(query1);
     const items = response1.rows[0].items;
     const arrOfSums = [];
-    Promise.all(
+    return Promise.all(
         items.map(async (itemID) => {
             const query2 = {
                 text: "SELECT sum FROM sold_items WHERE id = ($1)",

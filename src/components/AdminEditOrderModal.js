@@ -40,15 +40,17 @@ const StatusDiv = styled.div({
     },
 });
 
+const TotalSum = styled.div({
+    marginTop: "15px",
+    display: "flex",
+    fontWeight: "bold",
+});
+
 function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
     const [priceType, setPriceType] = useState(order.price_type);
     const [status, setStatus] = useState();
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.manage.loading);
-
-    const validationSchema = Yup.object().shape({
-        sum: Yup.number().required("Укажите общую сумму заказа"),
-    });
 
     const handleSubmit = (values) => {
         const data = { ...values };
@@ -108,9 +110,7 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
                     initialValues={{
                         address: order.address,
                         comment: order.comment,
-                        sum: order.sum,
                     }}
-                    validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                 >
                     {({ handleSubmit, values }) => (
@@ -126,14 +126,16 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
                                 <FormInput name="address" label="Адрес" formGroupStyle={{ width: "100%" }} />
                             </Row1>
                             <Row1>
-                                <FormInput name="sum" label="Общая сумма" />
-                                <DropdownButton drop="down" variant="outline-secondary" title={priceType} style={{ marginTop: "15px" }}>
-                                    {priceTypes.map((type) => (
-                                        <Dropdown.Item eventKey={type} key={type} onClick={() => handlePriceType(type)}>
-                                            {type}
-                                        </Dropdown.Item>
-                                    ))}
-                                </DropdownButton>
+                                <StatusDiv>
+                                    <p style={{ marginBottom: "0.5rem" }}>Тип цены</p>
+                                    <DropdownButton drop="down" variant="outline-secondary" title={priceType}>
+                                        {priceTypes.map((type) => (
+                                            <Dropdown.Item eventKey={type} key={type} onClick={() => handlePriceType(type)}>
+                                                {type}
+                                            </Dropdown.Item>
+                                        ))}
+                                    </DropdownButton>
+                                </StatusDiv>
                                 <StatusDiv>
                                     <p style={{ marginBottom: "0.5rem" }}>Статус</p>
                                     <DropdownButton drop="down" variant="outline-secondary" title={status.title} align="start">
@@ -144,6 +146,9 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
                                         ))}
                                     </DropdownButton>
                                 </StatusDiv>
+                            </Row1>
+                            <Row1>
+                                <TotalSum>Общая сумма: {order.sum}</TotalSum>
                             </Row1>
 
                             <ButtonGroup>

@@ -121,7 +121,7 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
                                     <FormInput name="number" label="Количество" formGroupStyle={{ width: "100%", paddingLeft: "20px" }} />
                                 </Row1>
                                 <TotalSum>Цена за единицу товара для клиента: {priceForClient}</TotalSum>
-                                <TotalSum>Общая сумма: {sum}</TotalSum>
+                                <TotalSum style={{ fontWeight: "bold" }}>Общая сумма: {sum}</TotalSum>
                                 <FormikOnChange onChange={handleChange} />
 
                                 <ButtonGroup>
