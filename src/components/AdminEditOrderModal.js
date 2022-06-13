@@ -56,6 +56,7 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
         const data = { ...values };
         data.priceType = priceType;
         data.status = status.value;
+        data.sum = order.sum;
         dispatch(setLoading(true));
         adminAPI
             .editOrder(data, order.id)
