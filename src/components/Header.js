@@ -73,15 +73,15 @@ function Header() {
     return (
         <React.Fragment>
             <HeaderStyled>
-                {location.pathname === "/" ? <MenuButton /> : <HeaderBackButton />}
+                {location.pathname === "/home" ? <MenuButton /> : <HeaderBackButton />}
                 {mobileScreen && search ? null : <BrandName onClick={() => navigate("/")}>5a.by</BrandName>}
-                <Search show={search && location.pathname === "/"} />
+                <Search show={search && location.pathname === "/home"} />
                 <RightCornerPanel>
                     {search ? null : <SearchButton />}
                     <Dropdown align="end">
                         <Dropdown.Toggle as={ThreeDotsButton} id="dropdown-basic" />
                         <Dropdown.Menu style={{ width: "230px" }}>
-                            {location.pathname !== "/" ? <Dropdown.Item onClick={() => navigate("/")}>{t("На главную")}</Dropdown.Item> : null}
+                            {location.pathname !== "/home" ? <Dropdown.Item onClick={() => navigate("/")}>{t("На главную")}</Dropdown.Item> : null}
                             <Dropdown.Item onClick={() => navigate("/about")}>{t("О компании")}</Dropdown.Item>
                             <Dropdown.Divider />
                             {user ? (
