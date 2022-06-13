@@ -54,9 +54,14 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
 
     const handleSubmit = (values) => {
         const data = { ...values };
-        data.priceType = priceType;
         data.status = status.value;
-        data.sum = order.sum;
+        if (order.price_type !== priceType) {
+            console.log("пересчитать");
+        } else {
+            console.log("оставить");
+            data.sum = order.sum;
+        }
+        data.priceType = priceType;
         dispatch(setLoading(true));
         adminAPI
             .editOrder(data, order.id)
