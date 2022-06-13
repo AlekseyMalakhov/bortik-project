@@ -1,4 +1,5 @@
 const pool = require("./pool");
+const recalculateSumOfOrder = require("./recalculateSumOfOrder");
 
 const deleteSoldItem = async (req, res) => {
     const id = req.params.id;
@@ -24,6 +25,7 @@ const deleteSoldItem = async (req, res) => {
                 };
                 const response3 = await pool.query(query3);
                 if (response3.rowCount !== 0) {
+                    await recalculateSumOfOrder(order_id);
                     res.status(200).send(`Sold item with id = ${id} removed`);
                 } else {
                     res.status(500).send("Error in update order");
