@@ -33,6 +33,7 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
     const loading = useSelector((state) => state.manage.loading);
     const [sum, setSum] = useState();
     const [priceForClient, setPriceForClient] = useState();
+    const [specialCase, setSpecialCase] = useState(false);
 
     const FormikOnChange = ({ onChange }) => {
         const { values } = useFormikContext();
@@ -44,11 +45,16 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
     };
 
     useEffect(() => {
-        if (item?.sum) {
+        if (item) {
             setSum(item.sum);
-        }
-        if (item?.price) {
             setPriceForClient(item.price);
+            const check = item.price_for_manager / item.price;
+            console.log(check);
+            if (check > 2) {
+                setSpecialCase(true);
+            } else {
+                setSpecialCase(false);
+            }
         }
     }, [item]);
 
@@ -86,6 +92,10 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
         if (order.price_type === "без НДС") {
             prForClient = e.price_for_manager;
         }
+        if (specialCase) {
+            prForClient = prForClient / 1000;
+            prForClient = prForClient.toFixed(2);
+        }
         setPriceForClient(prForClient);
         const s = prForClient * e.number;
         setSum(Number(s.toFixed(2)));
@@ -120,10 +130,10 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
                                     />
                                     <FormInput name="number" label="Количество" formGroupStyle={{ width: "100%", paddingLeft: "20px" }} />
                                 </Row1>
+                                {specialCase ? <TotalSum style={{ fontWeight: "bold" }}>Размерность тыс. шт/1000 шт !!!</TotalSum> : null}
                                 <TotalSum>Цена за единицу товара для клиента: {priceForClient}</TotalSum>
                                 <TotalSum style={{ fontWeight: "bold" }}>Общая сумма: {sum}</TotalSum>
                                 <FormikOnChange onChange={handleChange} />
-
                                 <ButtonGroup>
                                     <Button variant="outline-primary" onClick={onHide} disabled={loading}>
                                         Отмена
