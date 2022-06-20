@@ -15,12 +15,14 @@ const createOrder = async (req, res, userID) => {
         item.push(userID);
         item.push(date);
         item.push(cart[i].priceForManager);
+        item.push(cart[i].priceExcVAT);
+        item.push(cart[i].priceIncVAT);
         arrData.push(item);
     }
 
     try {
         const sql = format(
-            "INSERT INTO sold_items (article, title, number, price, sum, customer_id, date, price_for_manager) VALUES %L RETURNING id",
+            "INSERT INTO sold_items (article, title, number, price, sum, customer_id, date, price_for_manager, price_exc_vat, price_inc_vat ) VALUES %L RETURNING id",
             arrData
         );
         const response = await pool.query(sql);

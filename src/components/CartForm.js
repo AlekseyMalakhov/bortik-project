@@ -146,6 +146,8 @@ function CartForm({ cart, priceType, sum }) {
                     price: getPrice(cart[i], priceType),
                     sum: calcSum(cart[i]),
                     priceForManager: cart[i].priceForManager,
+                    priceExcVAT: cart[i].priceExcVAT,
+                    priceIncVAT: cart[i].priceIncVAT,
                 };
                 newCart.push(item);
             }
