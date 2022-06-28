@@ -52,13 +52,28 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.manage.loading);
 
+    const calcSum = (items) => {
+        let sum = 0;
+        items.forEach((item) => {
+            if (priceType === "с НДС") {
+                const sumOfItem = item.price_inc_vat * item.number;
+                sum = sum + sumOfItem;
+            }
+            if (priceType === "без НДС") {
+                const sumOfItem = item.price_exc_vat * item.number;
+                sum = sum + sumOfItem;
+            }
+        });
+        return Number(sum.toFixed(2));
+    };
+
     const handleSubmit = (values) => {
         const data = { ...values };
         data.status = status.value;
         if (order.price_type !== priceType) {
-            console.log("пересчитать");
+            const newSum = calcSum(order.items);
+            data.sum = newSum;
         } else {
-            console.log("оставить");
             data.sum = order.sum;
         }
         data.priceType = priceType;
