@@ -71,6 +71,7 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
         data.sum = sum.toString();
         data.price = priceForClient.toString();
         data.orderID = order.id;
+        //if you change price for manager change price_inc_vat and price_exc_vat
         adminAPI
             .editSoldItem(data, item.id)
             .then((response) => {
@@ -93,8 +94,12 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
             prForClient = e.price_for_manager;
         }
         if (specialCase) {
-            prForClient = prForClient / 1000;
-            prForClient = prForClient.toFixed(2);
+            if (order.price_type === "с НДС") {
+                prForClient = item.price_inc_vat;
+            }
+            if (order.price_type === "без НДС") {
+                prForClient = item.price_exc_vat;
+            }
         }
         setPriceForClient(prForClient);
         const s = prForClient * e.number;
