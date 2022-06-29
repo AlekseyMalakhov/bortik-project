@@ -50,8 +50,8 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
     useEffect(() => {
         if (item) {
             setSum(item.sum);
-            setPriceForClient(item.price);
-            const check = item.price_for_manager / item.price;
+            //setPriceForClient(item.price);
+            const check = item.price_for_manager / item.price_exc_vat;
             console.log(check);
             if (check > 2) {
                 setSpecialCase(true);
@@ -72,11 +72,10 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
         dispatch(setLoading(true));
         const data = { ...values };
         data.sum = sum.toString();
-        data.price = priceForClient.toString();
+        data.price = priceForClient.toString(); //price возможно понадобится для писем
         data.price_exc_vat = priceExcVAT.toString();
         data.price_inc_vat = priceIncVAT.toString();
         data.orderID = order.id;
-        //if you change price for manager change price_inc_vat and price_exc_vat
         adminAPI
             .editSoldItem(data, item.id)
             .then((response) => {

@@ -3,7 +3,7 @@ const recalculateSumOfOrder = require("./recalculateSumOfOrder");
 
 const editSoldItem = async (req, res) => {
     const id = req.params.id;
-    const { article, title, number, price, price_for_manager, sum, orderID } = req.body;
+    const { article, title, number, price, price_for_manager, sum, orderID, price_exc_vat, price_inc_vat } = req.body;
     try {
         const query = {
             text: `UPDATE sold_items SET 
@@ -11,11 +11,13 @@ const editSoldItem = async (req, res) => {
             title = ($2), 
             number = ($3), 
             price = ($4), 
-            price_for_manager = ($5), 
-            sum = ($6) 
-            WHERE id = ($7) 
+            price_for_manager = ($5),
+            price_exc_vat = ($6),
+            price_inc_vat = ($7),
+            sum = ($8) 
+            WHERE id = ($9) 
             RETURNING id`,
-            values: [article, title, number, price, price_for_manager, sum, id],
+            values: [article, title, number, price, price_for_manager, price_exc_vat, price_inc_vat, sum, id],
         };
         const response = await pool.query(query);
 
