@@ -52,6 +52,8 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.manage.loading);
 
+    //need test of changing prices, type prices, number of items, deleting and adding items
+
     const calcSum = (items) => {
         let sum = 0;
         items.forEach((item) => {
