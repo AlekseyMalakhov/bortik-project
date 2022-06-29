@@ -92,6 +92,7 @@ function AdminEditOrderModal({ show, onHide, order, ...otherProps }) {
             })
             .catch((err) => {
                 dispatch(setLoading(false));
+                showAdminDoneModal("Неизвестная ошибка! Обратитесь к администратору или попробуйте позже.");
                 console.log(err);
             });
     };

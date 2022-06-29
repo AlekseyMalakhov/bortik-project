@@ -9,6 +9,7 @@ import FormInput from "../components/FormInput";
 import adminAPI from "../api/admin";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading, getAdminOrders } from "../store/manage";
+import { showAdminDoneModal } from "../utilities/helpers";
 
 const Row1 = styled.div({
     width: "100%",
@@ -33,6 +34,8 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
     const loading = useSelector((state) => state.manage.loading);
     const [sum, setSum] = useState();
     const [priceForClient, setPriceForClient] = useState();
+    const [priceExcVAT, setPriceExcVAT] = useState();
+    const [priceIncVAT, setPriceIncVAT] = useState();
     const [specialCase, setSpecialCase] = useState(false);
 
     const FormikOnChange = ({ onChange }) => {
@@ -70,6 +73,8 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
         const data = { ...values };
         data.sum = sum.toString();
         data.price = priceForClient.toString();
+        data.price_exc_vat = priceExcVAT.toString();
+        data.price_inc_vat = priceIncVAT.toString();
         data.orderID = order.id;
         //if you change price for manager change price_inc_vat and price_exc_vat
         adminAPI
@@ -77,31 +82,83 @@ function AdminEditCartItemModal({ show, onHide, order, item, ...otherProps }) {
             .then((response) => {
                 dispatch(setLoading(false));
                 dispatch(getAdminOrders());
+                if (response.status === 200) {
+                    showAdminDoneModal("Товар успешно отредактирован!");
+                } else {
+                    showAdminDoneModal("Неизвестная ошибка! Обратитесь к администратору или попробуйте позже.");
+                }
                 onHide();
             })
             .catch((err) => {
                 dispatch(setLoading(false));
+                showAdminDoneModal("Неизвестная ошибка! Обратитесь к администратору или попробуйте позже.");
                 console.log(err);
             });
     };
 
+    /*
+    priceExcVAT: price,
+    priceIncVAT: Math.round((price * 1.2 + Number.EPSILON) * 100) / 100,
+    priceForManager: price,
+
+    //handle units
+            if (item.unit === "тыс. шт/1000 шт") {
+                const regex = /(\d+)\sшт/;
+                const found = item.title.ru.match(regex);
+                if (found && found[1]) {
+                    //console.log(item.title.ru + " штуки штуки");
+                    //console.log(found[1]);
+                    const newPrice = (item.priceExcVAT / 1000) * found[1];
+                    item.priceExcVAT = Math.ceil((newPrice + Number.EPSILON) * 100) / 100;
+                    item.priceIncVAT = Math.ceil((newPrice * 1.2 + Number.EPSILON) * 100) / 100;
+
+                    //console.log(newPrice);
+                    //console.log(item.priceExcVAT);
+                }
+            }
+
+
+            {
+        id: 'SMART.34187_1573',
+        category2: 'Ланч-боксы',
+        article: 'SMART.34187',
+        title: {
+          ru: 'Ланч-бокс 3-х секционный из сахарного тросника 50 шт',
+          zh: '甘蔗三节饭盒50个',
+          en: 'Lunch box 3-section Sugar Cane 50 pcs'
+        },
+        presence: 0.05,
+        unit: 'тыс. шт/1000 шт',
+        img: 'https://smartikon.by/uploads/SMART.34187.webp',
+        priceExcVAT: 51.05,
+        priceIncVAT: 61.26,
+        priceForManager: 1020.92,
+        discount: null,
+        selected: true,
+        category1: 'Одноразовая посуда',
+        group: 'Хозяйственные товары'
+      },
+    */
+
     const handleChange = (e) => {
         let prForClient;
+        let prExcVAT = e.price_for_manager;
+        let prIncVAT = Math.round((prExcVAT * 1.2 + Number.EPSILON) * 100) / 100;
+        if (specialCase) {
+            const coef = item.price_for_manager / item.price_exc_vat;
+            prExcVAT = e.price_for_manager / coef;
+            prExcVAT = Math.ceil((prExcVAT + Number.EPSILON) * 100) / 100;
+            prIncVAT = Math.ceil((prExcVAT * 1.2 + Number.EPSILON) * 100) / 100;
+        }
         if (order.price_type === "с НДС") {
-            prForClient = Math.round((e.price_for_manager * 1.2 + Number.EPSILON) * 100) / 100;
+            prForClient = prIncVAT;
         }
         if (order.price_type === "без НДС") {
-            prForClient = e.price_for_manager;
-        }
-        if (specialCase) {
-            if (order.price_type === "с НДС") {
-                prForClient = item.price_inc_vat;
-            }
-            if (order.price_type === "без НДС") {
-                prForClient = item.price_exc_vat;
-            }
+            prForClient = prExcVAT;
         }
         setPriceForClient(prForClient);
+        setPriceExcVAT(prExcVAT);
+        setPriceIncVAT(prIncVAT);
         const s = prForClient * e.number;
         setSum(Number(s.toFixed(2)));
     };
