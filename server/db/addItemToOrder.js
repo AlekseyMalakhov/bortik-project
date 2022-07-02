@@ -19,18 +19,19 @@ const addItemToOrder = async (req, res) => {
             const newItems = response2.rows[0].items;
             const newSum = Number(response2.rows[0].sum) + price;
             newItems.push(newItemId);
-            console.log(newItems);
 
             const query3 = {
                 text: "UPDATE orders SET items = ($1), sum = ($2) WHERE id = ($3)",
                 values: [newItems, newSum, order_id],
             };
             const response3 = await pool.query(query3);
-            console.log(response3);
-            res.status(200).send(`Order with id = ${order_id} updated`);
+            if (response3.rowCount !== 0) {
+                res.status(200).send(`Order with id = ${order_id} updated`);
+            } else {
+                res.status(500).send("Error in add item");
+            }
         } else {
-            res.status(500).send(error.stack);
-            console.log(error.stack);
+            res.status(500).send("Error in add item");
         }
     } catch (error) {
         res.status(500).send(error.stack);
