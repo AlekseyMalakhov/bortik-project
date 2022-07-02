@@ -16,6 +16,8 @@ const loginAdmin = async (req, res) => {
         const response1 = await pool.query(query1);
         const user = response1.rows[0];
 
+        console.log(user);
+
         if (user) {
             bcrypt.compare(password, user.password, function (err, result) {
                 if (!result) {
