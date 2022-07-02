@@ -145,7 +145,7 @@ function AdminAddCartItemModal({ show, onHide, order, ...otherProps }) {
                 setFilteredItems(items);
             }
         }
-    }, [search, searchInput]);
+    }, [search, searchInput, items]);
 
     return (
         <Modal show={show} {...otherProps} centered onHide={cancel} size="lg" backdrop="static" keyboard={false}>
