@@ -5,8 +5,8 @@ const addItemToOrder = async (req, res) => {
     const { item, customer_id, date, order_id, price } = req.body;
     try {
         const query1 = {
-            text: "INSERT INTO sold_items (article, title, number, price, sum, customer_id, date, price_for_manager) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id",
-            values: [item.article, item.title.ru, 1, price, price, customer_id, date, item.priceForManager],
+            text: "INSERT INTO sold_items (article, title, number, price, sum, customer_id, date, price_for_manager, price_exc_vat, price_inc_vat) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id",
+            values: [item.article, item.title.ru, 1, price, price, customer_id, date, item.priceForManager, item.priceExcVAT, item.priceIncVAT],
         };
         const response1 = await pool.query(query1);
         const newItemId = response1.rows[0].id;
